@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public int TestId { get; set; }
+        public TestModel TestModel { get; set; }
         public double Score { get; set; }
         public string Content { get; set; }
         public char CorrectAnswer { get; set; }

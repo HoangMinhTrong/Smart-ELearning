@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace Smart_ELearning.Models
 {
     public class AppUserModel : IdentityUser
     {
-        public string FirtName { get; set; }
-        
+        public string FullName { get; set; }
+
+        public ICollection<StudentInClassModel> StudentInClassModels { get; set; }
+        public ICollection<StudentAttendanceModel> StudentAttendanceModels { get; set; }
+        public ICollection<SubmitModel> SubmitModels { get; set; }
     }
 }
