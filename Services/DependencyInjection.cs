@@ -12,6 +12,7 @@ namespace Smart_ELearning.Services
         public static void AddService(this IServiceCollection services)
         {
             services.AddTransient<IClassService, ClassService>();
+            services.AddTransient<IScheduleService, ScheduleService>();
         }
     }
 }

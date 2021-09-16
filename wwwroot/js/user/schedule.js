@@ -11,7 +11,11 @@ function loadDataTable() {
             "url": "/User/Schedule/GetAll/"
         },
         "columns": [
-            { "data": "title", "width": "60%" },
+            { "data": "classId", "width": "30%" },
+            { "data": "subjectId", "width": "30%" },
+            { "data": "dateTime", "width": "30%" },
+            { "data": "startTime", "width": "30%" },
+            { "data": "endTime", "width": "30%" },
             {
                 "data": "id",
                 "render": function (data) {

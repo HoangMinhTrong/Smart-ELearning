@@ -7,6 +7,7 @@ using Smart_ELearning.Data;
 using Smart_ELearning.Models;
 using Smart_ELearning.Services.Interfaces;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Smart_ELearning.Services
 {
@@ -26,7 +27,7 @@ namespace Smart_ELearning.Services
             return ojbschedule;
         }
 
-        public bool Upsert(ScheduleModel model)
+        public int Upsert(ScheduleModel model)
         {
             if (model.Id == 0)
             {
@@ -36,11 +37,14 @@ namespace Smart_ELearning.Services
             {
                 var scheduleFromDb =  _context.ScheduleModels.Find(model.Id);
                 if (scheduleFromDb == null) throw new Exception($"Could not found class id{model.Id}");
-                _context.ScheduleModels.Update(model);
+                else
+                {
+                    _context.Entry<ScheduleModel>(scheduleFromDb).State = EntityState.Modified;
+                    _context.Entry<ScheduleModel>(model).State = EntityState.Modified;
+                }
             }
 
-            _context.SaveChanges();
-            return true;
+            return _context.SaveChanges();
         }
         
 

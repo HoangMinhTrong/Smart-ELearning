@@ -10,12 +10,10 @@ namespace Smart_ELearning.Areas.User.Controllers
     [Area("User")]
     public class ScheduleController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IScheduleService _schedule;
 
-        public ScheduleController(ApplicationDbContext context, IScheduleService schedule)
+        public ScheduleController( IScheduleService schedule)
         {
-            _context = context;
             _schedule = schedule;
         }
         public IActionResult Index()
@@ -46,18 +44,15 @@ namespace Smart_ELearning.Areas.User.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (scheduleModel.Id == 0)
-                {
-                    _context.ScheduleModels.Add(scheduleModel);
-                }
-                else
-                {
-                    _context.ScheduleModels.Update(scheduleModel);
-                }
-
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return View(scheduleModel);
             }
+
+            var obj = _schedule.Upsert(scheduleModel);
+            if (obj == 0)
+            {
+                return View(scheduleModel);
+            }
+
             return View(scheduleModel);
         }
 
@@ -75,8 +70,8 @@ namespace Smart_ELearning.Areas.User.Controllers
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            _context.ScheduleModels.Remove(objFromDb);
-            _context.SaveChanges();
+
+            _schedule.Delete(id);
             return Json(new { success = true, message = "Delete Successful" });
         }
         #endregion

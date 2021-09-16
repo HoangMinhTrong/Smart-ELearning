@@ -10,7 +10,7 @@ namespace Smart_ELearning.Services.Interfaces
     {
         List<ScheduleModel> GetAll();
 
-        bool Upsert(ScheduleModel model);
+        int Upsert(ScheduleModel model);
 
         bool Delete(int classId);
 
