@@ -22,7 +22,8 @@ namespace Smart_ELearning.Services
         }
         public List<ScheduleModel> GetAll()
         {
-            var ojb = _context.ScheduleModels;
+            
+            var ojb = _context.ScheduleModels.Include(x=>x.ClassModel).Include(x=>x.SubjectModel);
             var ojbschedule = ojb.ToList();
             return ojbschedule;
         }
@@ -39,7 +40,7 @@ namespace Smart_ELearning.Services
                 if (scheduleFromDb == null) throw new Exception($"Could not found class id{model.Id}");
                 else
                 {
-                    _context.Entry<ScheduleModel>(scheduleFromDb).State = EntityState.Modified;
+                    _context.Entry<ScheduleModel>(scheduleFromDb).State = EntityState.Detached;
                     _context.Entry<ScheduleModel>(model).State = EntityState.Modified;
                 }
             }

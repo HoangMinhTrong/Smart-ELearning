@@ -42,7 +42,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ScheduleModel scheduleModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(scheduleModel);
             }
@@ -52,8 +52,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             {
                 return View(scheduleModel);
             }
-
-            return View(scheduleModel);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
