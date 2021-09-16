@@ -70,9 +70,6 @@ namespace Smart_ELearning
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapControllerRoute(
-                    name: "api",
                     pattern: "{area=user}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
