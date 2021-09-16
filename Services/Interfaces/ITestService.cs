@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Smart_ELearning.Services.Interfaces
 {
-    interface IClassService
+    public interface ITestService
     {
     }
 }
