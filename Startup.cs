@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Smart_ELearning.Models;
+using Smart_ELearning.Services;
 
 namespace Smart_ELearning
 {
@@ -38,6 +39,8 @@ namespace Smart_ELearning
                        .AddEntityFrameworkStores<ApplicationDbContext>()
                                        .AddDefaultTokenProviders();
             services.AddControllersWithViews();
+
+            services.AddService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
