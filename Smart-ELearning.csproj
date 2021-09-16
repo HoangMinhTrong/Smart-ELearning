@@ -19,6 +19,14 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.6" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Areas\User\Controllers\" />
+      <Folder Include="Areas\User\Data\" />
+      <Folder Include="Areas\User\Models\" />
+      <Folder Include="Areas\User\Views\" />
     </ItemGroup>
 
     <ItemGroup>
