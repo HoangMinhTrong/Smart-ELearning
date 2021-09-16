@@ -18,7 +18,7 @@ namespace Smart_ELearning.Services
             _context = context;
         }
 
-        public async Task<bool> Upsert(ClassModel model)
+        public async Task<int> Upsert(ClassModel model)
         {
             if (model.Id == 0)
             {
@@ -30,19 +30,17 @@ namespace Smart_ELearning.Services
                 if (classFromDb == null) throw new Exception($"Could not found class id{model.Id}");
                 _context.ClassModels.Update(model);
             }
-            await _context.SaveChangesAsync();
-            return true;
+            return await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> Delete(int classId)
+        public async Task<int> Delete(int classId)
         {
             var classFromDb = await _context.ClassModels.FindAsync(classId);
             if (classFromDb == null) throw new Exception($"Could not found class id{classId}");
 
             _context.ClassModels.Remove(classFromDb);
 
-            await _context.SaveChangesAsync();
-            return true;
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<ICollection<ClassModel>> GetAll()

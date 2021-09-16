@@ -10,9 +10,9 @@ namespace Smart_ELearning.Services.Interfaces
     {
         Task<ICollection<ClassModel>> GetAll();
 
-        Task<bool> Upsert(ClassModel model);
+        Task<int> Upsert(ClassModel model);
 
-        Task<bool> Delete(int classId);
+        Task<int> Delete(int classId);
 
         Task<ClassModel> GetById(int? classId);
     }

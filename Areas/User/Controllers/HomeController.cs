@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
+    [Area("User")]
     public class HomeController : Controller
     {
         public IActionResult Index()
