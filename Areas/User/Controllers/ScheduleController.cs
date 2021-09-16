@@ -7,6 +7,7 @@ using Smart_ELearning.Services.Interfaces;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
+    [Area("User")]
     public class ScheduleController : Controller
     {
         private readonly ApplicationDbContext _context;
