@@ -11,8 +11,8 @@ function loadDataTable() {
             "url": "/User/Schedule/GetAll/"
         },
         "columns": [
-            { "data": "classId", "width": "30%" },
-            { "data": "subjectId", "width": "30%" },
+            { "data": "classModel.name", "width": "30%" },
+            { "data": "subjectModel.name", "width": "30%" },
             { "data": "dateTime", "width": "30%" },
             { "data": "startTime", "width": "30%" },
             { "data": "endTime", "width": "30%" },
