@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace Smart_ELearning.Services.Interfaces
 {
     public interface IClassService
-    {
+    { feature/Controller
+        
+
         Task<ICollection<ClassModel>> GetAll();
 
         Task<bool> Upsert(ClassModel model);
@@ -15,5 +17,6 @@ namespace Smart_ELearning.Services.Interfaces
         Task<bool> Delete(int classId);
 
         Task<ClassModel> GetById(int? classId);
+ develop
     }
 }

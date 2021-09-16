@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.6" />
@@ -26,6 +27,10 @@
       <Folder Include="Areas\User\Data\" />
       <Folder Include="Areas\User\Models\" />
       <Folder Include="Areas\User\Views\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Areas\User\Pages\Schedule\Index.cshtml" />
     </ItemGroup>
 
 </Project>

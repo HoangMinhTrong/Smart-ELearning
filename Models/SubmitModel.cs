@@ -1,4 +1,6 @@
-﻿namespace Smart_ELearning.Models
+﻿using System.Collections.Generic;
+
+namespace Smart_ELearning.Models
 {
     public class SubmitModel
     {
