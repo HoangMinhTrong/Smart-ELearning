@@ -2,7 +2,7 @@
 
 namespace Smart_ELearning.Migrations
 {
-    public partial class addorm2 : Migration
+    public partial class addFieldIndex : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

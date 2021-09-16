@@ -10,15 +10,15 @@ using Smart_ELearning.Data;
 namespace Smart_ELearning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210916021631_addorm4")]
-    partial class addorm4
+    [Migration("20210916084615_addField")]
+    partial class addField
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -200,6 +200,9 @@ namespace Smart_ELearning.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SpecificId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -216,6 +219,10 @@ namespace Smart_ELearning.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("SpecificId")
+                        .IsUnique()
+                        .HasFilter("[SpecificId] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -408,8 +415,6 @@ namespace Smart_ELearning.Migrations
 
                     b.HasIndex("AppUserModelId");
 
-                    b.HasIndex("TestId");
-
                     b.ToTable("Submits");
                 });
 
@@ -572,14 +577,6 @@ namespace Smart_ELearning.Migrations
                     b.HasOne("Smart_ELearning.Models.AppUserModel", null)
                         .WithMany("SubmitModels")
                         .HasForeignKey("AppUserModelId");
-
-                    b.HasOne("Smart_ELearning.Models.TestModel", "TestModel")
-                        .WithMany("SubmitModels")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
-
-                    b.Navigation("TestModel");
                 });
 
             modelBuilder.Entity("Smart_ELearning.Models.TestModel", b =>
@@ -629,8 +626,6 @@ namespace Smart_ELearning.Migrations
             modelBuilder.Entity("Smart_ELearning.Models.TestModel", b =>
                 {
                     b.Navigation("QuestionModels");
-
-                    b.Navigation("SubmitModels");
                 });
 #pragma warning restore 612, 618
         }
