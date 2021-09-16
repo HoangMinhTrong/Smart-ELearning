@@ -55,15 +55,15 @@ namespace Smart_ELearning.Areas.User.Controllers
         public async Task<IActionResult> GetAll()
         {
             var data = await _classService.GetAll();
-            return Ok(data);
+            return Json(new { data = data });
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int classId)
+        public async Task<IActionResult> Delete(int id)
         {
-            var result = await _classService.Delete(classId);
+            var result = await _classService.Delete(id);
             if (result == 0) return BadRequest("Cound not found");
-            else return Ok("Delete Success");
+            else return Json(new { success = true, message = "Delete Successful" }); ;
         }
     }
 }

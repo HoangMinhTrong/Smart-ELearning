@@ -28,7 +28,11 @@ namespace Smart_ELearning.Services
             {
                 var classFromDb = await _context.ClassModels.FindAsync(model.Id);
                 if (classFromDb == null) throw new Exception($"Could not found class id{model.Id}");
-                _context.ClassModels.Update(model);
+                else
+                {
+                    _context.Entry<ClassModel>(classFromDb).State = EntityState.Detached;
+                    _context.Entry<ClassModel>(model).State = EntityState.Modified;
+                }
             }
             return await _context.SaveChangesAsync();
         }
