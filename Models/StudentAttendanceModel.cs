@@ -6,6 +6,8 @@
         public string UserId { get; set; }
         public bool IsPresent { get; set; }
         public int ScheduleId { get; set; }
-        public int StudentSubmitId { get; set; }
+        public ScheduleModel ScheduleModel { get; set; }
+        public int SubmitId { get; set; }
+        public SubmitModel SubmitModel { get; set; }
     }
 }

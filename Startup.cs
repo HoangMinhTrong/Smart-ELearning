@@ -12,6 +12,7 @@ using Smart_ELearning.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Smart_ELearning.Models;
 
 namespace Smart_ELearning
 {
@@ -28,12 +29,14 @@ namespace Smart_ELearning
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
+                options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<AppUserModel, IdentityRole>()
+                       .AddDefaultUI()
+                       .AddEntityFrameworkStores<ApplicationDbContext>()
+                                       .AddDefaultTokenProviders();
             services.AddControllersWithViews();
         }
 

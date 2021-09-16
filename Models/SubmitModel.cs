@@ -9,5 +9,7 @@
         public int NumberOfCorrectAnswer { get; set; }
         public string ListAnswer { get; set; }
         public double TotalGrade { get; set; }
+
+        public StudentAttendanceModel StudentAttendanceModel { get; set; }
     }
 }
