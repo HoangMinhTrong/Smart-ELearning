@@ -5,11 +5,7 @@ using System.Threading.Tasks;
 
 namespace Smart_ELearning.Services.Interfaces
 {
- feature/Controller
     public interface ITestService
-
-    internal interface ITestService
-develop
     {
     }
 }
