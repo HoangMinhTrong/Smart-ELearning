@@ -9,7 +9,7 @@ namespace Smart_ELearning.Services
 {
     public static class DependencyInjection
     {
-        public static void AddCatalogService(this IServiceCollection services)
+        public static void AddService(this IServiceCollection services)
         {
             services.AddTransient<IClassService, ClassService>();
         }

@@ -1,18 +1,83 @@
-﻿@model ScheduleModel
-
+﻿@model Smart_ELearning.Models.ScheduleModel
 @{
-    Layout = null;
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Create Schedule";
 }
 
-<!DOCTYPE html>
+<form method="post">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if(Model.Id != 0)
+        {
+            title = "Edit Schedule";
+        }
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8 pt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ClassId" ></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="ClassId" class="form-control" />
+                    <span asp-validation-for="ClassId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="SubjectId" ></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="SubjectId" class="form-control" />
+                    <span asp-validation-for="SubjectId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="DateTime" ></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="DateTime" class="form-control" />
+                    <span asp-validation-for="DateTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="StartTime" ></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StartTime" class="form-control" />
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="EndTime" ></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="EndTime" class="form-control" />
+                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-8 offset-4">
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
-</div>
-</body>
-</html>
+                        @if (Model.Id != 0)
+                        {
+                           <partial name="_EditAndBackToListButton" model="Model.Id" />
+                        } else              
+                        {
+                           <partial name="_CreateAndBackToListButton" />
+                        }
+
+                 </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts 
+{
+    <partial name="_ValidationScriptsPartial" /> 
+}
