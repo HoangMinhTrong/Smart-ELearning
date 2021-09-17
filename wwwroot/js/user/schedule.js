@@ -24,6 +24,9 @@ function loadDataTable() {
                                 <a href="/User/Schedule/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                                <a href="/User/Schedule/ScheduleToTest/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                    <i class="fas fa-edit"></i> Test Exam
+                                </a>
                                 <a onclick=Delete("/User/Schedule/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>

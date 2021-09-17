@@ -1,0 +1,9 @@
+﻿namespace Smart_ELearning.ViewModels
+{
+    public class TestToScheduleViewModel
+    {
+        public int Id { get; set; }
+        public string Title {get; set;}
+        public int NumberOfQuestion { get; set; }
+    }
+}

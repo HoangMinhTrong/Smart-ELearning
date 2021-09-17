@@ -59,8 +59,20 @@ namespace Smart_ELearning.Areas.User.Controllers
             return View(scheduleViewModel);
         }
 
+        public IActionResult ScheduleToTest(int id)
+        {
+            var classFromDb =  _schedule.GetById(id);
+            ViewBag.ScheduleId = classFromDb.Id;
+            ViewBag.ScheduleName = classFromDb.Title;
+            return View();
+        }
         #region APICall
-
+        [HttpGet]
+        public IActionResult GetScheduleToTest(int id)
+        {
+            var obj = _schedule.GetScheduleToTest(id);
+            return Json(new { data = obj });
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ScheduleViewModel scheduleViewModel)
