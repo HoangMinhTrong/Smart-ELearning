@@ -25,6 +25,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             _scheduleService = scheduleService;
             _context = context;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -74,6 +75,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             var allObj = _testService.GetAll();
             return Json(new { data = allObj });
         }
+
         [HttpDelete]
         public IActionResult Delete(int id)
         {
@@ -93,10 +95,10 @@ namespace Smart_ELearning.Areas.User.Controllers
             var ojbFromdb = _context.TestModels.FirstOrDefault(u => u.Id == id);
             if (ojbFromdb == null)
             {
-                return Json(new {success = false, Message = "Error While Lock/Unlock"});
+                return Json(new { success = false, Message = "Error While Lock/Unlock" });
             }
 
-            if (ojbFromdb.LockoutEnd!=null && ojbFromdb.LockoutEnd > DateTime.Now)
+            if (ojbFromdb.LockoutEnd != null && ojbFromdb.LockoutEnd > DateTime.Now)
             {
                 ojbFromdb.LockoutEnd = DateTime.Now;
             }
@@ -106,8 +108,9 @@ namespace Smart_ELearning.Areas.User.Controllers
             }
 
             _context.SaveChanges();
-            return Json(new {success = true, Message = "Success"});
+            return Json(new { success = true, Message = "Success" });
         }
-        #endregion
+
+        #endregion APICall
     }
 }
