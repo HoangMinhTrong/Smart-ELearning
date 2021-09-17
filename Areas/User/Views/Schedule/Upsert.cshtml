@@ -48,7 +48,7 @@
                     <label asp-for="ScheduleModel.DateTime"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="ScheduleModel.DateTime" class="form-control" />
+                    <input type="date" asp-for="ScheduleModel.DateTime" class="form-control" />
                     <span asp-validation-for="ScheduleModel.DateTime" class="text-danger"></span>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                     <label asp-for="ScheduleModel.StartTime"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="ScheduleModel.StartTime" class="form-control" />
+                    <input type="time" step="3600000" asp-for="ScheduleModel.StartTime" class="form-control" />
                     <span asp-validation-for="ScheduleModel.StartTime" class="text-danger"></span>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     <label asp-for="ScheduleModel.EndTime"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="ScheduleModel.EndTime" class="form-control" />
+                    <input type="time" step="3600000" asp-for="ScheduleModel.EndTime" class="form-control" />
                     <span asp-validation-for="ScheduleModel.EndTime" class="text-danger"></span>
                 </div>
             </div>
