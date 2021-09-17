@@ -13,6 +13,7 @@ function loadDataTable() {
         "columns": [
             { "data": "classModel.name", "width": "30%" },
             { "data": "subjectModel.name", "width": "30%" },
+            { "data": "title", "width": "30%" },
             { "data": "dateTime", "width": "30%" },
             { "data": "startTime", "width": "30%" },
             { "data": "endTime", "width": "30%" },

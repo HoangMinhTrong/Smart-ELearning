@@ -8,9 +8,9 @@ namespace Smart_ELearning.Services.Interfaces
 {
     public interface IClassService
     {
-        Task<ICollection<ClassModel>> GetAll();
+        List<ClassModel> GetAll();
 
-        Task<int> Upsert(ClassModel model);
+        int Upsert(ClassModel model);
 
         Task<int> Delete(int classId);
 
