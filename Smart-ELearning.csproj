@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
-        <UserSecretsId>aspnet-Smart_ELearning-793648FE-23B8-4505-AC06-BF6B485914D1</UserSecretsId>
-        <RootNamespace>Smart_ELearning</RootNamespace>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>aspnet-Smart_ELearning-793648FE-23B8-4505-AC06-BF6B485914D1</UserSecretsId>
+		<RootNamespace>Smart_ELearning</RootNamespace>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
-    </ItemGroup>
+	<ItemGroup>
+		<None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+	</ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.0.0" />
@@ -27,18 +27,24 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Areas\Student\Controllers\" />
-      <Folder Include="Areas\Student\Data\" />
-      <Folder Include="Areas\Student\Models\" />
-      <Folder Include="Areas\Student\Views\" />
-      <Folder Include="Areas\User\Data\" />
-      <Folder Include="Areas\User\Models\" />
-    </ItemGroup>
+
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Areas\User\Pages\Schedule\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Areas\User\Pages\Test\Index.cshtml" />
     </ItemGroup>
 
+	<ItemGroup>
+		<Folder Include="Areas\Student\Controllers\" />
+		<Folder Include="Areas\Student\Data\" />
+		<Folder Include="Areas\Student\Models\" />
+		<Folder Include="Areas\Student\Views\" />
+		<Folder Include="Areas\User\Data\" />
+		<Folder Include="Areas\User\Models\" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<_ContentIncludedByDefault Remove="Areas\User\Pages\Schedule\Index.cshtml" />
+	</ItemGroup>
 </Project>

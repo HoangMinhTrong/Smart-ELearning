@@ -7,7 +7,7 @@ using Smart_ELearning.ViewModels;
 
 namespace Smart_ELearning.Services.Interfaces
 {
-    public interface ITestService
+    internal interface ITestService
     {
         List<TestModel> GetAll();
 

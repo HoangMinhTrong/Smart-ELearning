@@ -14,6 +14,7 @@ namespace Smart_ELearning.Data.Configurations
         {
             builder.ToTable("Users");
             builder.HasKey(x => x.Id);
+            builder.HasIndex(x => x.SpecificId).IsUnique(true);
         }
     }
 }

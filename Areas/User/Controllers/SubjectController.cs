@@ -10,13 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
-    public class ClassController : Controller
+    public class SubjectController : Controller
     {
-        private readonly IClassService _classService;
+        private readonly ISubjectService _subjectService;
 
-        public ClassController(IClassService classService)
+        public SubjectController(ISubjectService subjectService)
         {
-            _classService = classService;
+            _subjectService = subjectService;
         }
 
         public IActionResult Index()
@@ -26,43 +26,43 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            ClassModel classModel = new ClassModel();
+            SubjectModel subjectModel = new SubjectModel();
             if (id == null)
             {
-                return View(classModel);
+                return View(subjectModel);
             }
-            var classId = id.Value;
-            classModel = await _classService.GetById(classId);
-            return View(classModel);
+            var subjectId = id.Value;
+            subjectModel = await _subjectService.GetById(subjectId);
+            return View(subjectModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Upsert(ClassModel classModel)
+        public async Task<IActionResult> Upsert(SubjectModel subjectModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(classModel);
+                return View(subjectModel);
             }
-            var result =  _classService.Upsert(classModel);
+            var result = await _subjectService.Upsert(subjectModel);
             if (result == 0)
             {
-                return View(classModel);
+                return View(subjectModel);
             }
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var data =  _classService.GetAll();
+            var data = await _subjectService.GetAll();
             return Json(new { data = data });
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _classService.Delete(id);
+            var result = await _subjectService.Delete(id);
             if (result == 0) return BadRequest("Cound not found");
             else return Json(new { success = true, message = "Delete Successful" }); ;
         }

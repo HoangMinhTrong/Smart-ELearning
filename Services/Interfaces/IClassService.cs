@@ -14,6 +14,6 @@ namespace Smart_ELearning.Services.Interfaces
 
         Task<int> Delete(int classId);
 
-        Task<ClassModel> GetById(int? classId);
+        Task<ClassModel> GetById(int classId);
     }
 }

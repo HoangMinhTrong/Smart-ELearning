@@ -6,13 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Smart_ELearning.Data;
 using Smart_ELearning.Models;
 using Smart_ELearning.Services.Interfaces;
+
 using System.Threading.Tasks;
-using System.Web.Mvc;
-using Smart_ELearning.ViewModels;
 
 namespace Smart_ELearning.Services
 {
-
     public class ScheduleService : IScheduleService
     {
         private readonly ApplicationDbContext _context;
@@ -21,6 +19,7 @@ namespace Smart_ELearning.Services
         {
             _context = context;
         }
+
         public List<ScheduleModel> GetAll()
         {
             
@@ -37,8 +36,10 @@ namespace Smart_ELearning.Services
             }
             else
             {
+
                 var scheduleFromDb =  _context.ScheduleModels.Find(model.ScheduleModel.Id);
                 if (scheduleFromDb == null) throw new Exception($"Could not found class id{model.ScheduleModel.Id}");
+
                 else
                 {
                     _context.Entry<ScheduleModel>(scheduleFromDb).State = EntityState.Detached;
@@ -48,7 +49,6 @@ namespace Smart_ELearning.Services
 
             return _context.SaveChanges();
         }
-        
 
         public bool Delete(int Id)
         {
@@ -65,6 +65,5 @@ namespace Smart_ELearning.Services
             if (scheduleFromDb == null) throw new Exception($"Not Found");
             return scheduleFromDb;
         }
-        
     }
 }
