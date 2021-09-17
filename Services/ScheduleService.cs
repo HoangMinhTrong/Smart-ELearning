@@ -62,5 +62,17 @@ namespace Smart_ELearning.Services
             if (scheduleFromDb == null) throw new Exception($"Not Found");
             return scheduleFromDb;
         }
+
+        public List<TestToScheduleViewModel> GetScheduleToTest(int scheduleid)
+        {
+            var obj = _context.TestModels.Where(x => x.ScheduleId == scheduleid).AsQueryable();
+            var objlist = obj.Select(x => new TestToScheduleViewModel()
+            {
+                Id = x.Id,
+                Title = x.Title,
+                NumberOfQuestion = x.NumberOfQuestion
+            });
+            return objlist.ToList();
+        }
     }
 }
