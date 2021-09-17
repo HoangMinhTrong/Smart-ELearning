@@ -1,0 +1,113 @@
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Smart_ELearning.Data;
+using Smart_ELearning.Models;
+using Smart_ELearning.Services;
+using Smart_ELearning.Services.Interfaces;
+using Smart_ELearning.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+
+namespace Smart_ELearning.Areas.User.Controllers
+{
+    [Area("User")]
+    public class TestController : Controller
+    {
+        private readonly ITestService _testService;
+        private readonly IScheduleService _scheduleService;
+        private readonly ApplicationDbContext _context;
+
+        public TestController(ITestService testService, IScheduleService scheduleService, ApplicationDbContext context)
+        {
+            _testService = testService;
+            _scheduleService = scheduleService;
+            _context = context;
+        }
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Upsert(int? id)
+        {
+            TestViewModel testViewModel = new TestViewModel()
+            {
+                TestModel = new TestModel(),
+                ScheduleListItems = _scheduleService.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Title,
+                    Value = i.Id.ToString()
+                })
+            };
+            if (id == null)
+            {
+                return View(testViewModel);
+            }
+            testViewModel.TestModel = _testService.GetById(id);
+            return View(testViewModel);
+        }
+
+        #region APICall
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(TestViewModel testViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(testViewModel);
+            }
+
+            var obj = _testService.Upsert(testViewModel);
+            if (obj == 0)
+            {
+                return View(testViewModel);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var allObj = _testService.GetAll();
+            return Json(new { data = allObj });
+        }
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            var objFromDb = _testService.GetById(id);
+            if (objFromDb == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            _testService.Delete(id);
+            return Json(new { success = true, message = "Delete Successful" });
+        }
+
+        [HttpPost]
+        public IActionResult LockUnlock([FromBody] int id)
+        {
+            var ojbFromdb = _context.TestModels.FirstOrDefault(u => u.Id == id);
+            if (ojbFromdb == null)
+            {
+                return Json(new {success = false, Message = "Error While Lock/Unlock"});
+            }
+
+            if (ojbFromdb.LockoutEnd!=null && ojbFromdb.LockoutEnd > DateTime.Now)
+            {
+                ojbFromdb.LockoutEnd = DateTime.Now;
+            }
+            else
+            {
+                ojbFromdb.LockoutEnd = DateTime.Now.AddYears(1000);
+            }
+
+            _context.SaveChanges();
+            return Json(new {success = true, Message = "Success"});
+        }
+        #endregion
+    }
+}

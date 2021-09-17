@@ -37,13 +37,13 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(ClassModel classModel)
+        public  IActionResult Upsert(ClassModel classModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(classModel);
             }
-            var result = await _classService.Upsert(classModel);
+            var result =  _classService.Upsert(classModel);
             if (result == 0)
             {
                 return View(classModel);
@@ -52,9 +52,9 @@ namespace Smart_ELearning.Areas.User.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll()
         {
-            var data = await _classService.GetAll();
+            var data =  _classService.GetAll();
             return Json(new { data = data });
         }
 

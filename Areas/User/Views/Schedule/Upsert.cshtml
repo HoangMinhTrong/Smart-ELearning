@@ -1,4 +1,4 @@
-﻿@model Smart_ELearning.Models.ScheduleModel
+﻿@model Smart_ELearning.ViewModels.ScheduleViewModel
 @{
     ViewData["Title"] = "Upsert";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,7 +8,7 @@
 <form method="post">
     <div class="row p-3 border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @if(Model.Id != 0)
+        @if(Model.ScheduleModel.Id != 0)
         {
             title = "Edit Schedule";
         }
@@ -18,55 +18,64 @@
         <div class="col-8 pt-4">
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="ClassId" ></label>
+                    <label asp-for="ScheduleModel.ClassId" ></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="ClassId" class="form-control" />
-                    <span asp-validation-for="ClassId" class="text-danger"></span>
+                    @Html.DropDownListFor(m=>m.ScheduleModel.ClassId,Model.ClassListItems,"-Select a Class",new  {@class = "form-control"})
+                    <span asp-validation-for="ScheduleModel.ClassId" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="SubjectId" ></label>
+                    <label asp-for="ScheduleModel.SubjectId" ></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="SubjectId" class="form-control" />
-                    <span asp-validation-for="SubjectId" class="text-danger"></span>
+                    @Html.DropDownListFor(m=>m.ScheduleModel.SubjectId,Model.SubjectListItems,"-Select a Subject",new  {@class = "form-control"})
+                    <span asp-validation-for="ScheduleModel.SubjectId" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="DateTime" ></label>
+                    <label asp-for="ScheduleModel.Title" ></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="DateTime" class="form-control" />
-                    <span asp-validation-for="DateTime" class="text-danger"></span>
+                    <input asp-for="ScheduleModel.Title" class="form-control" />
+                    <span asp-validation-for="ScheduleModel.Title" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="StartTime" ></label>
+                    <label asp-for="ScheduleModel.DateTime" ></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="StartTime" class="form-control" />
-                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                    <input asp-for="ScheduleModel.DateTime" class="form-control" />
+                    <span asp-validation-for="ScheduleModel.DateTime" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="EndTime" ></label>
+                    <label asp-for="ScheduleModel.StartTime" ></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="EndTime" class="form-control" />
-                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                    <input asp-for="ScheduleModel.StartTime" class="form-control" />
+                    <span asp-validation-for="ScheduleModel.StartTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ScheduleModel.EndTime" ></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="ScheduleModel.EndTime" class="form-control" />
+                    <span asp-validation-for="ScheduleModel.EndTime" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-8 offset-4">
 
-                        @if (Model.Id != 0)
+                        @if (Model.ScheduleModel.Id != 0)
                         {
-                           <partial name="_EditAndBackToListButton" model="Model.Id" />
+                           <partial name="_EditAndBackToListButton" model="Model.ScheduleModel.Id" />
                         } else              
                         {
                            <partial name="_CreateAndBackToListButton" />

@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Smart_ELearning.Data;
 using Smart_ELearning.Models;
 using Smart_ELearning.Services;
 using Smart_ELearning.Services.Interfaces;
+using Smart_ELearning.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
@@ -11,10 +14,14 @@ namespace Smart_ELearning.Areas.User.Controllers
     public class ScheduleController : Controller
     {
         private readonly IScheduleService _schedule;
+        private readonly ISubjectService _subject;
+        private readonly IClassService _classService;
 
-        public ScheduleController( IScheduleService schedule)
+        public ScheduleController( IScheduleService schedule, IClassService classService, ISubjectService subject)
         {
             _schedule = schedule;
+            _classService = classService;
+            _subject = subject;
         }
         public IActionResult Index()
         {
@@ -23,45 +30,54 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            ScheduleModel scheduleModel = new ScheduleModel();
+            ScheduleViewModel scheduleViewModel = new ScheduleViewModel
+            {
+                ScheduleModel = new ScheduleModel(),
+                ClassListItems = _classService.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }), 
+                SubjectListItems = _subject.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                })
+            };
+
             if (id == null)
             {
-                return View(scheduleModel);
+                return View(scheduleViewModel);
             }
-            scheduleModel = _schedule.GetById(id);
-            if (scheduleModel == null)
-            {
-                return NotFound();
-            }
-            return View(scheduleModel);
+            scheduleViewModel.ScheduleModel = _schedule.GetById(id);
+            return View(scheduleViewModel);
         }
 
         #region APICall
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(ScheduleModel scheduleModel)
+        public IActionResult Upsert(ScheduleViewModel scheduleViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(scheduleModel);
+                return View(scheduleViewModel);
             }
-
-            var obj = _schedule.Upsert(scheduleModel);
+            var obj = _schedule.Upsert(scheduleViewModel);
             if (obj == 0)
             {
-                return View(scheduleModel);
+                return View(scheduleViewModel);
             }
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.HttpGet]
         public IActionResult GetAll()
         {
             var allObj = _schedule.GetAll();
             return Json(new { data = allObj });
         }
-        [HttpDelete]
+        [Microsoft.AspNetCore.Mvc.HttpDelete]
         public IActionResult Delete(int id)
         {
             var objFromDb = _schedule.GetById(id);
