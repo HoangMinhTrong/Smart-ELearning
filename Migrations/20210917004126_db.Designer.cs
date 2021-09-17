@@ -10,8 +10,8 @@ using Smart_ELearning.Data;
 namespace Smart_ELearning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210916084615_addField")]
-    partial class addField
+    [Migration("20210917004126_db")]
+    partial class db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -200,8 +200,8 @@ namespace Smart_ELearning.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SpecificId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("SpecificId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -221,8 +221,7 @@ namespace Smart_ELearning.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("SpecificId")
-                        .IsUnique()
-                        .HasFilter("[SpecificId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

@@ -9,6 +9,5 @@ namespace Smart_ELearning.ViewModels.AccountViewModels
     {
         public int ClassId { get; set; }
         public string FullName { get; set; }
-        public string EmailDomain { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace Smart_ELearning.Services
         public async Task<int> AssignStudentToClass(AssignStudentToClassRequest request)
         {
             var account = new AppUserModel();
-            var hasher = new PasswordHasher<AppUserModel>();
+
             var specificId = 0;
             var lastedStudentAccount = await _context.AppUserModels.OrderBy(x => x.SpecificId).LastOrDefaultAsync();
             if (lastedStudentAccount == null) specificId = 101;
@@ -56,7 +56,7 @@ namespace Smart_ELearning.Services
             }
 
             var addRoleResult = await _userManager.AddToRoleAsync(account, "Student");
-
+            await _context.SaveChangesAsync();
             // Tạo tạm cái role
 
             var studentInClass = new StudentInClassModel()
@@ -69,18 +69,30 @@ namespace Smart_ELearning.Services
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<StudentInClassVM>> GetStudentInClass(int? classId)
+        public async Task<ICollection<StudentInClassVM>> GetStudentInClass(int classId)
         {
-            var query = _context.StudentInClassModels.Include(x => x.AppUserModel)
+            var query = _context.StudentInClassModels.Include(x => x.AppUserModel).Include(x => x.ClassModel)
                 .Where(x => x.ClassId == classId).AsQueryable();
 
             var listStudent = await query.Select(x => new StudentInClassVM()
             {
+                Id = x.AppUserModel.Id,
+                SpecificId = "SL" + x.AppUserModel.SpecificId.ToString(),
                 FullName = x.AppUserModel.FullName,
                 Email = x.AppUserModel.Email
             }).ToListAsync();
 
             return listStudent;
+        }
+
+        public async Task<int> RemoveStudentInStudent(string studentId, int classId)
+        {
+            var studentInClass = await _context.StudentInClassModels
+                .FirstOrDefaultAsync(x => x.ClassId == classId && x.UserId == studentId);
+            if (studentInClass != null)
+                _context.StudentInClassModels.Remove(studentInClass);
+
+            return await _context.SaveChangesAsync();
         }
     }
 }
