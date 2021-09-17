@@ -9,8 +9,10 @@ namespace Smart_ELearning.Services.Interfaces
 {
     public interface IStudentService
     {
-        Task<ICollection<StudentInClassVM>> GetStudentInClass(int? classId);
+        Task<ICollection<StudentInClassVM>> GetStudentInClass(int classId);
 
         Task<int> AssignStudentToClass(AssignStudentToClassRequest request);
+
+        Task<int> RemoveStudentInStudent(string studentId, int classId);
     }
 }

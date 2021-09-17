@@ -4,28 +4,31 @@ $(document).ready(function () {
     loadDataTable();
 });
 
+
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/user/class/getall/",
+            "url": "/User/Student/StudentInClass/",
             "type": "GET",
-            "dataType": "json"
+            "data": jQuery.param({ classId: $('#classId').val()})
+
         },
         "columns": [
-            { "data": "name", "width": "60%" },
+            { "data": "classModel.name", "width": "30%" },
+            { "data": "subjectModel.name", "width": "30%" },
+            { "data": "dateTime", "width": "30%" },
+            { "data": "startTime", "width": "30%" },
+            { "data": "endTime", "width": "30%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                             <div class="text-center">
-                                <a href="/User/Student/StudentInClass/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit">View Students</i>
+                                <a href="/User/Schedule/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                    <i class="fas fa-edit"></i> 
                                 </a>
-                                <a href="/User/Class/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a onclick=Delete("/User/Class/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
-                                    <i class="fas fa-trash-alt"></i>
+                                <a onclick=Delete("/User/Schedule/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                                    <i class="fas fa-trash-alt"></i> 
                                 </a>
 
                             </div>

@@ -12,10 +12,12 @@ namespace Smart_ELearning.Areas.User.Controllers
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;
+        private readonly IClassService _classService;
 
-        public StudentController(IStudentService studentService)
+        public StudentController(IStudentService studentService, IClassService classService)
         {
             _studentService = studentService;
+            _classService = classService;
         }
 
         public IActionResult AssignStudentToClass(int classId)
@@ -36,14 +38,33 @@ namespace Smart_ELearning.Areas.User.Controllers
             }
 
             var result = await _studentService.AssignStudentToClass(request);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("StudentInClass", new { id = request.ClassId });
+        }
+
+        public async Task<IActionResult> StudentInClass(int? id)
+        {
+            var classId = id.Value;
+            var classFromDb = await _classService.GetById(classId);
+            ViewBag.ClassId = classFromDb.Id;
+            ViewBag.ClassName = classFromDb.Name;
+            return View();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetStudentInClass(int classId)
+        public async Task<IActionResult> GetStudentInClass(int id)
         {
-            var listStudents = await _studentService.GetStudentInClass(classId);
+            var listStudents = await _studentService.GetStudentInClass(id);
             return Json(new { data = listStudents });
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveStudentInClass(string studentId, int classId)
+        {
+            var result = await _studentService.RemoveStudentInStudent(studentId, classId);
+            if (result == 0)
+                return BadRequest("Cound not found");
+
+            return Json(new { success = true, message = "Delete Successful" });
         }
     }
 }
