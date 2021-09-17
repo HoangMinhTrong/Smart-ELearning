@@ -10,8 +10,8 @@ using Smart_ELearning.Data;
 namespace Smart_ELearning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210917004126_db")]
-    partial class db
+    [Migration("20210917082633_tyNha")]
+    partial class tyNha
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

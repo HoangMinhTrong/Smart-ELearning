@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Smart_ELearning.Migrations
 {
-    public partial class db : Migration
+    public partial class tyNha : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
