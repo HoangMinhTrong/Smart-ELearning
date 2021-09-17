@@ -1,0 +1,92 @@
+@model List<Smart_ELearning.Models.QuestionModel>
+@{
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Add question for test";
+}
+
+<form method="post" action="AddRange">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title @*@ViewBag.TestTitle*@</h2>
+        </div>
+        <div class="col-8 pt-4">
+
+            @for (int i = 0; i < ViewBag.NumberOfQuestion; i++)
+            {
+                <h6>Question @(i + 1)</h6>
+
+                <input type="hidden" asp-for="@Model[i].TestId" />
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].Content"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model[i].Content" class="form-control" />
+                        <span asp-validation-for="@Model[i].Content" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].ChoiceA"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model[i].ChoiceA" class="form-control" />
+                        <span asp-validation-for="@Model[i].ChoiceA" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].ChoiceB"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model[i].ChoiceB" class="form-control" />
+                        <span asp-validation-for="@Model[i].ChoiceB" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].ChoiceC"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model[i].ChoiceC" class="form-control" />
+                        <span asp-validation-for="@Model[i].ChoiceC" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].ChoiceD"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model[i].ChoiceD" class="form-control" />
+                        <span asp-validation-for="@Model[i].ChoiceD" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].CorrectAnswer"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model[i].CorrectAnswer" class="form-control" />
+                        <span asp-validation-for="@Model[i].CorrectAnswer" class="text-danger"></span>
+                    </div>
+                </div>
+                <hr />
+            }
+
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+
+                    <partial name="_CreateAndBackToListButton" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

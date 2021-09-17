@@ -4,15 +4,14 @@ $(document).ready(function () {
     loadDataTable();
 });
 
-
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/User/Schedule/GetAll/"
+            "url": "/User/Schedule/GetDisplay/"
         },
         "columns": [
-            { "data": "classModel.name", "width": "30%" },
-            { "data": "subjectModel.name", "width": "30%" },
+            { "data": "className", "width": "30%" },
+            { "data": "subjectName", "width": "30%" },
             { "data": "title", "width": "30%" },
             { "data": "dateTime", "width": "30%" },
             { "data": "startTime", "width": "30%" },
@@ -23,13 +22,13 @@ function loadDataTable() {
                     return `
                             <div class="text-center">
                                 <a href="/User/Schedule/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit"></i> 
+                                    <i class="fas fa-edit"></i>
                                 </a>
                                 <a href="/User/Schedule/ScheduleToTest/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i> Test Exam
                                 </a>
                                 <a onclick=Delete("/User/Schedule/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
-                                    <i class="fas fa-trash-alt"></i> 
+                                    <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
                            `;

@@ -37,8 +37,7 @@ namespace Smart_ELearning.Areas.User.Controllers
                 ScheduleModel = new ScheduleModel()
                 {
                     DateTime = DateTime.Now.Date,
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now
+                    
                 },
                 ClassListItems = _classService.GetAll().Select(i => new SelectListItem
                 {
@@ -94,6 +93,13 @@ namespace Smart_ELearning.Areas.User.Controllers
         public IActionResult GetAll()
         {
             var allObj = _schedule.GetAll();
+            return Json(new { data = allObj });
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public IActionResult GetDisplay()
+        {
+            var allObj = _schedule.GetDisplay();
             return Json(new { data = allObj });
         }
 

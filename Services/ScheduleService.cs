@@ -8,6 +8,7 @@ using Smart_ELearning.Models;
 using Smart_ELearning.Services.Interfaces;
 
 using Smart_ELearning.ViewModels;
+using Smart_ELearning.ViewModels.ScheduleViewModels;
 
 namespace Smart_ELearning.Services
 {
@@ -22,9 +23,9 @@ namespace Smart_ELearning.Services
 
         public List<ScheduleModel> GetAll()
         {
-            var ojb = _context.ScheduleModels.Include(x => x.ClassModel).Include(x => x.SubjectModel);
-            var ojbschedule = ojb.ToList();
-            return ojbschedule;
+            var query = _context.ScheduleModels.Include(x => x.ClassModel).Include(x => x.SubjectModel).AsQueryable();
+            var list = query.ToList();
+            return list;
         }
 
         public int Upsert(ScheduleViewModel model)
@@ -63,6 +64,7 @@ namespace Smart_ELearning.Services
             return scheduleFromDb;
         }
 
+
         public List<TestToScheduleViewModel> GetScheduleToTest(int scheduleid)
         {
             var obj = _context.TestModels.Where(x => x.ScheduleId == scheduleid).AsQueryable();
@@ -73,6 +75,22 @@ namespace Smart_ELearning.Services
                 NumberOfQuestion = x.NumberOfQuestion
             });
             return objlist.ToList();
+
+        public List<ScheduleVM> GetDisplay()
+        {
+            var query = _context.ScheduleModels.Include(x => x.ClassModel).Include(x => x.SubjectModel).AsQueryable();
+            var list = query.Select(x => new ScheduleVM()
+            {
+                DateTime = x.DateTime.ToString("dd/MM/yyyy"),
+                StartTime = x.StartTime.ToString("HH:mm"),
+                EndTime = x.EndTime.ToString("HH:mm"),
+                ClassName = x.ClassModel.Name,
+                SubjectName = x.SubjectModel.Name,
+                Title = x.Title,
+            }).ToList();
+
+            return list;
+
         }
     }
 }
