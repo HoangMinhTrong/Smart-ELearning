@@ -7,7 +7,7 @@ using Smart_ELearning.Data;
 using Smart_ELearning.Models;
 using Smart_ELearning.Services.Interfaces;
 
-using System.Threading.Tasks;
+using Smart_ELearning.ViewModels;
 
 namespace Smart_ELearning.Services
 {
@@ -22,8 +22,7 @@ namespace Smart_ELearning.Services
 
         public List<ScheduleModel> GetAll()
         {
-            
-            var ojb = _context.ScheduleModels.Include(x=>x.ClassModel).Include(x=>x.SubjectModel);
+            var ojb = _context.ScheduleModels.Include(x => x.ClassModel).Include(x => x.SubjectModel);
             var ojbschedule = ojb.ToList();
             return ojbschedule;
         }
@@ -36,10 +35,8 @@ namespace Smart_ELearning.Services
             }
             else
             {
-
-                var scheduleFromDb =  _context.ScheduleModels.Find(model.ScheduleModel.Id);
+                var scheduleFromDb = _context.ScheduleModels.Find(model.ScheduleModel.Id);
                 if (scheduleFromDb == null) throw new Exception($"Could not found class id{model.ScheduleModel.Id}");
-
                 else
                 {
                     _context.Entry<ScheduleModel>(scheduleFromDb).State = EntityState.Detached;

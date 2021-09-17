@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Smart_ELearning.Models;
-using Smart_ELearning.Services.Interfaces;
+
 using Smart_ELearning.Data;
 using Smart_ELearning.ViewModels;
 
@@ -19,10 +19,10 @@ namespace Smart_ELearning.Services
         {
             _context = context;
         }
+
         public List<TestModel> GetAll()
         {
-            
-            var ojb = _context.TestModels.Include(x=>x.ScheduleModel);
+            var ojb = _context.TestModels.Include(x => x.ScheduleModel);
             var ojbtest = ojb.ToList();
             return ojbtest;
         }
@@ -46,7 +46,6 @@ namespace Smart_ELearning.Services
 
             return _context.SaveChanges();
         }
-        
 
         public bool Delete(int Id)
         {

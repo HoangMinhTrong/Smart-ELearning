@@ -55,7 +55,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var data = await _subjectService.GetAll();
+            var data = await _subjectService.GetAllAsync();
             return Json(new { data = data });
         }
 

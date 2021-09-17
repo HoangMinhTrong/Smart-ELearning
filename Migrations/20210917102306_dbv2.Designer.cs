@@ -10,8 +10,8 @@ using Smart_ELearning.Data;
 namespace Smart_ELearning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210917082633_tyNha")]
-    partial class tyNha
+    [Migration("20210917102306_dbv2")]
+    partial class dbv2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -302,6 +302,9 @@ namespace Smart_ELearning.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
@@ -427,8 +430,8 @@ namespace Smart_ELearning.Migrations
                     b.Property<bool>("CorrectAnswerlist")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Duration")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("LockoutEnd")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("NumberOfQuestion")
                         .HasColumnType("int");

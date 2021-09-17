@@ -7,6 +7,7 @@ using Smart_ELearning.Services;
 using Smart_ELearning.Services.Interfaces;
 using Smart_ELearning.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
@@ -17,12 +18,13 @@ namespace Smart_ELearning.Areas.User.Controllers
         private readonly ISubjectService _subject;
         private readonly IClassService _classService;
 
-        public ScheduleController( IScheduleService schedule, IClassService classService, ISubjectService subject)
+        public ScheduleController(IScheduleService schedule, IClassService classService, ISubjectService subject)
         {
             _schedule = schedule;
             _classService = classService;
             _subject = subject;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -32,12 +34,17 @@ namespace Smart_ELearning.Areas.User.Controllers
         {
             ScheduleViewModel scheduleViewModel = new ScheduleViewModel
             {
-                ScheduleModel = new ScheduleModel(),
+                ScheduleModel = new ScheduleModel()
+                {
+                    DateTime = DateTime.Now.Date,
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now
+                },
                 ClassListItems = _classService.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
-                }), 
+                }),
                 SubjectListItems = _subject.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
@@ -77,6 +84,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             var allObj = _schedule.GetAll();
             return Json(new { data = allObj });
         }
+
         [Microsoft.AspNetCore.Mvc.HttpDelete]
         public IActionResult Delete(int id)
         {
@@ -89,6 +97,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             _schedule.Delete(id);
             return Json(new { success = true, message = "Delete Successful" });
         }
-        #endregion
+
+        #endregion APICall
     }
 }
