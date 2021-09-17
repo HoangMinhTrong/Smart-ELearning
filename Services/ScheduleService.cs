@@ -64,7 +64,6 @@ namespace Smart_ELearning.Services
             return scheduleFromDb;
         }
 
-
         public List<TestToScheduleViewModel> GetScheduleToTest(int scheduleid)
         {
             var obj = _context.TestModels.Where(x => x.ScheduleId == scheduleid).AsQueryable();
@@ -75,12 +74,14 @@ namespace Smart_ELearning.Services
                 NumberOfQuestion = x.NumberOfQuestion
             });
             return objlist.ToList();
+        }
 
         public List<ScheduleVM> GetDisplay()
         {
             var query = _context.ScheduleModels.Include(x => x.ClassModel).Include(x => x.SubjectModel).AsQueryable();
             var list = query.Select(x => new ScheduleVM()
             {
+                Id = x.Id,
                 DateTime = x.DateTime.ToString("dd/MM/yyyy"),
                 StartTime = x.StartTime.ToString("HH:mm"),
                 EndTime = x.EndTime.ToString("HH:mm"),
@@ -90,7 +91,6 @@ namespace Smart_ELearning.Services
             }).ToList();
 
             return list;
-
         }
     }
 }

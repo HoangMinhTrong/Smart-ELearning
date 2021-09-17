@@ -37,7 +37,6 @@ namespace Smart_ELearning.Areas.User.Controllers
                 ScheduleModel = new ScheduleModel()
                 {
                     DateTime = DateTime.Now.Date,
-                    
                 },
                 ClassListItems = _classService.GetAll().Select(i => new SelectListItem
                 {
@@ -61,18 +60,21 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         public IActionResult ScheduleToTest(int id)
         {
-            var classFromDb =  _schedule.GetById(id);
+            var classFromDb = _schedule.GetById(id);
             ViewBag.ScheduleId = classFromDb.Id;
             ViewBag.ScheduleName = classFromDb.Title;
             return View();
         }
+
         #region APICall
+
         [HttpGet]
         public IActionResult GetScheduleToTest(int id)
         {
             var obj = _schedule.GetScheduleToTest(id);
             return Json(new { data = obj });
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ScheduleViewModel scheduleViewModel)
