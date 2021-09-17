@@ -14,7 +14,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.6" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.7" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.10" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.6" />
@@ -28,6 +28,12 @@
     </ItemGroup>
 
 
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Areas\User\Pages\Schedule\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\User\Pages\Test\Index.cshtml" />
+    </ItemGroup>
+
 	<ItemGroup>
 		<Folder Include="Areas\Student\Controllers\" />
 		<Folder Include="Areas\Student\Data\" />
@@ -36,6 +42,7 @@
 		<Folder Include="Areas\User\Data\" />
 		<Folder Include="Areas\User\Models\" />
 	</ItemGroup>
+
 
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="Areas\User\Pages\Schedule\Index.cshtml" />

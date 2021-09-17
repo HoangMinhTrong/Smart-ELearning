@@ -28,20 +28,22 @@ namespace Smart_ELearning.Services
             return ojbschedule;
         }
 
-        public int Upsert(ScheduleModel model)
+        public int Upsert(ScheduleViewModel model)
         {
-            if (model.Id == 0)
+            if (model.ScheduleModel.Id == 0)
             {
-                _context.ScheduleModels.Add(model);
+                _context.ScheduleModels.Add(model.ScheduleModel);
             }
             else
             {
-                var scheduleFromDb = _context.ScheduleModels.Find(model.Id);
-                if (scheduleFromDb == null) throw new Exception($"Could not found class id{model.Id}");
+
+                var scheduleFromDb =  _context.ScheduleModels.Find(model.ScheduleModel.Id);
+                if (scheduleFromDb == null) throw new Exception($"Could not found class id{model.ScheduleModel.Id}");
+
                 else
                 {
                     _context.Entry<ScheduleModel>(scheduleFromDb).State = EntityState.Detached;
-                    _context.Entry<ScheduleModel>(model).State = EntityState.Modified;
+                    _context.Entry<ScheduleModel>(model.ScheduleModel).State = EntityState.Modified;
                 }
             }
 
