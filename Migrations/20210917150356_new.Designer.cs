@@ -10,8 +10,8 @@ using Smart_ELearning.Data;
 namespace Smart_ELearning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210917102306_dbv2")]
-    partial class dbv2
+    [Migration("20210917150356_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
