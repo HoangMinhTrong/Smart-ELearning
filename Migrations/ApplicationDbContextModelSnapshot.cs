@@ -261,9 +261,8 @@ namespace Smart_ELearning.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CorrectAnswer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
+                    b.Property<int?>("CorrectAnswer")
+                        .HasColumnType("int");
 
                     b.Property<double>("Score")
                         .HasColumnType("float");

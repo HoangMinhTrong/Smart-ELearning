@@ -16,7 +16,7 @@ namespace Smart_ELearning.Services
             services.AddTransient<ISubjectService, SubjectService>();
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IStudentService, StudentService>();
-
+            services.AddTransient<IQuestionService, QuestionSerive>();
         }
     }
 }

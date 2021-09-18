@@ -10,8 +10,8 @@ using Smart_ELearning.Data;
 namespace Smart_ELearning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210917102306_dbv2")]
-    partial class dbv2
+    [Migration("20210917182329_db")]
+    partial class db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -263,9 +263,8 @@ namespace Smart_ELearning.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CorrectAnswer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
+                    b.Property<int?>("CorrectAnswer")
+                        .HasColumnType("int");
 
                     b.Property<double>("Score")
                         .HasColumnType("float");
