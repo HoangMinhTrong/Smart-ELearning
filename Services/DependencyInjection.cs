@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Smart_ELearning.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Smart_ELearning.Services
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IStudentService, StudentService>();
             services.AddTransient<IQuestionService, QuestionSerive>();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
         }
     }
 }
