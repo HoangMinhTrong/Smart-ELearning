@@ -12,14 +12,17 @@ function loadDataTable() {
             "dataType": "json"
         },
         "columns": [
-            { "data": "name", "width": "60%" },
+            { "data": "name", "width": "55%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                             <div class="text-center">
-                                <a href="/User/Student/StudentInClass/${data}" class="btn btn-success text-white" style="cursor:pointer">
+<                               a href="/User/Student/StudentInClass/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit">View Students</i>
+                                </a>
+                                <a href="/User/Schedule/ClassSchedule/?classId=${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                    <i class="fas fa-edit">Schedule</i>
                                 </a>
                                 <a href="/User/Class/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i>
@@ -27,10 +30,9 @@ function loadDataTable() {
                                 <a onclick=Delete("/User/Class/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
-
                             </div>
                            `;
-                }, "width": "40%"
+                }, "width": "45%"
             }
         ]
     });
