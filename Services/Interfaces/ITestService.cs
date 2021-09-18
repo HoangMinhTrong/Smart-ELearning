@@ -21,5 +21,6 @@ namespace Smart_ELearning.Services.Interfaces
         Task<int> CreateTestToSchedule(TestModel model);
 
         StudentTestVm GetTestQuestion(int testId);
+        SubmitTestVM SubmitRecord(int submitid);
     }
 }

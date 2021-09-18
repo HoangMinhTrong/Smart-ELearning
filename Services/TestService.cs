@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Smart_ELearning.Models;
 
 using Smart_ELearning.Data;
+using Smart_ELearning.Models.Enums;
 using Smart_ELearning.ViewModels;
 using Smart_ELearning.ViewModels.Test;
 
@@ -94,6 +95,20 @@ namespace Smart_ELearning.Services
             model.QuestionsResult = listQuestion;
             model.NumberOfQuestion = test.NumberOfQuestion;
 
+            return model;
+        }
+
+        public SubmitTestVM SubmitRecord(int submitid)
+        {
+            var test = _context.TestModels.Find(submitid);
+            var submit = _context.submitModels.Find(submitid);
+            var model = new SubmitTestVM();
+            model.TestId = submit.TestId;
+            model.TestTitle = test.Title;
+            model.TotalGrade = submit.TotalGrade;
+            model.NumberOfQuestion = test.NumberOfQuestion;
+            model.CorrectAnswer = model.CorrectAnswer;
+            model.StudentAnswer = model.StudentAnswer;
             return model;
         }
     }
