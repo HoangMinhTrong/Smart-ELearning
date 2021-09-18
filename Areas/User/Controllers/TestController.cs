@@ -9,6 +9,7 @@ using Smart_ELearning.Services.Interfaces;
 using Smart_ELearning.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using System.Threading.Tasks;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
@@ -18,12 +19,14 @@ namespace Smart_ELearning.Areas.User.Controllers
         private readonly ITestService _testService;
         private readonly IScheduleService _scheduleService;
         private readonly ApplicationDbContext _context;
+        private readonly IQuestionService _questionService;
 
-        public TestController(ITestService testService, IScheduleService scheduleService, ApplicationDbContext context)
+        public TestController(IQuestionService questionService, ITestService testService, IScheduleService scheduleService, ApplicationDbContext context)
         {
             _testService = testService;
             _scheduleService = scheduleService;
             _context = context;
+            _questionService = questionService;
         }
 
         public IActionResult Index()
@@ -48,6 +51,13 @@ namespace Smart_ELearning.Areas.User.Controllers
             }
             testViewModel.TestModel = _testService.GetById(id);
             return View(testViewModel);
+        }
+
+        public async Task<IActionResult> TestQuestion(int testId)
+        {
+            var data = await _questionService.GetTestQuestions(testId);
+
+            return View(data);
         }
 
         #region APICall

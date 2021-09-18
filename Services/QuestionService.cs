@@ -2,6 +2,7 @@
 using Smart_ELearning.Data;
 using Smart_ELearning.Models;
 using Smart_ELearning.Services.Interfaces;
+using Smart_ELearning.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,10 +46,17 @@ namespace Smart_ELearning.Services
             return question;
         }
 
-        public async Task<ICollection<QuestionModel>> GetTestQuestions(int testId)
+        public async Task<TestQuestionVm> GetTestQuestions(int testId)
         {
-            var query = _context.QuestionModels.Where(x => x.TestId == testId);
-            return await query.ToListAsync();
+            var questions = await _context.QuestionModels.Where(x => x.TestId == testId).ToListAsync();
+            var testTitle = await _context.TestModels.FirstOrDefaultAsync(x => x.Id == testId);
+            var model = new TestQuestionVm()
+            {
+                Id = testId,
+                Title = testTitle.Title,
+                question = questions,
+            };
+            return model;
         }
 
         public async Task<int> Upsert(QuestionModel model)
