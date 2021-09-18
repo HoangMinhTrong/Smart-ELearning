@@ -85,8 +85,8 @@ namespace Smart_ELearning.Areas.User.Controllers
         public async Task<IActionResult> AddRange(List<QuestionModel> models)
         {
             var result = await _questionService.AddRange(models.ToList());
-            return RedirectToAction(nameof(Index));
-            //return RedirectToAction("StudentInClass", new { id = request.ClassId });
+
+            return RedirectToAction("Index", "Schedule");
         }
     }
 }
