@@ -28,6 +28,7 @@ namespace Smart_ELearning.Data
             builder.ApplyConfiguration(new SubmitConfiguration());
             builder.ApplyConfiguration(new TestConfiguration());
             builder.ApplyConfiguration(new ScheduleConfiguration());
+            builder.ApplyConfiguration(new SubmitDetailConfiguration());
 
             builder.Entity<IdentityRole>(entity =>
             {
@@ -68,5 +69,6 @@ namespace Smart_ELearning.Data
         public DbSet<SubjectModel> SubjectModels { get; set; }
         public DbSet<SubmitModel> submitModels { get; set; }
         public DbSet<TestModel> TestModels { get; set; }
+        public DbSet<SubmitDetailModel> SubmitDetailModels { get; set; }
     }
 }
