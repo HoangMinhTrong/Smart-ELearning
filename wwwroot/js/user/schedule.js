@@ -10,12 +10,12 @@ function loadDataTable() {
             "url": "/User/Schedule/GetDisplay/"
         },
         "columns": [
-            { "data": "className", "width": "30%" },
-            { "data": "subjectName", "width": "30%" },
-            { "data": "title", "width": "30%" },
-            { "data": "dateTime", "width": "30%" },
-            { "data": "startTime", "width": "30%" },
-            { "data": "endTime", "width": "30%" },
+            { "data": "className", "width": "12%" },
+            { "data": "subjectName", "width": "13%" },
+            { "data": "title", "width": "20%" },
+            { "data": "dateTime", "width": "15%" },
+            { "data": "startTime", "width": "15%" },
+            { "data": "endTime", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {

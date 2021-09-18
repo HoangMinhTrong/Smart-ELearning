@@ -12,7 +12,7 @@ function loadDataTable() {
             "dataType": "json"
         },
         "columns": [
-            { "data": "name", "width": "55%" },
+            { "data": "name", "width": "40%" },
             {
                 "data": "id",
                 "render": function (data) {
@@ -21,9 +21,17 @@ function loadDataTable() {
 <                               a href="/User/Student/StudentInClass/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit">View Students</i>
                                 </a>
-                                <a href="/User/Schedule/ClassSchedule/?classId=${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit">Schedule</i>
-                                </a>
+                               
+                            </div>
+                           `;
+                }, "width": "30%"
+            },
+            {
+                "data": "id",
+                "render": function (data) {
+                    return `
+                            <div class="text-center">
+                               
                                 <a href="/User/Class/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -32,7 +40,7 @@ function loadDataTable() {
                                 </a>
                             </div>
                            `;
-                }, "width": "45%"
+                }, "width": "30%"
             }
         ]
     });
