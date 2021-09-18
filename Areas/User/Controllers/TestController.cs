@@ -151,11 +151,22 @@ namespace Smart_ELearning.Areas.User.Controllers
             var data = _testService.GetTestQuestion(testId);
             return View(data);
         }
-
+        public IActionResult SubmitRecord(int recordid)
+        {
+            var data = _testService.GetTestQuestion(recordid);
+            return View(data);
+        }
+        
         [HttpPost]
         public async Task<IActionResult> TestForm(StudentTestVm model)
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> SubmitRecord(StudentTestVm model)
+        {
+            return View();
+        }
+        
     }
 }

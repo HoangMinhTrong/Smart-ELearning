@@ -1,10 +1,10 @@
-﻿@model Smart_ELearning.ViewModels.Test.StudentTestVm;
+﻿@model Smart_ELearning.ViewModels.Test.StudentTestVm
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form method="post" action="SubmitRecord.cshtml">
+<form method="post" action="SubmitTest">
     <div class="row p-3 border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -15,25 +15,20 @@
 
             @for (int i = 0; i < Model.NumberOfQuestion; i++)
             {
+                <h4><strong>Question @(i + 1) </strong></h4>
+                <p>@Model.QuestionsResult[i].Content</p>
+                <h3> Student Answer</h3> <hr />
+                <input type="" asp-for="@Model.QuestionsResult[i].StudentAnswer" />
+                <h3>Correct Answer </h3>  <hr />
                 <input type="" asp-for="@Model.QuestionsResult[i].CorrectAnswer" />
                 <input type="hidden" asp-for="@Model.QuestionsResult[i].Id" />
                 <input type="hidden" asp-for="@Model.QuestionsResult[i].TestId" />
-                <h4><strong>Question </strong>@(i + 1)</h4>
-                <p>@Model.QuestionsResult[i].Content</p>
-                <label asp-for="@Model.QuestionsResult[i].StudentAnswer">Choose a answer:</label>
-                <select asp-for="@Model.QuestionsResult[i].StudentAnswer" id="answer">
-                    <option value="A">@Model.QuestionsResult[i].ChoiceA</option>
-                    <option value="B">@Model.QuestionsResult[i].ChoiceB</option>
-                    <option value="C">@Model.QuestionsResult[i].ChoiceC</option>
-                    <option value="D">@Model.QuestionsResult[i].ChoiceD</option>
-                </select>
-
+     
                 <hr />
             }
             <div class="form-group row">
                 <div class="col-8 offset-4">
 
-                    <partial name="_CreateAndBackToListButton" />
                 </div>
             </div>
         </div>
