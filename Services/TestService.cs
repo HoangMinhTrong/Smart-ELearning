@@ -8,6 +8,7 @@ using Smart_ELearning.Models;
 
 using Smart_ELearning.Data;
 using Smart_ELearning.ViewModels;
+using Smart_ELearning.ViewModels.Test;
 
 namespace Smart_ELearning.Services
 {
@@ -67,6 +68,33 @@ namespace Smart_ELearning.Services
         {
             _context.TestModels.Add(model);
             return await _context.SaveChangesAsync();
+        }
+
+        public StudentTestVm GetTestQuestion(int testId)
+        {
+            var test = _context.TestModels.Find(testId);
+            var questionQuery = _context.QuestionModels
+                .Where(x => x.TestId == testId).AsQueryable();
+
+            var listQuestion = questionQuery.Select(x => new StudentQuestionVm()
+            {
+                Id = x.Id,
+                TestId = x.TestId,
+                ChoiceA = x.ChoiceA,
+                ChoiceB = x.ChoiceB,
+                ChoiceC = x.ChoiceC,
+                ChoiceD = x.ChoiceD,
+                Content = x.Content,
+                CorrectAnswer = x.CorrectAnswer,
+            }).ToList();
+
+            var model = new StudentTestVm();
+            model.TestId = testId;
+            model.TestTitle = test.Title;
+            model.QuestionsResult = listQuestion;
+            model.NumberOfQuestion = test.NumberOfQuestion;
+
+            return model;
         }
     }
 }

@@ -59,9 +59,9 @@ namespace Smart_ELearning.Areas.User.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetQuestionByTestId(int testId)
+        public IActionResult GetQuestionByTestId(int testId)
         {
-            var data = await _questionService.GetTestQuestions(testId);
+            var data = _questionService.GetTestQuestions(testId);
 
             return Ok(data);
         }

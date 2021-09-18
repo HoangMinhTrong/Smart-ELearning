@@ -10,6 +10,7 @@ using Smart_ELearning.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System.Threading.Tasks;
+using Smart_ELearning.ViewModels.Test;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
@@ -75,9 +76,9 @@ namespace Smart_ELearning.Areas.User.Controllers
             return RedirectToAction("AddRange", "Question", new { testId = model.Id, numberOfQuestion = model.NumberOfQuestion });
         }
 
-        public async Task<IActionResult> TestQuestion(int testId)
+        public IActionResult TestQuestion(int testId)
         {
-            var data = await _questionService.GetTestQuestions(testId);
+            var data = _questionService.GetTestQuestions(testId);
 
             return View(data);
         }
@@ -144,5 +145,17 @@ namespace Smart_ELearning.Areas.User.Controllers
         }
 
         #endregion APICall
+
+        public IActionResult TestForm(int testId)
+        {
+            var data = _testService.GetTestQuestion(testId);
+            return View(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TestForm(StudentTestVm model)
+        {
+            return View();
+        }
     }
 }

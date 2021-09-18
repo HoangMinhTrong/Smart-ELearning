@@ -46,15 +46,15 @@ namespace Smart_ELearning.Services
             return question;
         }
 
-        public async Task<TestQuestionVm> GetTestQuestions(int testId)
+        public TestQuestionVm GetTestQuestions(int testId)
         {
-            var questions = await _context.QuestionModels.Where(x => x.TestId == testId).ToListAsync();
-            var testTitle = await _context.TestModels.FirstOrDefaultAsync(x => x.Id == testId);
+            var questions = _context.QuestionModels.Where(x => x.TestId == testId);
+            var test = _context.TestModels.FirstOrDefault(x => x.Id == testId);
             var model = new TestQuestionVm()
             {
                 Id = testId,
-                Title = testTitle.Title,
-                question = questions,
+                Title = test.Title,
+                question = questions.ToList(),
             };
             return model;
         }

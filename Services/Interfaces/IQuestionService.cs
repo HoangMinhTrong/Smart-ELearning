@@ -13,7 +13,7 @@ namespace Smart_ELearning.Services.Interfaces
 
         Task<int> Delete(int id);
 
-        Task<TestQuestionVm> GetTestQuestions(int testId);
+        TestQuestionVm GetTestQuestions(int testId);
 
         Task<ICollection<QuestionModel>> GetAll();
 
