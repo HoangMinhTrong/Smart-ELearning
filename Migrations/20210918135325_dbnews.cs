@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Smart_ELearning.Migrations
 {
-    public partial class db : Migration
+    public partial class dbnews : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -96,36 +96,6 @@ namespace Smart_ELearning.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Schedules",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ClassId = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Schedules", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Schedules_Classes_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Classes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Schedules_Subjects_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "StudentInClasses",
                 columns: table => new
                 {
@@ -149,31 +119,6 @@ namespace Smart_ELearning.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Submits",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ScheduleId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TestId = table.Column<int>(type: "int", nullable: false),
-                    NumberOfCorrectAnswer = table.Column<int>(type: "int", nullable: false),
-                    ListAnswer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TotalGrade = table.Column<double>(type: "float", nullable: false),
-                    AppUserModelId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Submits", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Submits_Users_AppUserModelId",
-                        column: x => x.AppUserModelId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -262,25 +207,32 @@ namespace Smart_ELearning.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Testes",
+                name: "Schedules",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ScheduleId = table.Column<int>(type: "int", nullable: false),
+                    ClassId = table.Column<int>(type: "int", nullable: false),
+                    SubjectId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumberOfQuestion = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    CorrectAnswerlist = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SubmitDetailModelId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Testes", x => x.Id);
+                    table.PrimaryKey("PK_Schedules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Testes_Schedules_ScheduleId",
-                        column: x => x.ScheduleId,
-                        principalTable: "Schedules",
+                        name: "FK_Schedules_Classes_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Classes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Schedules_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -307,17 +259,35 @@ namespace Smart_ELearning.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StudentAttendances_Submits_SubmitId",
-                        column: x => x.SubmitId,
-                        principalTable: "Submits",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_StudentAttendances_Users_AppUserModelId",
                         column: x => x.AppUserModelId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Testes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumberOfQuestion = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CorrectAnswerlist = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Testes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Testes_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -342,6 +312,58 @@ namespace Smart_ELearning.Migrations
                         name: "FK_Questions_Testes_TestId",
                         column: x => x.TestId,
                         principalTable: "Testes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Submits",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TestId = table.Column<int>(type: "int", nullable: false),
+                    NumberOfCorrectAnswer = table.Column<int>(type: "int", nullable: false),
+                    ListAnswer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TotalGrade = table.Column<double>(type: "float", nullable: false),
+                    AppUserModelId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Submits", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Submits_Testes_TestId",
+                        column: x => x.TestId,
+                        principalTable: "Testes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Submits_Users_AppUserModelId",
+                        column: x => x.AppUserModelId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubmitDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubmitId = table.Column<int>(type: "int", nullable: false),
+                    QuestionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StudentAnswer = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubmitDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubmitDetails_Submits_SubmitId",
+                        column: x => x.SubmitId,
+                        principalTable: "Submits",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -374,6 +396,11 @@ namespace Smart_ELearning.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Schedules_SubmitDetailModelId",
+                table: "Schedules",
+                column: "SubmitDetailModelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StudentAttendances_AppUserModelId",
                 table: "StudentAttendances",
                 column: "AppUserModelId");
@@ -382,12 +409,6 @@ namespace Smart_ELearning.Migrations
                 name: "IX_StudentAttendances_ScheduleId",
                 table: "StudentAttendances",
                 column: "ScheduleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentAttendances_SubmitId",
-                table: "StudentAttendances",
-                column: "SubmitId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentInClasses_ClassId",
@@ -400,9 +421,19 @@ namespace Smart_ELearning.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SubmitDetails_SubmitId",
+                table: "SubmitDetails",
+                column: "SubmitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Submits_AppUserModelId",
                 table: "Submits",
                 column: "AppUserModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Submits_TestId",
+                table: "Submits",
+                column: "TestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Testes_ScheduleId",
@@ -441,10 +472,22 @@ namespace Smart_ELearning.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Schedules_SubmitDetails_SubmitDetailModelId",
+                table: "Schedules",
+                column: "SubmitDetailModelId",
+                principalTable: "SubmitDetails",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Submits_Testes_TestId",
+                table: "Submits");
+
             migrationBuilder.DropTable(
                 name: "Questions");
 
@@ -470,25 +513,28 @@ namespace Smart_ELearning.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Testes");
-
-            migrationBuilder.DropTable(
-                name: "Submits");
-
-            migrationBuilder.DropTable(
                 name: "Role");
 
             migrationBuilder.DropTable(
-                name: "Schedules");
+                name: "Testes");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Schedules");
 
             migrationBuilder.DropTable(
                 name: "Classes");
 
             migrationBuilder.DropTable(
                 name: "Subjects");
+
+            migrationBuilder.DropTable(
+                name: "SubmitDetails");
+
+            migrationBuilder.DropTable(
+                name: "Submits");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }
