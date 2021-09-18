@@ -10,8 +10,8 @@ using Smart_ELearning.Data;
 namespace Smart_ELearning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210917182329_db")]
-    partial class db
+    [Migration("20210918135325_dbnews")]
+    partial class dbnews
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -301,6 +301,9 @@ namespace Smart_ELearning.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SubmitDetailModelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -309,6 +312,8 @@ namespace Smart_ELearning.Migrations
                     b.HasIndex("ClassId");
 
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("SubmitDetailModelId");
 
                     b.ToTable("Schedules");
                 });
@@ -340,9 +345,6 @@ namespace Smart_ELearning.Migrations
                     b.HasIndex("AppUserModelId");
 
                     b.HasIndex("ScheduleId");
-
-                    b.HasIndex("SubmitId")
-                        .IsUnique();
 
                     b.ToTable("StudentAttendances");
                 });
@@ -384,6 +386,29 @@ namespace Smart_ELearning.Migrations
                     b.ToTable("Subjects");
                 });
 
+            modelBuilder.Entity("Smart_ELearning.Models.SubmitDetailModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("QuestionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentAnswer")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubmitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubmitId");
+
+                    b.ToTable("SubmitDetails");
+                });
+
             modelBuilder.Entity("Smart_ELearning.Models.SubmitModel", b =>
                 {
                     b.Property<int>("Id")
@@ -415,6 +440,8 @@ namespace Smart_ELearning.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserModelId");
+
+                    b.HasIndex("TestId");
 
                     b.ToTable("Submits");
                 });
@@ -527,6 +554,10 @@ namespace Smart_ELearning.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Smart_ELearning.Models.SubmitDetailModel", null)
+                        .WithMany("ScheduleModels")
+                        .HasForeignKey("SubmitDetailModelId");
+
                     b.Navigation("ClassModel");
 
                     b.Navigation("SubjectModel");
@@ -544,15 +575,7 @@ namespace Smart_ELearning.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Smart_ELearning.Models.SubmitModel", "SubmitModel")
-                        .WithOne("StudentAttendanceModel")
-                        .HasForeignKey("Smart_ELearning.Models.StudentAttendanceModel", "SubmitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ScheduleModel");
-
-                    b.Navigation("SubmitModel");
                 });
 
             modelBuilder.Entity("Smart_ELearning.Models.StudentInClassModel", b =>
@@ -573,11 +596,30 @@ namespace Smart_ELearning.Migrations
                     b.Navigation("ClassModel");
                 });
 
+            modelBuilder.Entity("Smart_ELearning.Models.SubmitDetailModel", b =>
+                {
+                    b.HasOne("Smart_ELearning.Models.SubmitModel", "SubmitModel")
+                        .WithMany("SubmitDetailModels")
+                        .HasForeignKey("SubmitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubmitModel");
+                });
+
             modelBuilder.Entity("Smart_ELearning.Models.SubmitModel", b =>
                 {
                     b.HasOne("Smart_ELearning.Models.AppUserModel", null)
                         .WithMany("SubmitModels")
                         .HasForeignKey("AppUserModelId");
+
+                    b.HasOne("Smart_ELearning.Models.TestModel", "TestModels")
+                        .WithMany("SubmitModels")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestModels");
                 });
 
             modelBuilder.Entity("Smart_ELearning.Models.TestModel", b =>
@@ -619,14 +661,21 @@ namespace Smart_ELearning.Migrations
                     b.Navigation("ScheduleModels");
                 });
 
+            modelBuilder.Entity("Smart_ELearning.Models.SubmitDetailModel", b =>
+                {
+                    b.Navigation("ScheduleModels");
+                });
+
             modelBuilder.Entity("Smart_ELearning.Models.SubmitModel", b =>
                 {
-                    b.Navigation("StudentAttendanceModel");
+                    b.Navigation("SubmitDetailModels");
                 });
 
             modelBuilder.Entity("Smart_ELearning.Models.TestModel", b =>
                 {
                     b.Navigation("QuestionModels");
+
+                    b.Navigation("SubmitModels");
                 });
 #pragma warning restore 612, 618
         }
