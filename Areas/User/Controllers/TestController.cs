@@ -9,6 +9,7 @@ using Smart_ELearning.Services.Interfaces;
 using Smart_ELearning.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using System.Threading.Tasks;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
@@ -18,12 +19,14 @@ namespace Smart_ELearning.Areas.User.Controllers
         private readonly ITestService _testService;
         private readonly IScheduleService _scheduleService;
         private readonly ApplicationDbContext _context;
+        private readonly IQuestionService _questionService;
 
-        public TestController(ITestService testService, IScheduleService scheduleService, ApplicationDbContext context)
+        public TestController(IQuestionService questionService, ITestService testService, IScheduleService scheduleService, ApplicationDbContext context)
         {
             _testService = testService;
             _scheduleService = scheduleService;
             _context = context;
+            _questionService = questionService;
         }
 
         public IActionResult Index()
@@ -31,7 +34,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return View();
         }
 
-        public IActionResult Upsert(int? id)
+        public IActionResult Upsert(int? id, int? scheduleId)
         {
             TestViewModel testViewModel = new TestViewModel()
             {
@@ -48,6 +51,35 @@ namespace Smart_ELearning.Areas.User.Controllers
             }
             testViewModel.TestModel = _testService.GetById(id);
             return View(testViewModel);
+        }
+
+        public IActionResult CreateTestToSchedule(int scheduleId)
+        {
+            ViewBag.SchedulTitle = _scheduleService.GetById(scheduleId).Title;
+            ViewBag.ScheduleId = scheduleId;
+            var model = new TestModel()
+            {
+                ScheduleId = scheduleId,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTestToSchedule(TestModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            await _testService.CreateTestToSchedule(model);
+            return RedirectToAction("AddRange", "Question", new { testId = model.Id, numberOfQuestion = model.NumberOfQuestion });
+        }
+
+        public async Task<IActionResult> TestQuestion(int testId)
+        {
+            var data = await _questionService.GetTestQuestions(testId);
+
+            return View(data);
         }
 
         #region APICall
