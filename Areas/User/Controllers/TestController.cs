@@ -34,7 +34,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return View();
         }
 
-        public IActionResult Upsert(int? id)
+        public IActionResult Upsert(int? id, int? scheduleId)
         {
             TestViewModel testViewModel = new TestViewModel()
             {
@@ -51,6 +51,28 @@ namespace Smart_ELearning.Areas.User.Controllers
             }
             testViewModel.TestModel = _testService.GetById(id);
             return View(testViewModel);
+        }
+
+        public IActionResult CreateTestToSchedule(int scheduleId)
+        {
+            ViewBag.SchedulTitle = _scheduleService.GetById(scheduleId).Title;
+            ViewBag.ScheduleId = scheduleId;
+            var model = new TestModel()
+            {
+                ScheduleId = scheduleId,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTestToSchedule(TestModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            await _testService.CreateTestToSchedule(model);
+            return RedirectToAction("AddRange", "Question", new { testId = model.Id, numberOfQuestion = model.NumberOfQuestion });
         }
 
         public async Task<IActionResult> TestQuestion(int testId)

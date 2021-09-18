@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Smart_ELearning.Data;
 using Smart_ELearning.Models;
 using Smart_ELearning.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Smart_ELearning.Services
@@ -12,10 +14,12 @@ namespace Smart_ELearning.Services
     public class ClassService : IClassService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ClassService(ApplicationDbContext context)
+        public ClassService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public int Upsert(ClassModel model)
@@ -26,7 +30,7 @@ namespace Smart_ELearning.Services
             }
             else
             {
-                var classFromDb =  _context.ClassModels.Find(model.Id);
+                var classFromDb = _context.ClassModels.Find(model.Id);
                 if (classFromDb == null) throw new Exception($"Could not found class id{model.Id}");
                 else
                 {
@@ -34,7 +38,7 @@ namespace Smart_ELearning.Services
                     _context.Entry<ClassModel>(model).State = EntityState.Modified;
                 }
             }
-            return  _context.SaveChanges();
+            return _context.SaveChanges();
         }
 
         public async Task<int> Delete(int classId)
@@ -50,8 +54,8 @@ namespace Smart_ELearning.Services
         public List<ClassModel> GetAll()
         {
             var query = _context.ClassModels;
-            var classes =  query.ToList();
-
+            var classes = query.ToList();
+            //var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             return classes;
         }
 
