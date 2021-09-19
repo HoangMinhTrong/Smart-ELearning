@@ -153,6 +153,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         }
         public IActionResult SubmitRecord(int recordid)
         {
+            ViewBag.RecordId = recordid;
             var data = _testService.GetTestQuestion(recordid);
             return View(data);
         }
@@ -160,7 +161,12 @@ namespace Smart_ELearning.Areas.User.Controllers
         [HttpPost]
         public async Task<IActionResult> TestForm(StudentTestVm model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+             await _testService.AddSubmitRecord(model);
+            return RedirectToAction("SubmitRecord", "Test", new {});
         }
         [HttpPost]
         public async Task<IActionResult> SubmitRecord(StudentTestVm model)

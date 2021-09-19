@@ -22,5 +22,6 @@ namespace Smart_ELearning.Services.Interfaces
 
         StudentTestVm GetTestQuestion(int testId);
         SubmitTestVM SubmitRecord(int submitid);
+        Task<int> AddSubmitRecord(StudentTestVm submitTestVm);
     }
 }

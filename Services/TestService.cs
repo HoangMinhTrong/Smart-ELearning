@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smart_ELearning.Models;
 
@@ -110,6 +112,23 @@ namespace Smart_ELearning.Services
             model.CorrectAnswer = model.CorrectAnswer;
             model.StudentAnswer = model.StudentAnswer;
             return model;
+        }
+
+        public async Task<int> AddSubmitRecord(StudentTestVm submitTestVm)
+        {
+            var objquest = new QuestionModel();
+            
+            var objsub = new SubmitModel()
+            {
+                TestId = objquest.Id,
+                TotalGrade = objquest.Score,
+            };
+            if (objsub.NumberOfCorrectAnswer == (int) objquest.CorrectAnswer)
+            {
+                var objsubNumberOfCorrectAnswer = objsub.NumberOfCorrectAnswer + 1;
+            }
+            await _context.submitModels.AddAsync(objsub);
+            return await _context.SaveChangesAsync();
         }
     }
 }
