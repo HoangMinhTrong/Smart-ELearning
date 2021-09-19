@@ -62,5 +62,11 @@ namespace Smart_ELearning.Services
             if (testFromDb == null) throw new Exception($"Not Found");
             return testFromDb;
         }
+
+        public async Task<int> CreateTestToSchedule(TestModel model)
+        {
+            _context.TestModels.Add(model);
+            return await _context.SaveChangesAsync();
+        }
     }
 }

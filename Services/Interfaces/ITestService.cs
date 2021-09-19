@@ -16,5 +16,7 @@ namespace Smart_ELearning.Services.Interfaces
         bool Delete(int classId);
 
         TestModel GetById(int? classId);
+
+        Task<int> CreateTestToSchedule(TestModel model);
     }
 }
