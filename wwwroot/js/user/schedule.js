@@ -21,6 +21,9 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                             <div class="text-center">
+                                <a href="/User/Schedule/ScheduleToTest/${data}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
+                                    <i class="fas fa-edit"></i>Test List
+                                </a>
                                 <a href="/User/Schedule/Upsert/${data}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
                                     <i class="fas fa-edit"></i>
                                 </a>

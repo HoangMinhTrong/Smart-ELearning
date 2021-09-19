@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Smart_ELearning.Migrations
 {
-    public partial class dbnews : Migration
+    public partial class db : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -322,11 +322,8 @@ namespace Smart_ELearning.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ScheduleId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TestId = table.Column<int>(type: "int", nullable: false),
                     NumberOfCorrectAnswer = table.Column<int>(type: "int", nullable: false),
-                    ListAnswer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TotalGrade = table.Column<double>(type: "float", nullable: false),
                     AppUserModelId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },

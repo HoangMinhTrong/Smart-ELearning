@@ -12,16 +12,21 @@ using Smart_ELearning.Data;
 using Smart_ELearning.Models.Enums;
 using Smart_ELearning.ViewModels;
 using Smart_ELearning.ViewModels.Test;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Smart_ELearning.Services
 {
     public class TestService : ITestService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public TestService(ApplicationDbContext context)
+        public TestService(ApplicationDbContext context,
+            IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public List<TestModel> GetAll()
@@ -114,21 +119,32 @@ namespace Smart_ELearning.Services
             return model;
         }
 
-        public async Task<int> AddSubmitRecord(StudentTestVm submitTestVm)
+        public async Task<int> AddSubmitRecord(StudentTestVm request)
         {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var objquest = new QuestionModel();
-            
+            var noOfCorrect = 0;
+            foreach (var item in request.QuestionsResult)
+            {
+                if (item.StudentAnswer == item.CorrectAnswer) noOfCorrect++;
+            }
+
             var objsub = new SubmitModel()
             {
-                TestId = objquest.Id,
+                NumberOfCorrectAnswer = noOfCorrect,
+                TestId = request.TestId,
                 TotalGrade = objquest.Score,
+                UserId = userId,
             };
-            if (objsub.NumberOfCorrectAnswer == (int) objquest.CorrectAnswer)
-            {
-                var objsubNumberOfCorrectAnswer = objsub.NumberOfCorrectAnswer + 1;
-            }
+            //if (objsub.NumberOfCorrectAnswer == (int)objquest.CorrectAnswer)
+            //{
+            //    var objsubNumberOfCorrectAnswer = objsub.NumberOfCorrectAnswer + 1;
+            //}
             await _context.submitModels.AddAsync(objsub);
-            return await _context.SaveChangesAsync();
+
+            await _context.SaveChangesAsync();
+            var submitId = objsub.Id;
+            return submitId;
         }
     }
 }
