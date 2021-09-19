@@ -11,7 +11,7 @@
             <h2 class="text-primary">Subject List </h2>
         </div>
         <div class="col-6 text-right">
-            <a class="btn btn-primary" asp-action="Upsert"><i class="fas fa-plus"></i> &nbsp;New Subject</a>
+            <a class="btn btn-primary btn-sm" asp-action="Upsert"><i class="fas fa-plus"></i> &nbsp;New Subject</a>
         </div>
     </div>
     <br>
@@ -48,10 +48,10 @@
                             return `
                                     <div class="text-center">
 
-                                        <a href="/User/Subject/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                        <a href="/User/Subject/Upsert/${data}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a onclick=Delete("/User/Subject/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                                        <a onclick=Delete("/User/Subject/Delete/${data}") class="btn btn-danger text-white btn-sm" style="cursor:pointer">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </div>

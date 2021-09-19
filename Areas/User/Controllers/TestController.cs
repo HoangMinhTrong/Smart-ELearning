@@ -151,13 +151,14 @@ namespace Smart_ELearning.Areas.User.Controllers
             var data = _testService.GetTestQuestion(testId);
             return View(data);
         }
+
         public IActionResult SubmitRecord(int recordid)
         {
             ViewBag.RecordId = recordid;
-            var data = _testService.GetTestQuestion(recordid);
+            var data = _testService.GetSubmitDetail(recordid);
             return View(data);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> TestForm(StudentTestVm model)
         {
@@ -165,14 +166,15 @@ namespace Smart_ELearning.Areas.User.Controllers
             {
                 return View(model);
             }
-             await _testService.AddSubmitRecord(model);
-            return RedirectToAction("SubmitRecord", "Test", new {});
+            var submitId = await _testService.AddSubmitRecord(model);
+
+            return RedirectToAction("SubmitRecord", "Test", new { recordid = submitId });
         }
+
         [HttpPost]
         public async Task<IActionResult> SubmitRecord(StudentTestVm model)
         {
             return View();
         }
-        
     }
 }

@@ -3,63 +3,78 @@
 @{
     ViewData["Title"] = "TestQuestion";
 }
-@{ int index = 0;}
+@{ int index = 1;}
 <h1>TestQuestion</h1>
 
 <div>
-    <h4>TestQuestionVm</h4>
-    <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+            <h4>@Html.DisplayNameFor(model => model.Title)</h4>
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            <h4>@Html.DisplayFor(model => model.Title)</h4>
         </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+
+
+
+
         @foreach (var item in Model.question)
         {
-
-            <dt class="col-sm-2">
-                Question number @(index++):
-            </dt>
-            <dd class="col-sm-10">
-                @item.Content
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Choice A:
-            </dt>
-            <dd class="col-sm-10">
-                @item.ChoiceA
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Choice B:
-            </dt>
-            <dd class="col-sm-10">
-                @item.ChoiceB
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Choice C
-            </dt>
-            <dd class="col-sm-10">
-                @item.ChoiceC
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Choice D
-            </dt>
-            <dd class="col-sm-10">
-                @item.ChoiceD
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Correct:
-            </dt>
-            <dd class="col-sm-10">
-                @item.CorrectAnswer
-            </dd>
+            <form>
+                <table class="table table-striped border">
+                    <tr class=" table-secondary">
+                        <th>
+                            <label>Question number @(index++):</label>
+                        </th>
+                        <th>
+                            <label> @item.Content</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Choice A:
+                        </th>
+                        <th>
+                            @item.ChoiceA
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Choice B:
+                        </th>
+                        <th>
+                            @item.ChoiceB
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Choice C:
+                        </th>
+                        <th>
+                            @item.ChoiceC
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Choice D:
+                        </th>
+                        <th>
+                            @item.ChoiceD
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Correct:
+                        </th>
+                        <th>
+                            @item.CorrectAnswer
+                        </th>
+                    </tr>
+                </table>
+            </form>
         }
     </dl>
 </div>

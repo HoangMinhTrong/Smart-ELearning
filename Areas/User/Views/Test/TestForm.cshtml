@@ -4,10 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form method="post" asp-controller="Test" asp-action="SubmitRecord">
+<form method="post" action="SubmitTest">
     <div class="row p-3 border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+        <input type="hidden" asp-for="NumberOfQuestion" />
+        <input type="hidden" asp-for="TestId" />
         <div class="col-12 border-bottom">
             <h2 class="text-primary">Titl Chuwa ghi </h2>
         </div>
@@ -32,14 +33,8 @@
             }
             <div class="form-group row">
                 <div class="col-8 offset-4">
-                    <div class="row">
-                        <div class="col">
-                            <a type="submit" class="btn btn-primary form-control" href="@Url.Action("SubmitRecord","Test",new {recordid = ViewBag.RecordId} )"> Submit</a>
-                        </div>
-                        <div class="col">
-                            <input type="submit" a asp-action="Index" class="btn btn-success form-control" name="Submit" value="Cancel" />
-                        </div>
-                    </div>
+
+                    <partial name="_CreateAndBackToListButton" />
                 </div>
             </div>
         </div>
