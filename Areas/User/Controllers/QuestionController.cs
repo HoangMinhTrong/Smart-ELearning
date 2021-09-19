@@ -59,9 +59,9 @@ namespace Smart_ELearning.Areas.User.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetQuestionByTestId(int testId)
+        public IActionResult GetQuestionByTestId(int testId)
         {
-            var data = await _questionService.GetTestQuestions(testId);
+            var data = _questionService.GetTestQuestions(testId);
 
             return Ok(data);
         }
@@ -85,8 +85,8 @@ namespace Smart_ELearning.Areas.User.Controllers
         public async Task<IActionResult> AddRange(List<QuestionModel> models)
         {
             var result = await _questionService.AddRange(models.ToList());
-            return RedirectToAction(nameof(Index));
-            //return RedirectToAction("StudentInClass", new { id = request.ClassId });
+
+            return RedirectToAction("Index", "Schedule");
         }
     }
 }

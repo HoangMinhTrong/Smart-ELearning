@@ -8,6 +8,7 @@ using Smart_ELearning.Services.Interfaces;
 using Smart_ELearning.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Threading.Tasks;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
@@ -66,7 +67,22 @@ namespace Smart_ELearning.Areas.User.Controllers
             return View();
         }
 
+        public async Task<IActionResult> ClassSchedule(int? classId)
+        {
+            var data = await _classService.GetById(classId.Value);
+            ViewBag.ClassId = data.Id;
+            ViewBag.ClassName = data.Name;
+            return View();
+        }
+
         #region APICall
+
+        [HttpGet]
+        public async Task<IActionResult> GetClassSchedule(int classId)
+        {
+            var data = _schedule.GetClassSchedule(classId);
+            return Ok(data);
+        }
 
         [HttpGet]
         public IActionResult GetScheduleToTest(int id)

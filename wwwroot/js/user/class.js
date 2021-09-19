@@ -18,7 +18,9 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                             <div class="text-center">
+
                                 <a href="/User/Student/StudentInClass/${data}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
+
                                     <i class="fas fa-edit">View Students</i>
                                 </a>
                                
@@ -38,7 +40,6 @@ function loadDataTable() {
                                 <a onclick=Delete("/User/Class/Delete/${data}") class="btn btn-danger text-white btn-sm" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
-
                             </div>
                            `;
                 }, "width": "30%"
