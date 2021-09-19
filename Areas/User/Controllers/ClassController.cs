@@ -13,14 +13,17 @@ namespace Smart_ELearning.Areas.User.Controllers
     public class ClassController : Controller
     {
         private readonly IClassService _classService;
+        private readonly ISubmissionService _submissionService;
 
-        public ClassController(IClassService classService)
+        public ClassController(IClassService classService, ISubmissionService submission)
         {
             _classService = classService;
+            _submissionService = submission;
         }
 
         public IActionResult Index()
         {
+            var isFake = _submissionService.CheckFakeAddress();
             return View();
         }
 
@@ -38,13 +41,13 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Upsert(ClassModel classModel)
+        public IActionResult Upsert(ClassModel classModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(classModel);
             }
-            var result =  _classService.Upsert(classModel);
+            var result = _classService.Upsert(classModel);
             if (result == 0)
             {
                 return View(classModel);
@@ -55,7 +58,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var data =  _classService.GetAll();
+            var data = _classService.GetAll();
             return Json(new { data = data });
         }
 

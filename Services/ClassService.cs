@@ -6,6 +6,7 @@ using Smart_ELearning.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -56,6 +57,7 @@ namespace Smart_ELearning.Services
             var query = _context.ClassModels;
             var classes = query.ToList();
             //var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             return classes;
         }
 
