@@ -1,0 +1,36 @@
+﻿@model Smart_ELearning.ViewModels.Test.StudentTestVm
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" action="SubmitTest">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">Titl Chuwa ghi </h2>
+        </div>
+        <div class="col-8 pt-4">
+
+            @for (int i = 0; i < Model.NumberOfQuestion; i++)
+            {
+                <h4><strong>Question @(i + 1) </strong></h4>
+                <p>@Model.QuestionsResult[i].Content</p>
+                <h3> Student Answer</h3> <hr />
+                <input type="" asp-for="@Model.QuestionsResult[i].StudentAnswer" />
+                <h3>Correct Answer </h3>  <hr />
+                <input type="" asp-for="@Model.QuestionsResult[i].CorrectAnswer" />
+                <input type="hidden" asp-for="@Model.QuestionsResult[i].Id" />
+                <input type="hidden" asp-for="@Model.QuestionsResult[i].TestId" />
+     
+                <hr />
+            }
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
