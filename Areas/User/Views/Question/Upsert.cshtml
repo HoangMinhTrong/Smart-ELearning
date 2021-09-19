@@ -1,5 +1,5 @@
 
-@model Smart_ELearning.Models.ClassModel
+@model Smart_ELearning.Models.QuestionModel
 @{
     ViewData["Title"] = "Upsert";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,13 +18,13 @@
         </div>
         <div class="col-8 pt-4">
             <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="Name"></label>
-                </div>
-                <div class="col-8">
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
+                @* <div class="col-4"> *@
+                @*     <label asp-for="Name"></label> *@
+                @* </div> *@
+                @* <div class="col-8"> *@
+                @*     <input asp-for="Name" class="form-control" /> *@
+                @*     <span asp-validation-for="Name" class="text-danger"></span> *@
+                @* </div> *@
             </div>
             <div class="form-group row">
                 <div class="col-8 offset-4">

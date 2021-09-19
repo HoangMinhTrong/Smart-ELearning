@@ -14,9 +14,7 @@ namespace Smart_ELearning.Data.Configurations
         {
             builder.ToTable("Submits");
             builder.HasKey(x => x.Id);
-            builder.HasOne(x => x.StudentAttendanceModel)
-                    .WithOne(x => x.SubmitModel)
-                    .HasForeignKey<StudentAttendanceModel>(x => x.SubmitId);
+            builder.HasOne(x => x.TestModels).WithMany(x => x.SubmitModels).HasForeignKey(x => x.TestId);
         }
     }
 }
