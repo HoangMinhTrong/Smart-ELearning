@@ -391,8 +391,8 @@ namespace Smart_ELearning.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("QuestionId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
 
                     b.Property<int>("StudentAnswer")
                         .HasColumnType("int");

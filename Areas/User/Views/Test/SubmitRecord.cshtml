@@ -1,36 +1,65 @@
-﻿@model Smart_ELearning.ViewModels.Test.StudentTestVm
+﻿@model List<Smart_ELearning.ViewModels.Test.SubmitDetailVm>;
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Smart-Elearning";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{ var index = 1;}
+<div>
+    <h4>Result</h4>
+    <hr />
+    <dl class="row">
+        @foreach (var item in Model)
+        {
 
-<form method="post" action="SubmitTest">
-    <div class="row p-3 border">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-        <div class="col-12 border-bottom">
-            <h2 class="text-primary">Titl Chuwa ghi </h2>
-        </div>
-        <div class="col-8 pt-4">
-
-            @for (int i = 0; i < Model.NumberOfQuestion; i++)
-            {
-                <h4><strong>Question @(i + 1) </strong></h4>
-                <p>@Model.QuestionsResult[i].Content</p>
-                <h3> Student Answer</h3> <hr />
-                <input type="" asp-for="@Model.QuestionsResult[i].StudentAnswer" />
-                <h3>Correct Answer </h3>  <hr />
-                <input type="" asp-for="@Model.QuestionsResult[i].CorrectAnswer" />
-                <input type="hidden" asp-for="@Model.QuestionsResult[i].Id" />
-                <input type="hidden" asp-for="@Model.QuestionsResult[i].TestId" />
-     
-                <hr />
-            }
-            <div class="form-group row">
-                <div class="col-8 offset-4">
-
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
+            <dt class="col-sm-2">
+                Question number @(index++):
+            </dt>
+            <dd class="col-sm-10">
+                @item.QuestionContent
+            </dd>
+            //
+            <dt class="col-sm-2">
+                Choice A:
+            </dt>
+            <dd class="col-sm-10">
+                @item.ChoiceA
+            </dd>
+            //
+            <dt class="col-sm-2">
+                Choice B:
+            </dt>
+            <dd class="col-sm-10">
+                @item.ChoiceB
+            </dd>
+            //
+            <dt class="col-sm-2">
+                Choice C
+            </dt>
+            <dd class="col-sm-10">
+                @item.ChoiceC
+            </dd>
+            //
+            <dt class="col-sm-2">
+                Choice D
+            </dt>
+            <dd class="col-sm-10">
+                @item.ChoiceD
+            </dd>
+            //
+            <dt class="col-sm-2">
+                Correct:
+            </dt>
+            <dd class="col-sm-10">
+                @item.CorrectAnswer
+            </dd>
+            //
+            <dt class="col-sm-2">
+                Student Answer:
+            </dt>
+            <dd class="col-sm-10">
+                @item.StudentAnswer
+            </dd>
+        }
+    </dl>
+</div>

@@ -155,7 +155,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         public IActionResult SubmitRecord(int recordid)
         {
             ViewBag.RecordId = recordid;
-            var data = _testService.GetTestQuestion(recordid);
+            var data = _testService.GetSubmitDetail(recordid);
             return View(data);
         }
 
