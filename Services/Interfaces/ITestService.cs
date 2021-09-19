@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Smart_ELearning.Models;
 using Smart_ELearning.ViewModels;
+using Smart_ELearning.ViewModels.Test;
 
 namespace Smart_ELearning.Services.Interfaces
 {
@@ -18,5 +19,13 @@ namespace Smart_ELearning.Services.Interfaces
         TestModel GetById(int? classId);
 
         Task<int> CreateTestToSchedule(TestModel model);
+
+        StudentTestVm GetTestQuestion(int testId);
+
+        SubmitTestVM SubmitRecord(int submitid);
+
+        Task<int> AddSubmitRecord(StudentTestVm submitTestVm);
+
+        List<SubmitDetailVm> GetSubmitDetail(int submitId);
     }
 }

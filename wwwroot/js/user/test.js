@@ -11,11 +11,10 @@ function loadDataTable() {
             "url": "/User/Test/GetAll/"
         },
         "columns": [
-            { "data": "scheduleModel.title", "width": "30%" },
-            { "data": "title", "width": "10%" },
-            { "data": "numberOfQuestion", "width": "10%" },
+            { "data": "scheduleModel.title", "width": "15%" },
+            { "data": "title", "width": "15%" },
+            { "data": "numberOfQuestion", "width": "20%" },
             { "data": "status", "width": "10%" },
-            { "data": "correctAnswerlist", "width": "10%" },
             {
                 "data": {
                     id :"id", lockoutEnd : "LockoutEnd" },
@@ -25,15 +24,13 @@ function loadDataTable() {
                     if (lockout > today) {
                         return `
                             <div class="text-center">                             
-                                <a onclick=LockUnlock('${data.id}') class="btn btn-danger text-white" style="cursor:pointer">
+                                <a onclick=LockUnlock('${data.id}') class="btn btn-danger text-white btn-sm" style="cursor:pointer">
                                     <i class="fas fa-lock-open"></i> Unlock
-                                </a>
-                            </div>
-                            <div class="text-center">
-                                <a href="/User/Test/Upsert/${data.id}" class="btn btn-success text-white" style="cursor:pointer">
+                                </a>                         
+                                <a href="/User/Test/Upsert/${data.id}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
                                     <i class="fas fa-edit"></i> 
                                 </a>
-                                <a onclick=Delete("/User/Test/Delete/${data.id}") class="btn btn-danger text-white" style="cursor:pointer">
+                                <a onclick=Delete("/User/Test/Delete/${data.id}") class="btn btn-danger text-white btn-sm" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i> 
                                 </a>
                             </div>
@@ -41,18 +38,17 @@ function loadDataTable() {
                     } else {
                         return `
                             <div class="text-center">                             
-                                <a onclick=LockUnlock('${data.id}') class="btn btn-success text-white" style="cursor:pointer">
+                                <a onclick=LockUnlock('${data.id}') class="btn btn-success text-white btn-sm" style="cursor:pointer">
                                     <i class="fas fa-lock"></i> Lock
                                 </a>
-                            </div>
-                            <div class="text-center">
-                                <a href="/User/Test/Upsert/${data.id}" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/User/Test/Upsert/${data.id}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
                                     <i class="fas fa-edit"></i> 
                                 </a>
-                                <a onclick=Delete("/User/Test/Delete/${data.id}") class="btn btn-danger text-white" style="cursor:pointer">
-                                    <i class="fas fa-trash-alt"></i> 
+                                <a onclick=Delete("/User/Test/Delete/${data.id}") class="btn btn-danger text-white btn-sm" style="cursor:pointer">
+                                    <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
+                          
                            `;
                     }
                 }, "width": "60%"

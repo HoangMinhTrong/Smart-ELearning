@@ -13,6 +13,7 @@ namespace Smart_ELearning.ViewModels
     {
         public int Id { get; set; }
         public string Title { get; set; }
+
         public List<QuestionModel> question { get; set; }
     }
 }

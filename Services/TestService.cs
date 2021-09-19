@@ -2,22 +2,31 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smart_ELearning.Models;
 
 using Smart_ELearning.Data;
+using Smart_ELearning.Models.Enums;
 using Smart_ELearning.ViewModels;
+using Smart_ELearning.ViewModels.Test;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Smart_ELearning.Services
 {
     public class TestService : ITestService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public TestService(ApplicationDbContext context)
+        public TestService(ApplicationDbContext context,
+            IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public List<TestModel> GetAll()
@@ -67,6 +76,116 @@ namespace Smart_ELearning.Services
         {
             _context.TestModels.Add(model);
             return await _context.SaveChangesAsync();
+        }
+
+        public StudentTestVm GetTestQuestion(int testId)
+        {
+            var test = _context.TestModels.Find(testId);
+            var questionQuery = _context.QuestionModels
+                .Where(x => x.TestId == testId).AsQueryable();
+
+            var listQuestion = questionQuery.Select(x => new StudentQuestionVm()
+            {
+                Id = x.Id,
+                TestId = x.TestId,
+                ChoiceA = x.ChoiceA,
+                ChoiceB = x.ChoiceB,
+                ChoiceC = x.ChoiceC,
+                ChoiceD = x.ChoiceD,
+                Content = x.Content,
+                CorrectAnswer = x.CorrectAnswer,
+            }).ToList();
+
+            var model = new StudentTestVm();
+            model.TestId = testId;
+            model.TestTitle = test.Title;
+            model.QuestionsResult = listQuestion;
+            model.NumberOfQuestion = test.NumberOfQuestion;
+
+            return model;
+        }
+
+        public SubmitTestVM SubmitRecord(int submitid)
+        {
+            var test = _context.TestModels.Find(submitid);
+            var submit = _context.submitModels.Find(submitid);
+            var model = new SubmitTestVM();
+            model.TestId = submit.TestId;
+            model.TestTitle = test.Title;
+            model.TotalGrade = submit.TotalGrade;
+            model.NumberOfQuestion = test.NumberOfQuestion;
+            model.CorrectAnswer = model.CorrectAnswer;
+            model.StudentAnswer = model.StudentAnswer;
+            return model;
+        }
+
+        public async Task<int> AddSubmitRecord(StudentTestVm request)
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var objquest = new QuestionModel();
+            var noOfCorrect = 0;
+            foreach (var item in request.QuestionsResult)
+            {
+                if (item.StudentAnswer == item.CorrectAnswer) noOfCorrect++;
+            }
+
+            var objsub = new SubmitModel()
+            {
+                NumberOfCorrectAnswer = noOfCorrect,
+                TestId = request.TestId,
+                TotalGrade = objquest.Score,
+                UserId = userId,
+            };
+
+            //if (objsub.NumberOfCorrectAnswer == (int)objquest.CorrectAnswer)
+            //{
+            //    var objsubNumberOfCorrectAnswer = objsub.NumberOfCorrectAnswer + 1;
+            //}
+            await _context.submitModels.AddAsync(objsub);
+            await _context.SaveChangesAsync();
+            foreach (var item in request.QuestionsResult)
+            {
+                var submitDetail = new SubmitDetailModel()
+                {
+                    QuestionId = item.Id,
+                    StudentAnswer = item.StudentAnswer,
+                    SubmitId = objsub.Id,
+                };
+                _context.SubmitDetailModels.Add(submitDetail);
+            }
+            await _context.SaveChangesAsync();
+            var submitId = objsub.Id;
+            return submitId;
+        }
+
+        public List<SubmitDetailVm> GetSubmitDetail(int submitId)
+        {
+            var models = new List<SubmitDetailVm>();
+            var submit = _context.submitModels.Find(submitId);
+            var submitDetails = _context.SubmitDetailModels.Where(x => x.SubmitId == submitId).ToList();
+            var questions = _context.QuestionModels.Where(x => x.TestId == submit.TestId).ToList();
+
+            foreach (var question in questions)
+            {
+                foreach (var submitDetail in submitDetails)
+                {
+                    if (submitDetail.QuestionId == question.Id)
+                    {
+                        var model = new SubmitDetailVm()
+                        {
+                            QuestionContent = question.Content,
+                            ChoiceA = question.ChoiceA,
+                            ChoiceB = question.ChoiceB,
+                            ChoiceC = question.ChoiceC,
+                            ChoiceD = question.ChoiceD,
+                            CorrectAnswer = question.CorrectAnswer,
+                            StudentAnswer = submitDetail.StudentAnswer
+                        };
+                        models.Add(model);
+                    }
+                }
+            }
+            return models.ToList();
         }
     }
 }

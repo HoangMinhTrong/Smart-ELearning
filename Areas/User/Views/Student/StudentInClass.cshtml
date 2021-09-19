@@ -8,13 +8,13 @@
 <div class="p-4 border rounded bg-white">
     <div class="row">
         <div class="col-6">
-            <div>
-                <a href="@Url.Action("Index","Class")">Classes List</a>
-            </div>
             <h2 class="text-primary">Class @ViewBag.ClassName </h2>
+            <div>
+                <a href="@Url.Action("Index","Class")"><i class="fas fa-long-arrow-alt-left"></i> Back to Class List</a>
+            </div>
         </div>
         <div class="col-6 text-right">
-            <a class="btn btn-primary" href="@Url.Action("AssignStudentToClass","Student",new {classId=ViewBag.ClassId})"><i class="fas fa-plus"></i> &nbsp; Add new student</a>
+            <a class="btn btn-primary btn-sm" href="@Url.Action("AssignStudentToClass","Student",new {classId=ViewBag.ClassId})"><i class="fas fa-plus"></i> &nbsp; Add new student</a>
         </div>
     </div>
     <br>
@@ -59,7 +59,7 @@
                             return `
                                 <div class="text-center">
 
-                                    <a onclick=Delete("/User/Student/RemoveStudentInClass/?studentId=${data}&classId=${classId}") class="btn btn-danger text-white" style="cursor:pointer">
+                                    <a onclick=Delete("/User/Student/RemoveStudentInClass/?studentId=${data}&classId=${classId}") class="btn btn-danger text-white btn-sm" style="cursor:pointer">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </div>

@@ -12,6 +12,8 @@ namespace Smart_ELearning.Services.Interfaces
     {
         List<ScheduleModel> GetAll();
 
+        List<ScheduleVM> GetClassSchedule(int classId);
+
         List<ScheduleVM> GetDisplay();
 
         int Upsert(ScheduleViewModel model);
@@ -19,7 +21,7 @@ namespace Smart_ELearning.Services.Interfaces
         bool Delete(int classId);
 
         ScheduleModel GetById(int? classId);
+
         List<TestToScheduleViewModel> GetScheduleToTest(int scheduleid);
-        
     }
 }

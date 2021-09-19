@@ -12,25 +12,37 @@ function loadDataTable() {
             "dataType": "json"
         },
         "columns": [
-            { "data": "name", "width": "60%" },
+            { "data": "name", "width": "40%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                             <div class="text-center">
-                                <a href="/User/Student/StudentInClass/${data}" class="btn btn-success text-white" style="cursor:pointer">
+
+                                <a href="/User/Student/StudentInClass/${data}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
+
                                     <i class="fas fa-edit">View Students</i>
                                 </a>
-                                <a href="/User/Class/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a onclick=Delete("/User/Class/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-
+                               
                             </div>
                            `;
-                }, "width": "40%"
+                }, "width": "30%"
+            },
+            {
+                "data": "id",
+                "render": function (data) {
+                    return `
+                            <div class="text-center">
+                               
+                                <a href="/User/Class/Upsert/${data}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a onclick=Delete("/User/Class/Delete/${data}") class="btn btn-danger text-white btn-sm" style="cursor:pointer">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                           `;
+                }, "width": "30%"
             }
         ]
     });

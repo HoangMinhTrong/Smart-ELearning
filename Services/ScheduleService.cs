@@ -24,6 +24,7 @@ namespace Smart_ELearning.Services
         public List<ScheduleModel> GetAll()
         {
             var query = _context.ScheduleModels.Include(x => x.ClassModel).Include(x => x.SubjectModel).AsQueryable();
+
             var list = query.ToList();
             return list;
         }
@@ -79,6 +80,26 @@ namespace Smart_ELearning.Services
         public List<ScheduleVM> GetDisplay()
         {
             var query = _context.ScheduleModels.Include(x => x.ClassModel).Include(x => x.SubjectModel).AsQueryable();
+            var list = query.Select(x => new ScheduleVM()
+            {
+                Id = x.Id,
+                DateTime = x.DateTime.ToString("dd/MM/yyyy"),
+                StartTime = x.StartTime.ToString("HH:mm"),
+                EndTime = x.EndTime.ToString("HH:mm"),
+                ClassName = x.ClassModel.Name,
+                SubjectName = x.SubjectModel.Name,
+                Title = x.Title,
+            }).ToList();
+
+            return list;
+        }
+
+        public List<ScheduleVM> GetClassSchedule(int classId)
+        {
+            var query = _context.ScheduleModels.Include(x => x.ClassModel)
+                .Include(x => x.SubjectModel)
+                .Where(x => x.ClassId == classId)
+                .AsQueryable();
             var list = query.Select(x => new ScheduleVM()
             {
                 Id = x.Id,
