@@ -15,10 +15,13 @@ namespace Smart_ELearning.Services
     public class ScheduleService : IScheduleService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IAttendanceService _attendanceService;
 
-        public ScheduleService(ApplicationDbContext context)
+        public ScheduleService(ApplicationDbContext context,
+            IAttendanceService attendanceService)
         {
             _context = context;
+            _attendanceService = attendanceService;
         }
 
         public List<ScheduleModel> GetAll()
@@ -46,7 +49,9 @@ namespace Smart_ELearning.Services
                 }
             }
 
-            return _context.SaveChanges();
+            var result = _context.SaveChanges();
+            _attendanceService.GenerateAttendanceList(model.ScheduleModel.Id, model.ScheduleModel.ClassId);
+            return result;
         }
 
         public bool Delete(int Id)
