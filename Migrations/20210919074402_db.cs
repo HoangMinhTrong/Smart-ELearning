@@ -325,6 +325,7 @@ namespace Smart_ELearning.Migrations
                     TestId = table.Column<int>(type: "int", nullable: false),
                     NumberOfCorrectAnswer = table.Column<int>(type: "int", nullable: false),
                     TotalGrade = table.Column<double>(type: "float", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AppUserModelId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -351,7 +352,7 @@ namespace Smart_ELearning.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SubmitId = table.Column<int>(type: "int", nullable: false),
-                    QuestionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuestionId = table.Column<int>(type: "int", nullable: false),
                     StudentAnswer = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

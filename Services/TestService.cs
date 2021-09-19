@@ -136,15 +136,56 @@ namespace Smart_ELearning.Services
                 TotalGrade = objquest.Score,
                 UserId = userId,
             };
+
             //if (objsub.NumberOfCorrectAnswer == (int)objquest.CorrectAnswer)
             //{
             //    var objsubNumberOfCorrectAnswer = objsub.NumberOfCorrectAnswer + 1;
             //}
             await _context.submitModels.AddAsync(objsub);
-
+            await _context.SaveChangesAsync();
+            foreach (var item in request.QuestionsResult)
+            {
+                var submitDetail = new SubmitDetailModel()
+                {
+                    QuestionId = item.Id,
+                    StudentAnswer = item.StudentAnswer,
+                    SubmitId = objsub.Id,
+                };
+                _context.SubmitDetailModels.Add(submitDetail);
+            }
             await _context.SaveChangesAsync();
             var submitId = objsub.Id;
             return submitId;
+        }
+
+        public List<SubmitDetailVm> GetSubmitDetail(int submitId)
+        {
+            var models = new List<SubmitDetailVm>();
+            var submit = _context.submitModels.Find(submitId);
+            var submitDetails = _context.SubmitDetailModels.Where(x => x.SubmitId == submitId).ToList();
+            var questions = _context.QuestionModels.Where(x => x.TestId == submit.TestId).ToList();
+
+            foreach (var question in questions)
+            {
+                foreach (var submitDetail in submitDetails)
+                {
+                    if (submitDetail.QuestionId == question.Id)
+                    {
+                        var model = new SubmitDetailVm()
+                        {
+                            QuestionContent = question.Content,
+                            ChoiceA = question.ChoiceA,
+                            ChoiceB = question.ChoiceB,
+                            ChoiceC = question.ChoiceC,
+                            ChoiceD = question.ChoiceD,
+                            CorrectAnswer = question.CorrectAnswer,
+                            StudentAnswer = submitDetail.StudentAnswer
+                        };
+                        models.Add(model);
+                    }
+                }
+            }
+            return models.ToList();
         }
     }
 }
