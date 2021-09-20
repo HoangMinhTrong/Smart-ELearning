@@ -41,41 +41,19 @@
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@UserManager.GetUserName(User)</span>
-                    <img class="img-profile rounded-circle bg-dark" src="https://xuanthulab.net/public/img/logo.png">
-                </a>
-                <!-- Dropdown - User Information -->
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" asp-page="/Account/Manage/Index">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Hồ sơ
-                    </a>
-                    <div class="dropdown-divider"></div>
-
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <form class="form-inline " asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-
-                            <button type="submit" class="dropdown-item">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Đăng xuất
-                            </button>
-
-                        </form>
-                    }
-                    else
-                    {
-                        <p>You have successfully logged out of the application.</p>
-                    }
 
 
 
-                </div>
+            <li class="nav-item">
+                 <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
             </li>
+             <li class="nav-item">
+                 <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                      <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                 </form>
+             </li>
         }
+
         else
         {
             <li class="nav-item">

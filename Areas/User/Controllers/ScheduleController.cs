@@ -9,10 +9,12 @@ using Smart_ELearning.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(Roles = "Teacher")]
     public class ScheduleController : Controller
     {
         private readonly IScheduleService _schedule;
@@ -137,7 +139,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             {
                 return View(scheduleViewModel);
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("ClassSchedule", new { classId = scheduleViewModel.ScheduleModel.ClassId });
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]

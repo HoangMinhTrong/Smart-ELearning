@@ -10,7 +10,7 @@ using Smart_ELearning.Data;
 namespace Smart_ELearning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210920102731_db")]
+    [Migration("20210920103434_db")]
     partial class db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

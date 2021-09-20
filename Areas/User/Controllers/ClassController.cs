@@ -6,10 +6,13 @@ using System.Linq;
 
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Smart_ELearning.Data.DataSeed;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(Roles = "Teacher")]
     public class ClassController : Controller
     {
         private readonly IClassService _classService;
@@ -23,7 +26,6 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         public IActionResult Index()
         {
-            var isFake = _submissionService.CheckFakeAddress();
             return View();
         }
 

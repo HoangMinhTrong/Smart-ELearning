@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Smart_ELearning.Services.Interfaces;
 using Smart_ELearning.ViewModels.AccountViewModels;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(Roles = "Teacher")]
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;

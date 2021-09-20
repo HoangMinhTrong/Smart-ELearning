@@ -13,10 +13,12 @@ using System.Threading.Tasks;
 using Smart_ELearning.ViewModels.Test;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(Roles = "Teacher")]
     public class TestController : Controller
     {
         private readonly ITestService _testService;
@@ -158,6 +160,7 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         #endregion APICall
 
+        [Authorize(Roles = "Teacher,Student")]
         public IActionResult TestForm(int testId)
         {
             // Check IP here
@@ -167,10 +170,13 @@ namespace Smart_ELearning.Areas.User.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var isDuplicate = _submissionService.IsDuplicate(testId);
-            if (ipResult == 1)
+            if (isDuplicate == 1)
             {
+                TempData["DangerMessage"] = "Your Have Submmited Before!!!";
                 return RedirectToAction("Index", "Home");
             }
+            var studentIp = _submissionService.GetIpAddress();
+            ViewBag.StudentIp = studentIp;
             var data = _testService.GetTestQuestion(testId);
             return View(data);
         }
@@ -189,10 +195,12 @@ namespace Smart_ELearning.Areas.User.Controllers
             {
                 return View(model);
             }
+
             var submit = await _testService.AddSubmitRecord(model);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _attendanceService.IsFulFillTest(model.ScheduleId, userId);
-            return RedirectToAction("SubmitRecord", "Test", new { recordid = submit.Id });
+            //return RedirectToAction("SubmitRecord", "Test", new { id = submit.Id });
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

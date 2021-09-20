@@ -2,7 +2,7 @@
 
 namespace Smart_ELearning.Migrations
 {
-    public partial class @new : Migration
+    public partial class dn : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

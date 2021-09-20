@@ -79,6 +79,9 @@ namespace Smart_ELearning.Services
                 Title = x.Title,
                 NumberOfQuestion = x.NumberOfQuestion,
                 lockoutEnd =  x.LockoutEnd
+
+                Status = x.Status ? "Open" : "Close",
+
             });
             return objlist.ToList();
         }

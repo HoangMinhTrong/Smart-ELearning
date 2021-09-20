@@ -10,8 +10,8 @@ using Smart_ELearning.Data;
 namespace Smart_ELearning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210919103758_d")]
-    partial class d
+    [Migration("20210920141049_dn")]
+    partial class dn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -429,6 +429,9 @@ namespace Smart_ELearning.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserIp")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
