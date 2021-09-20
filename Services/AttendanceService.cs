@@ -60,6 +60,7 @@ namespace Smart_ELearning.Services
             var noOfSumitted = _context.submitModels
                 .Where(x => x.TestModels.ScheduleId == scheduleId)
                 .Count();
+
             return noOfSumitted.ToString() + "/" + noOfTest.ToString();
         }
 
@@ -86,6 +87,13 @@ namespace Smart_ELearning.Services
             }
             _context.StudentAttendanceModels.AddRange(studenntAttendance);
             _context.SaveChanges();
+        }
+
+        public StudentAttendanceModel GetById(int id)
+        {
+            var model = _context.StudentAttendanceModels.Find(id);
+
+            return model;
         }
 
         public async Task<List<ClassAttendanceVm>> GetClassAttendace(int classId)
@@ -167,13 +175,38 @@ namespace Smart_ELearning.Services
             return models;
         }
 
+        public int IsFulFillTest(int scheduleId, string userId)
+        {
+            var noOfTest = _context.ScheduleModels
+                .Include(x => x.TestModels)
+                .Where(x => x.Id == scheduleId)
+                .Select(x => x.TestModels)
+                .Count();
+
+            var noOfSumitted = _context.submitModels
+                .Where(x => x.TestModels.ScheduleId == scheduleId)
+                .Count();
+
+            if (noOfSumitted == noOfTest)
+            {
+                var attendanceRecord = _context.StudentAttendanceModels
+                    .Where(x => x.ScheduleId == scheduleId)
+                    .Where(x => x.UserId == userId).First();
+                attendanceRecord.IsPresent = true;
+
+                _context.Entry(attendanceRecord).State = EntityState.Modified;
+                return _context.SaveChanges();
+            }
+            return 0;
+        }
+
         public string TakeAttendanceStatus(DateTime date)
         {
             if (DateTime.Now.Date < date.Date)
             {
                 return "Future";
             }
-            return "Avaliale to Take Attendance";
+            return "Avaliale";
         }
     }
 }

@@ -5,5 +5,7 @@
         string GetIpAddress();
 
         int CheckFakeAddress();
+
+        int IsDuplicate(int testId);
     }
 }

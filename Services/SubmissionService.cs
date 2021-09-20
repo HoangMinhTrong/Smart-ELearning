@@ -26,11 +26,15 @@ namespace Smart_ELearning.Services
 
         public int CheckFakeAddress()
         {
-            string userId = this.GetIpAddress();
-            int isFake = 1;
+            string userIp = this.GetIpAddress();
+            int isFake = 0;
             string info = new WebClient().DownloadString("https://v2.api.iphub.info/guest/ip/14.243.128.251" + "?c=Fae9gi8a");
             var ipInfo = JsonConvert.DeserializeObject<dynamic>(info);
-            isFake = ipInfo.block;
+            if (ipInfo.block == 1 || ipInfo.block == 2)
+            {
+                isFake = 1;
+            }
+
             return isFake;
         }
 
@@ -45,6 +49,19 @@ namespace Smart_ELearning.Services
             {
             }
             return userIp;
+        }
+
+        public int IsDuplicate(int testId)
+        {
+            int isDuplicate = 0;
+            string userIp = this.GetIpAddress();
+            // Dùng tạm ip cố định
+            var record = _context.submitModels.Where(x => x.TestId == testId).Where(x => x.UserIp == "14.243.128.251").First();
+            if (record != null)
+            {
+                isDuplicate = 1;
+            }
+            return isDuplicate;
         }
     }
 }
