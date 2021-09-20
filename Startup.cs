@@ -75,7 +75,7 @@ namespace Smart_ELearning
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{area=user}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area=Unauthenticated}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
