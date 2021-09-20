@@ -102,6 +102,7 @@ namespace Smart_ELearning.Services
             }).ToList();
 
             var model = new StudentTestVm();
+            model.ScheduleId = test.ScheduleId;
             model.TestId = testId;
             model.TestTitle = test.Title;
             model.QuestionsResult = listQuestion;
@@ -124,11 +125,13 @@ namespace Smart_ELearning.Services
             return model;
         }
 
-        public async Task<int> AddSubmitRecord(StudentTestVm request)
+        public async Task<SubmitModel> AddSubmitRecord(StudentTestVm request)
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var questionScore = request.QuestionsResult.First().Score;
             var noOfCorrect = 0;
+            // Get User IP
+
             foreach (var item in request.QuestionsResult)
             {
                 if (item.StudentAnswer == item.CorrectAnswer) noOfCorrect++;
@@ -160,7 +163,7 @@ namespace Smart_ELearning.Services
             }
             await _context.SaveChangesAsync();
             var submitId = objsub.Id;
-            return submitId;
+            return objsub;
         }
 
         public List<SubmitDetailVm> GetSubmitDetail(int submitId)
