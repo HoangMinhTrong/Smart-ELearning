@@ -68,7 +68,6 @@ namespace Smart_ELearning.Areas.User.Controllers
             var data = await _questionService.GetAll();
             return Ok(data);
         }
-
         [HttpGet]
         public IActionResult GetQuestionByTestId(int testId)
         {

@@ -94,6 +94,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         }
 
         [Authorize(Roles = "Teacher")]
+
         public IActionResult TestQuestion(int testId)
         {
             var data = _questionService.GetTestQuestions(testId);
@@ -168,7 +169,9 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         #endregion APICall
 
+
         [Authorize(Roles = "Student")]
+
         public IActionResult TestForm(int testId)
         {
             // Check IP here
@@ -196,7 +199,6 @@ namespace Smart_ELearning.Areas.User.Controllers
             var data = _testService.GetSubmitDetail(id);
             return View(data);
         }
-
         [HttpPost]
         public async Task<IActionResult> TestForm(StudentTestVm model)
         {
