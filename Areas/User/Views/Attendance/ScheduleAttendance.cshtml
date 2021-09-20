@@ -1,0 +1,68 @@
+﻿@model List<Smart_ELearning.ViewModels.Attendance.ScheduleAttendanceVm>
+
+@{
+    ViewData["Title"] = "ScheduleAttendance";
+}
+
+<h1>ScheduleAttendance</h1>
+@{var count = Model.Count();}
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form method="post" action"ScheduleAttendance">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Student Name
+                </th>
+                <th>
+                    Student ID
+                </th>
+                <th>
+                    Test
+                </th>
+                <th>
+                    Status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < count; i++)
+            {
+                <input type="hidden" asp-for="@Model[i].AttendanceId" />
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].StudentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].SpecificId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].SubmitInRequire)
+                    </td>
+                    <td>
+                        @if (Model[i].Status == "Absent")
+                        {
+                            <div>
+                                <input type="radio" asp-for="@Model[i].Status" value="Absent" checked="checked" />Absent ||
+
+                                <input type="radio" asp-for="@Model[i].Status" value="Present" />Present
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <input type="radio" asp-for="@Model[i].Status" value="Absent" />Absent ||
+
+                                <input type="radio" asp-for="@Model[i].Status" value="Present" checked="checked" />Present
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input type="submit" value="Save" />
+</form>

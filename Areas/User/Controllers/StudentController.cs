@@ -44,7 +44,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         public async Task<IActionResult> StudentInClass(int? id)
         {
             var classId = id.Value;
-            var classFromDb = await _classService.GetById(classId);
+            var classFromDb = await _classService.GetByIdAsync(classId);
             ViewBag.ClassId = classFromDb.Id;
             ViewBag.ClassName = classFromDb.Name;
             return View();

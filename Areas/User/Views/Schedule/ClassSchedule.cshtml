@@ -8,10 +8,15 @@
 <div class="p-4 border rounded bg-white">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-primary"> Class @ViewBag.ClassName Schedule </h2>
+            <h2 class="text-primary">@ViewBag.ClassName Schedule </h2>
+            <div>
+                <p>
+                    <a href="@Url.Action("Index","Class")"><i class="fas fa-long-arrow-alt-left"></i>Class</a>/Schedule
+                </p>
+            </div>
         </div>
         <div class="col-6 text-right">
-            <a class="btn btn-primary" asp-action="Upsert"><i class="fas fa-plus"></i> &nbsp; Create New Schedule</a>
+            <a class="btn btn-primary" href="@Url.Action("Upsert","Schedule",new {classId=ViewBag.ClassId })"><i class="fas fa-plus"></i> &nbsp; Create New Schedule</a>
         </div>
     </div>
     <br>
@@ -24,7 +29,6 @@
                 <th>Time End</th>
                 <th>Title</th>
                 <th>Subject Name</th>
-
                 <th></th>
             </tr>
         </thead>
@@ -33,6 +37,7 @@
 @section Scripts{
     <script>
         var dataTable;
+        var classId = @ViewBag.ClassId;
 
         $(document).ready(function () {
             loadDataTable();
@@ -41,7 +46,8 @@
         function loadDataTable() {
             dataTable = $('#tblData').DataTable({
                 "ajax": {
-                    "url": "/User/Schedule/GetDisplay/"
+                    "url": "/User/Schedule/GetClassSchedule/"+classId,
+                    "type": "GET"
                 },
                 "columns": [
                     { "data": "dateTime", "width": "10%" },

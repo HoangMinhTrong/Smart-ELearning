@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Smart_ELearning.Data;
 using Smart_ELearning.Models;
 using Smart_ELearning.Services.Interfaces;
+using Smart_ELearning.ViewModels.Attendance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,17 +25,47 @@ namespace Smart_ELearning.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public int ChangeAttendanceStatus(int attendanceId, bool isPresent)
+        public async Task<int> ChangeAttendanceStatus(List<ScheduleAttendanceVm> request)
         {
-            var studentAttendance = _context.StudentAttendanceModels
-                .Find(attendanceId);
-            studentAttendance.IsPresent = isPresent;
-            _context.StudentAttendanceModels.Update(studentAttendance);
-            return _context.SaveChanges();
+            foreach (var item in request)
+            {
+                var studentAttendance = await _context.StudentAttendanceModels
+                .FindAsync(item.AttendanceId);
+                if (item.Status == "Absent")
+                {
+                    if (studentAttendance.IsPresent == false) return 1;
+                    else studentAttendance.IsPresent = false;
+                }
+                if (item.Status == "Present")
+                {
+                    if (studentAttendance.IsPresent == true) return 1;
+                    else studentAttendance.IsPresent = true;
+                }
+                _context.Entry(studentAttendance).State = EntityState.Modified;
+            }
+            return await _context.SaveChangesAsync();
 
             //_context.Entry<StudentAttendanceModel>(studentAttendance).State = EntityState.Detached;
             //_context.Entry<StudentAttendanceModel>().State = EntityState.Modified;
         }
+
+        public string CheckNumberOfSubmit(int scheduleId, string userId)
+        {
+            var noOfTest = _context.ScheduleModels
+                .Include(x => x.TestModels)
+                .Where(x => x.Id == scheduleId)
+                .Select(x => x.TestModels)
+                .Count();
+
+            var noOfSumitted = _context.submitModels
+                .Where(x => x.TestModels.ScheduleId == scheduleId)
+                .Count();
+            return noOfSumitted.ToString() + "/" + noOfTest.ToString();
+        }
+
+        //public int CheckNumberOfSubmit(int scheduleId, string userId)
+        //{
+        //}
 
         public void GenerateAttendanceList(int scheduleId, int classId)
         {
@@ -55,6 +86,94 @@ namespace Smart_ELearning.Services
             }
             _context.StudentAttendanceModels.AddRange(studenntAttendance);
             _context.SaveChanges();
+        }
+
+        public async Task<List<ClassAttendanceVm>> GetClassAttendace(int classId)
+
+        {
+            //var query = _context.ClassModels
+            //    .Include(x => x.ScheduleModels)
+            //    .ThenInclude(x => x.SubjectModel)
+            //    .Where(x => x.Id == classId)
+            //    .AsQueryable();
+            var query = _context.ScheduleModels
+                .Include(x => x.ClassModel)
+                .Include(x => x.SubjectModel)
+                .Where(x => x.ClassId == classId).AsQueryable();
+
+            //foreach(var item in query)
+            //{
+            //    var model = new ClassAttendanceVm()
+            //    {
+            //        ClassName = item.ScheduleModels.Select(x => x.ClassModel.Name).ToString(),
+            //        ScheduleTile = item.ScheduleModels.Select(x => x.Title).ToString(),
+            //        Subject = item.ScheduleModels.Select(x => x.SubjectModel.Name).ToString(),
+            //        Date = item.ScheduleModels.Select(x => x.DateTime.Date).ToString(),
+            //        Time = item.ScheduleModels.Select(x => x.StartTime.ToString("hh:mm")) + "-" + item.ScheduleModels.Select(x => x.EndTime.ToString("hh:mm")),
+            //    };
+
+            //}
+
+            //var models = await query.Select(x => new ClassAttendanceVm()
+            //{
+            //    ClassName = x.ScheduleModels.Select(x => x.ClassModel.Name).ToString(),
+            //    ScheduleTile = x.ScheduleModels.Select(x => x.Title).ToString(),
+            //    Subject = x.ScheduleModels.Select(x => x.SubjectModel.Name).ToString(),
+            //    Date = x.ScheduleModels.Select(x => x.DateTime.Date).ToString(),
+            //    Time = x.ScheduleModels.Select(x => x.StartTime.ToString("hh:mm")) + "-" + x.ScheduleModels.Select(x => x.EndTime.ToString("hh:mm")),
+            //}).ToListAsync();
+
+            var models = await query.Select(x => new ClassAttendanceVm()
+            {
+                ScheduleId = x.Id,
+                ClassName = x.ClassModel.Name,
+                ScheduleTile = x.Title,
+                Subject = x.SubjectModel.Name,
+                Date = x.DateTime.Date.ToString(),
+                Time = x.StartTime.ToString("hh:mm") + "-" + x.EndTime.ToString("hh:mm"),
+                //Status = this.TakeAttendanceStatus(x.DateTime)
+            }).ToListAsync();
+            foreach (var model in models)
+            {
+                model.Status = this.TakeAttendanceStatus(DateTime.Parse(model.Date));
+            }
+
+            return models;
+        }
+
+        public List<ScheduleAttendanceVm> GetScheduleAttendance(int scheduleId)
+        {
+            var attendances = _context.StudentAttendanceModels.Where(x => x.ScheduleId == scheduleId);
+            var scheduleDate = _context.ScheduleModels.First(x => x.Id == scheduleId).DateTime;
+            var models = new List<ScheduleAttendanceVm>();
+            foreach (var item in attendances)
+            {
+                var student = _context.AppUserModels.Find(item.UserId);
+                var record = new ScheduleAttendanceVm()
+                {
+                    AttendanceId = item.Id,
+                    StudentName = student.FullName,
+                    SpecificId = "SL" + student.SpecificId.ToString(),
+                    SubmitInRequire = this.CheckNumberOfSubmit(scheduleId, item.UserId),
+                };
+                if (item.IsPresent == false)
+                {
+                    if (DateTime.Now.Date < scheduleDate.Date) record.Status = "Future";
+                    else record.Status = "Absent";
+                }
+                else { record.Status = "Present"; };
+                models.Add(record);
+            }
+            return models;
+        }
+
+        public string TakeAttendanceStatus(DateTime date)
+        {
+            if (DateTime.Now.Date < date.Date)
+            {
+                return "Future";
+            }
+            return "Avaliale to Take Attendance";
         }
     }
 }

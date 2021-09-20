@@ -61,12 +61,17 @@ namespace Smart_ELearning.Services
             return classes;
         }
 
-        public async Task<ClassModel> GetById(int classId)
+        public async Task<ClassModel> GetByIdAsync(int classId)
         {
             var classModel = await _context.ClassModels.FindAsync(classId);
             if (classModel == null) throw new Exception("Cound not found");
 
             return classModel;
+        }
+
+        public ClassModel GetById(int classId)
+        {
+            return _context.ClassModels.Find(classId);
         }
     }
 }

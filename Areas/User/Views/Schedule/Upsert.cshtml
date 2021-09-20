@@ -16,6 +16,18 @@
             <h2 class="text-primary">@title</h2>
         </div>
         <div class="col-8 pt-4">
+            @if (Model.ScheduleModel.ClassId != 0)
+            {
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Class:</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="hidden" readonly asp-for="ScheduleModel.ClassId" />
+                        <input readonly value="@ViewBag.ClassName" />
+                    </div>
+                </div>
+            }
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="ScheduleModel.ClassId"></label>
