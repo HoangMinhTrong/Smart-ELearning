@@ -4,12 +4,18 @@
     ViewData["Title"] = "ScheduleAttendance";
 }
 
-<h1>ScheduleAttendance</h1>
+<h2>Attendance</h2>
 @{var count = Model.Count();}
+<div>
+    <p>
+        <a href="@Url.Action("ClassAttendance","Attendance",new { classId=ViewBag.ClassId})">
+        <i class="fas fa-long-arrow-alt-left"></i>Class Attendance</a>
+    </p>
+</div>
 <p>
     @* <a asp-action="Create">Create New</a> *@
 </p>
-<form method="post" >
+<form method="post">
     <table class="table">
         <thead>
             <tr>
@@ -31,7 +37,8 @@
         <tbody>
             @for (int i = 0; i < count; i++)
             {
-                <input type="hidden" asp-for="@Model[i].AttendanceId" />
+
+
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => Model[i].StudentName)
@@ -45,19 +52,23 @@
                     <td>
                         @if (Model[i].Status == "Absent")
                         {
-                            <div>
-                                <input type="radio" asp-for="@Model[i].Status" value="Absent" checked="checked" />Absent ||
+                        <div>
+                            <input type="radio" asp-for="@Model[i].Status" value="Absent" checked="checked" />Absent ||
 
-                                <input type="radio" asp-for="@Model[i].Status" value="Present" />Present
-                            </div>
+                            <input type="radio" asp-for="@Model[i].Status" value="Present" />Present
+                            <input type="hidden" asp-for="@Model[i].AttendanceId" />
+                            <input type="hidden" asp-for="@Model[i].ScheduleId" />
+                        </div>
                         }
                         else
                         {
-                            <div>
-                                <input type="radio" asp-for="@Model[i].Status" value="Absent" />Absent ||
+                    <div>
+                        <input type="radio" asp-for="@Model[i].Status" value="Absent" />Absent ||
 
-                                <input type="radio" asp-for="@Model[i].Status" value="Present" checked="checked" />Present
-                            </div>
+                        <input type="radio" asp-for="@Model[i].Status" value="Present" checked="checked" />Present
+                        <input type="hidden" asp-for="@Model[i].AttendanceId" />
+                        <input type="hidden" asp-for="@Model[i].ScheduleId" />
+                    </div>
                         }
                     </td>
                 </tr>

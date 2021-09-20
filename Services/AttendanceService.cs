@@ -33,13 +33,11 @@ namespace Smart_ELearning.Services
                 .FindAsync(item.AttendanceId);
                 if (item.Status == "Absent")
                 {
-                    if (studentAttendance.IsPresent == false) return 1;
-                    else studentAttendance.IsPresent = false;
+                    if (studentAttendance.IsPresent == true) studentAttendance.IsPresent = false;
                 }
                 if (item.Status == "Present")
                 {
-                    if (studentAttendance.IsPresent == true) return 1;
-                    else studentAttendance.IsPresent = true;
+                    if (studentAttendance.IsPresent == false) studentAttendance.IsPresent = true;
                 }
                 _context.Entry(studentAttendance).State = EntityState.Modified;
             }
@@ -159,6 +157,7 @@ namespace Smart_ELearning.Services
                 var record = new ScheduleAttendanceVm()
                 {
                     AttendanceId = item.Id,
+                    ScheduleId = scheduleId,
                     StudentName = student.FullName,
                     SpecificId = "SL" + student.SpecificId.ToString(),
                     SubmitInRequire = this.CheckNumberOfSubmit(scheduleId, item.UserId),
