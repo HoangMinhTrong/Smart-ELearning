@@ -55,8 +55,8 @@
         </a>
         <div id="collapsePhanquyen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" asp-page="/Role/Index" asp-area="">Role</a>
-                <a class="collapse-item" asp-page="/Role/User" asp-area="">Assign roles</a>
+                <a class="collapse-item" asp-area="user" asp-controller="UserManager" asp-action="Index">Role</a>
+                <a class="collapse-item"asp-area="user" asp-controller="UserRoles" asp-action="Index">Assign roles</a>
             </div>
         </div>
     </li>
@@ -82,7 +82,6 @@
 
                 <a class="collapse-item" asp-area="user" asp-controller="Class" asp-action="Index"><i class="fas fa-list mx-2"></i> Class</a>
                 <a class="collapse-item" asp-area="user" asp-controller="Subject" asp-action="Index"><i class="	fas fa-book-reader mx-2"></i> Subject</a>
-                <a class="collapse-item" asp-area="user" asp-controller="Schedule" asp-action="Index"><i class="fas fa-calendar-alt mx-2"></i> Schedule</a>
 
             </div>
         </div>
