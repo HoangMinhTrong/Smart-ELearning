@@ -1,4 +1,5 @@
 ﻿using Smart_ELearning.Models;
+using Smart_ELearning.ViewModels.Attendance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,16 @@ namespace Smart_ELearning.Services.Interfaces
     {
         void GenerateAttendanceList(int scheduleId, int classId);
 
-        int ChangeAttendanceStatus(int attendanceId, bool isPresent);
+        Task<int> ChangeAttendanceStatus(List<ScheduleAttendanceVm> request);
 
-        //public Task<AttendanceVm> GetScheduleAttendance(int scheduleId);
+        string CheckNumberOfSubmit(int scheduleId, string userId);
+
+        List<ScheduleAttendanceVm> GetScheduleAttendance(int scheduleId);
+
+        Task<List<ClassAttendanceVm>> GetClassAttendace(int classId);
+
+        //List<ClassAttendanceVm> GetClassAttendace(int classId);
+
+        string TakeAttendanceStatus(DateTime date);
     }
 }

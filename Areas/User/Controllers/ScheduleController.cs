@@ -31,7 +31,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return View();
         }
 
-        public IActionResult Upsert(int? id)
+        public IActionResult Upsert(int? id, int? classId)
         {
             ScheduleViewModel scheduleViewModel = new ScheduleViewModel
             {
@@ -53,6 +53,14 @@ namespace Smart_ELearning.Areas.User.Controllers
 
             if (id == null)
             {
+                if (classId.HasValue)
+                {
+                    var classModel = _classService.GetById(classId.Value);
+                    ViewBag.ClassId = classModel.Id;
+                    ViewBag.ClassName = classModel.Name;
+                    scheduleViewModel.ScheduleModel.ClassId = classModel.Id;
+                }
+
                 return View(scheduleViewModel);
             }
             scheduleViewModel.ScheduleModel = _schedule.GetById(id);
@@ -63,13 +71,15 @@ namespace Smart_ELearning.Areas.User.Controllers
         {
             var classFromDb = _schedule.GetById(id);
             ViewBag.ScheduleId = classFromDb.Id;
+            ViewBag.ClassId = classFromDb.ClassId;
             ViewBag.ScheduleName = classFromDb.Title;
+
             return View();
         }
 
         public async Task<IActionResult> ClassSchedule(int? classId)
         {
-            var data = await _classService.GetById(classId.Value);
+            var data = await _classService.GetByIdAsync(classId.Value);
             ViewBag.ClassId = data.Id;
             ViewBag.ClassName = data.Name;
             return View();
@@ -78,10 +88,10 @@ namespace Smart_ELearning.Areas.User.Controllers
         #region APICall
 
         [HttpGet]
-        public async Task<IActionResult> GetClassSchedule(int classId)
+        public IActionResult GetClassSchedule(int id)
         {
-            var data = _schedule.GetClassSchedule(classId);
-            return Ok(data);
+            var data = _schedule.GetClassSchedule(id);
+            return Json(new { data = data });
         }
 
         [HttpGet]

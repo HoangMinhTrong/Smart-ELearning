@@ -170,11 +170,5 @@ namespace Smart_ELearning.Areas.User.Controllers
 
             return RedirectToAction("SubmitRecord", "Test", new { recordid = submitId });
         }
-
-        [HttpPost]
-        public async Task<IActionResult> SubmitRecord(StudentTestVm model)
-        {
-            return View();
-        }
     }
 }

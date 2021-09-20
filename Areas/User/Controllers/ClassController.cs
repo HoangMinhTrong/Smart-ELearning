@@ -35,7 +35,7 @@ namespace Smart_ELearning.Areas.User.Controllers
                 return View(classModel);
             }
             var classId = id.Value;
-            classModel = await _classService.GetById(classId);
+            classModel = await _classService.GetByIdAsync(classId);
             return View(classModel);
         }
 

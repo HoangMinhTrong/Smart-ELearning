@@ -3,15 +3,18 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{ var classId = ViewBag.ClassId;}
 <br>
 <div class="p-4 border rounded bg-white">
     <div class="row">
         <div class="col-6">
-            <div>
-                <a href="@Url.Action("Index","Class")">Classes List</a>
-            </div>
             <h2 class="text-primary">Test for Lesson: @ViewBag.ScheduleName </h2>
+            <div>
+                <p>
+                    <a href="@Url.Action("Index","Class") class=" fas fa-long-arrow-alt-left"">Class</a>/
+                    <a href="@Url.Action("ClassSchedule","Schedule", new {classId=classId })">Schedule</a>/Test
+                </p>
+            </div>
         </div>
         <div class="col-6 text-right">
             <a class="btn btn-primary" href="@Url.Action("CreateTestToSchedule","Test",new {scheduleId=ViewBag.ScheduleId})"><i class="fas fa-plus"></i> &nbsp;New Test</a>
