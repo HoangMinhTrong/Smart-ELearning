@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
-    [Authorize("Teacher")]
+    [Authorize(Roles = "Teacher")]
     public class AttendanceController : Controller
     {
         private readonly ITestService _testService;

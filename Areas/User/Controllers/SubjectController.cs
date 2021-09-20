@@ -6,10 +6,12 @@ using System.Linq;
 
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(Roles = "Teacher")]
     public class SubjectController : Controller
     {
         private readonly ISubjectService _subjectService;

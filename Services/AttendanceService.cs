@@ -51,14 +51,13 @@ namespace Smart_ELearning.Services
 
         public string CheckNumberOfSubmit(int scheduleId, string userId)
         {
-            var noOfTest = _context.ScheduleModels
-                .Include(x => x.TestModels)
-                .Where(x => x.Id == scheduleId)
-                .Select(x => x.TestModels)
+            var noOfTest = _context.TestModels
+                .Where(x => x.ScheduleId == scheduleId)
                 .Count();
 
             var noOfSumitted = _context.submitModels
                 .Where(x => x.TestModels.ScheduleId == scheduleId)
+                .Where(x => x.UserId == userId)
                 .Count();
 
             return noOfSumitted.ToString() + "/" + noOfTest.ToString();

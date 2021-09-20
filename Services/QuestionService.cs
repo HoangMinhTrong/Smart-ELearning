@@ -21,6 +21,11 @@ namespace Smart_ELearning.Services
 
         public async Task<int> AddRange(ICollection<QuestionModel> models)
         {
+            var numberOfQuestion = models.Count();
+            foreach(var item in models)
+            {
+                item.Score = 100 / numberOfQuestion;
+            }
             await _context.QuestionModels.AddRangeAsync(models);
             return await _context.SaveChangesAsync();
         }

@@ -13,10 +13,12 @@ using System.Threading.Tasks;
 using Smart_ELearning.ViewModels.Test;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(Roles = "Teacher")]
     public class TestController : Controller
     {
         private readonly ITestService _testService;
@@ -158,6 +160,7 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         #endregion APICall
 
+        [Authorize(Roles = "Teacher,Student")]
         public IActionResult TestForm(int testId)
         {
             // Check IP here

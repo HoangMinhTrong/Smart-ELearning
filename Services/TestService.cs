@@ -69,7 +69,7 @@ namespace Smart_ELearning.Services
             return true;
         }
 
-        TestModel ITestService.GetById(int? Id)
+        public TestModel GetById(int? Id)
         {
             var testFromDb = _context.TestModels.Find(Id);
             if (testFromDb == null) throw new Exception($"Not Found");
