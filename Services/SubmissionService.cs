@@ -75,5 +75,13 @@ namespace Smart_ELearning.Services
 
             return isDuplicate;
         }
+
+        public int IsExpired(int testId)
+        {
+            var status = _context.TestModels.Find(testId).Status;
+            if (status == false)
+                return 1;
+            return 0;
+        }
     }
 }

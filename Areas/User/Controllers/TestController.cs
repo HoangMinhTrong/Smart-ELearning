@@ -94,7 +94,6 @@ namespace Smart_ELearning.Areas.User.Controllers
         }
 
         [Authorize(Roles = "Teacher")]
-
         public IActionResult TestQuestion(int testId)
         {
             var data = _questionService.GetTestQuestions(testId);
@@ -170,11 +169,15 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         #endregion APICall
 
-
         [Authorize(Roles = "Student")]
-
         public IActionResult TestForm(int testId)
         {
+            var isExpired = _submissionService.IsExpired(testId);
+            if (isExpired == 1)
+            {
+                TempData["DangerMessage"] = "Over time!!!!!!";
+                return RedirectToAction("Index", "Home");
+            }
             // Check IP here
             var lockout = _context.TestModels.Find(testId);
             var ipResult = _submissionService.CheckFakeAddress();
@@ -207,9 +210,16 @@ namespace Smart_ELearning.Areas.User.Controllers
             var data = _testService.GetSubmitDetail(id);
             return View(data);
         }
+
         [HttpPost]
         public async Task<IActionResult> TestForm(StudentTestVm model)
         {
+            var isExpired = _submissionService.IsExpired(model.TestId);
+            if (isExpired == 1)
+            {
+                TempData["DangerMessage"] = "Over time!!!!!!";
+                return RedirectToAction("Index", "Home");
+            }
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -236,6 +246,14 @@ namespace Smart_ELearning.Areas.User.Controllers
             var test = _testService.GetById(id);
             ViewBag.TestId = id;
             return View(test);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpPost]
+        public IActionResult ChangeTestStatus(int id)
+        {
+            var result = _testService.ChangeTestStatus(id);
+            return Json(new { success = true, message = "Change Successful" });
         }
     }
 }

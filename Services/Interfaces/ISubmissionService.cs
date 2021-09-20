@@ -9,5 +9,7 @@
         int IsDuplicate(int testId);
 
         int Delete(int id);
+
+        int IsExpired(int testId);
     }
 }

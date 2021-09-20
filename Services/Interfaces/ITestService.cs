@@ -29,5 +29,7 @@ namespace Smart_ELearning.Services.Interfaces
         List<SubmitDetailVm> GetSubmitDetail(int submitId);
 
         List<TestResult> GetTestResults(int testId);
+
+        int ChangeTestStatus(int id);
     }
 }
