@@ -152,10 +152,10 @@ namespace Smart_ELearning.Areas.User.Controllers
             return View(data);
         }
 
-        public IActionResult SubmitRecord(int recordid)
+        public IActionResult SubmitRecord(int id)
         {
-            ViewBag.RecordId = recordid;
-            var data = _testService.GetSubmitDetail(recordid);
+            ViewBag.RecordId = id;
+            var data = _testService.GetSubmitDetail(id);
             return View(data);
         }
 
@@ -169,6 +169,20 @@ namespace Smart_ELearning.Areas.User.Controllers
             var submitId = await _testService.AddSubmitRecord(model);
 
             return RedirectToAction("SubmitRecord", "Test", new { recordid = submitId });
+        }
+
+        [HttpGet]
+        public IActionResult GetTestResult(int id)
+        {
+            var data = _testService.GetTestResults(id);
+            return Json(new { data = data });
+        }
+
+        public IActionResult TestResult(int id)
+        {
+            var test = _testService.GetById(id);
+            ViewBag.TestId = id;
+            return View(test);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Smart_ELearning.ViewModels.Test
     public class StudentQuestionVm
     {
         public int Id { get; set; }
+        public double Score { get; set; }
         public int TestId { get; set; }
         public string Content { get; set; }
         public AnswerChoice? CorrectAnswer { get; set; }

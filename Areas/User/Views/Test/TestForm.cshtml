@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form method="post" action="SubmitTest">
+<form method="post" action="TestForm">
     <div class="row p-3 border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="NumberOfQuestion" />
@@ -19,6 +19,7 @@
                 <input type="hidden" asp-for="@Model.QuestionsResult[i].CorrectAnswer" />
                 <input type="hidden" asp-for="@Model.QuestionsResult[i].Id" />
                 <input type="hidden" asp-for="@Model.QuestionsResult[i].TestId" />
+                <input type="hidden" asp-for="@Model.QuestionsResult[i].Score" />
                 <h4><strong>Question </strong>@(i + 1)</h4>
                 <p>@Model.QuestionsResult[i].Content</p>
                 <label asp-for="@Model.QuestionsResult[i].StudentAnswer">Choose a answer:</label>

@@ -22,11 +22,15 @@ namespace Smart_ELearning.Services
         private readonly ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+        private readonly ISubmissionService _submissionService;
+
         public TestService(ApplicationDbContext context,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            ISubmissionService submissionService)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
+            _submissionService = submissionService;
         }
 
         public List<TestModel> GetAll()
@@ -87,6 +91,7 @@ namespace Smart_ELearning.Services
             var listQuestion = questionQuery.Select(x => new StudentQuestionVm()
             {
                 Id = x.Id,
+                Score = x.Score,
                 TestId = x.TestId,
                 ChoiceA = x.ChoiceA,
                 ChoiceB = x.ChoiceB,
@@ -105,7 +110,7 @@ namespace Smart_ELearning.Services
             return model;
         }
 
-        public SubmitTestVM SubmitRecord(int submitid)
+        public SubmitTestVM SubmitDeatilRecord(int submitid)
         {
             var test = _context.TestModels.Find(submitid);
             var submit = _context.submitModels.Find(submitid);
@@ -122,7 +127,7 @@ namespace Smart_ELearning.Services
         public async Task<int> AddSubmitRecord(StudentTestVm request)
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var objquest = new QuestionModel();
+            var questionScore = request.QuestionsResult.First().Score;
             var noOfCorrect = 0;
             foreach (var item in request.QuestionsResult)
             {
@@ -133,7 +138,7 @@ namespace Smart_ELearning.Services
             {
                 NumberOfCorrectAnswer = noOfCorrect,
                 TestId = request.TestId,
-                TotalGrade = objquest.Score,
+                TotalGrade = noOfCorrect * questionScore,
                 UserId = userId,
             };
 
@@ -186,6 +191,28 @@ namespace Smart_ELearning.Services
                 }
             }
             return models.ToList();
+        }
+
+        public List<TestResult> GetTestResults(int testId)
+        {
+            var result = new List<TestResult>();
+            var test = _context.TestModels.Find(testId);
+            var query = _context.submitModels.Where(x => x.TestId == testId).ToList();
+            foreach (var item in query)
+            {
+                var student = _context.AppUserModels.Find(item.UserId);
+                var model = new TestResult()
+                {
+                    Id = item.Id,
+                    SpecificId = "SL" + student.SpecificId.ToString(),
+                    NoOfCorrect = item.NumberOfCorrectAnswer.ToString() + "/" + test.NumberOfQuestion.ToString(),
+                    StudentName = student.FullName,
+                    TotalGrade = item.TotalGrade,
+                    UserId = item.UserId
+                };
+                result.Add(model);
+            }
+            return result;
         }
     }
 }

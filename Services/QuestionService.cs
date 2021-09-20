@@ -22,7 +22,6 @@ namespace Smart_ELearning.Services
         public async Task<int> AddRange(ICollection<QuestionModel> models)
         {
             await _context.QuestionModels.AddRangeAsync(models);
-
             return await _context.SaveChangesAsync();
         }
 

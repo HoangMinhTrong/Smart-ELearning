@@ -16,6 +16,28 @@
 
             @for (int i = 0; i < ViewBag.NumberOfQuestion; i++)
             {
+                switch (ViewBag.NumberOfQuesiton)
+                {
+                    case 5:
+                        <input type="hidden" asp-for="@Model[i].Score" value="20" />
+                        break;
+                    case 10:
+                        <input type="hidden" asp-for="@Model[i].Score" value="10" />
+                        break;
+                    case 20:
+                        <input type="hidden" asp-for="@Model[i].Score" value="5" />
+                        break;
+                    case 25:
+                        <input type="hidden" asp-for="@Model[i].Score" value="4" />
+                        break;
+                    case 40:
+                        <input type="hidden" asp-for="@Model[i].Score" value="2.5" />
+                        break;
+                    default:
+                        <input type="hidden" asp-for="@Model[i].Score" value="0" />
+                        break;
+
+                }
                 <h6>Question @(i + 1)</h6>
 
                 <input type="hidden" asp-for="@Model[i].TestId" />
