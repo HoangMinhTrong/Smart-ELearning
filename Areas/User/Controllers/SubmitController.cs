@@ -18,11 +18,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         {
             _submissionService = submissionService;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
 
         [HttpDelete]
         public IActionResult Delete(int id)

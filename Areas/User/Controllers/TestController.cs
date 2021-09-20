@@ -89,7 +89,6 @@ namespace Smart_ELearning.Areas.User.Controllers
             await _testService.CreateTestToSchedule(model);
             return RedirectToAction("AddRange", "Question", new { testId = model.Id, numberOfQuestion = model.NumberOfQuestion });
         }
-
         public IActionResult TestQuestion(int testId)
         {
             var data = _questionService.GetTestQuestions(testId);
@@ -160,7 +159,7 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         #endregion APICall
 
-        [Authorize(Roles = "Teacher,Student")]
+        [Authorize(Roles = "Student,Teacher")]
         public IActionResult TestForm(int testId)
         {
             // Check IP here
@@ -187,7 +186,6 @@ namespace Smart_ELearning.Areas.User.Controllers
             var data = _testService.GetSubmitDetail(id);
             return View(data);
         }
-
         [HttpPost]
         public async Task<IActionResult> TestForm(StudentTestVm model)
         {
