@@ -29,6 +29,8 @@
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="Areas\User\Pages\Schedule\Index.cshtml" />
 		<_ContentIncludedByDefault Remove="Areas\User\Pages\Test\Index.cshtml" />
+		<_ContentIncludedByDefault Remove="Areas\User\Pages\User\Index.cshtml" />
+		<_ContentIncludedByDefault Remove="Areas\User\Pages\UserRoles\Index.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>

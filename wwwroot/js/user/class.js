@@ -21,8 +21,9 @@ function loadDataTable() {
 
                                 <a href="/User/Student/StudentInClass/${data}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
 
-                                    <i class="fas fa-edit">View Students</i>
+                                    <i class="fas fa-edit"></i>View Students
                                 </a>
+                                
                                
                             </div>
                            `;
