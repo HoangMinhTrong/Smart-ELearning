@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Smart_ELearning.Data.Configurations;
+using Smart_ELearning.Data.DataSeed;
 using Smart_ELearning.Models;
 
 namespace Smart_ELearning.Data
