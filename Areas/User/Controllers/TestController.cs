@@ -167,10 +167,13 @@ namespace Smart_ELearning.Areas.User.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var isDuplicate = _submissionService.IsDuplicate(testId);
-            if (ipResult == 1)
+            if (isDuplicate == 1)
             {
+                TempData["DangerMessage"] = "Your Have Submmited Before!!!";
                 return RedirectToAction("Index", "Home");
             }
+            var studentIp = _submissionService.GetIpAddress();
+            ViewBag.StudentIp = studentIp;
             var data = _testService.GetTestQuestion(testId);
             return View(data);
         }
@@ -189,10 +192,12 @@ namespace Smart_ELearning.Areas.User.Controllers
             {
                 return View(model);
             }
+
             var submit = await _testService.AddSubmitRecord(model);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _attendanceService.IsFulFillTest(model.ScheduleId, userId);
-            return RedirectToAction("SubmitRecord", "Test", new { recordid = submit.Id });
+            //return RedirectToAction("SubmitRecord", "Test", new { id = submit.Id });
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

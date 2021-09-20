@@ -10,6 +10,8 @@
         <input type="hidden" asp-for="NumberOfQuestion" />
         <input type="hidden" asp-for="TestId" />
         <input type="hidden" asp-for="ScheduleId" />
+        <input type="hidden" asp-for="StudentIp" value="@ViewBag.StudentIp" />
+
         <div class="col-12 border-bottom">
             <h2 class="text-primary">Titl Chuwa ghi </h2>
         </div>
@@ -25,6 +27,7 @@
                 <p>@Model.QuestionsResult[i].Content</p>
                 <label asp-for="@Model.QuestionsResult[i].StudentAnswer">Choose a answer:</label>
                 <select asp-for="@Model.QuestionsResult[i].StudentAnswer" id="answer">
+                    <option selected="selected" disabled hidden value="">Choose answer</option>
                     <option value="A">@Model.QuestionsResult[i].ChoiceA</option>
                     <option value="B">@Model.QuestionsResult[i].ChoiceB</option>
                     <option value="C">@Model.QuestionsResult[i].ChoiceC</option>

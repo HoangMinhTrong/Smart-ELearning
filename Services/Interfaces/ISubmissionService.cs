@@ -7,5 +7,7 @@
         int CheckFakeAddress();
 
         int IsDuplicate(int testId);
+
+        int Delete(int id);
     }
 }

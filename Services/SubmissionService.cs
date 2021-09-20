@@ -38,6 +38,13 @@ namespace Smart_ELearning.Services
             return isFake;
         }
 
+        public int Delete(int id)
+        {
+            var submit = _context.submitModels.Find(id);
+            _context.submitModels.Remove(submit);
+            return _context.SaveChanges();
+        }
+
         public string GetIpAddress()
         {
             string userIp = "unknow";
@@ -48,19 +55,24 @@ namespace Smart_ELearning.Services
             catch (Exception ex)
             {
             }
-            return userIp;
+            return "14.243.128.251";
         }
 
         public int IsDuplicate(int testId)
         {
             int isDuplicate = 0;
             string userIp = this.GetIpAddress();
+            string userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             // Dùng tạm ip cố định
-            var record = _context.submitModels.Where(x => x.TestId == testId).Where(x => x.UserIp == "14.243.128.251").First();
+            var record = _context.submitModels.Where(x => x.TestId == testId)
+                .Where(x => x.UserIp == "14.243.128.251" || x.UserId == userId)
+                .FirstOrDefault();
             if (record != null)
             {
                 isDuplicate = 1;
+                return isDuplicate;
             }
+
             return isDuplicate;
         }
     }

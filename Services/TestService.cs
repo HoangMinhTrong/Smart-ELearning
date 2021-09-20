@@ -143,6 +143,7 @@ namespace Smart_ELearning.Services
                 TestId = request.TestId,
                 TotalGrade = noOfCorrect * questionScore,
                 UserId = userId,
+                UserIp = request.StudentIp
             };
 
             //if (objsub.NumberOfCorrectAnswer == (int)objquest.CorrectAnswer)
@@ -211,7 +212,8 @@ namespace Smart_ELearning.Services
                     NoOfCorrect = item.NumberOfCorrectAnswer.ToString() + "/" + test.NumberOfQuestion.ToString(),
                     StudentName = student.FullName,
                     TotalGrade = item.TotalGrade,
-                    UserId = item.UserId
+                    UserId = item.UserId,
+                    IpAdress = item.UserIp,
                 };
                 result.Add(model);
             }
