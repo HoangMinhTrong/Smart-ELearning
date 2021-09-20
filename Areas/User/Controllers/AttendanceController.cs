@@ -71,6 +71,8 @@ namespace Smart_ELearning.Areas.User.Controllers
         public IActionResult ScheduleAttendance(int scheduleId)
         {
             var data = _attendanceService.GetScheduleAttendance(scheduleId).ToList();
+            var schedule = _scheduleService.GetById(scheduleId);
+            ViewBag.ClassId = schedule.ClassId;
             return View(data);
         }
 
@@ -79,12 +81,13 @@ namespace Smart_ELearning.Areas.User.Controllers
         {
             await _attendanceService.ChangeAttendanceStatus(request);
 
-            return View();
+            return RedirectToAction("ScheduleAttendance", "Attendance", new { scheduleId = request[0].ScheduleId });
         }
 
         public async Task<IActionResult> ClassAttendance(int classId)
         {
             var data = await _attendanceService.GetClassAttendace(classId);
+
             return View(data);
         }
     }

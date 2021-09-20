@@ -8,7 +8,7 @@
 <div class="p-4 border rounded bg-white">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-primary">Class Listtt</h2>
+            <h2 class="text-primary">List of Classes</h2>
         </div>
         <div class="col-6 text-right">
             <a class="btn btn-primary btn-sm" asp-action="Upsert"><i class="fas fa-plus"></i> &nbsp; Create New Class</a>
@@ -21,7 +21,7 @@
             <tr class="table-info">
                 <th>Name</th>
                 <th></th>
-                <th></th>
+               
 
             </tr>
         </thead>
@@ -43,30 +43,30 @@
                     "dataType": "json"
                 },
                 "columns": [
-                    { "data": "name", "width": "55%" },
+                    { "data": "name", "width": "30%" },
                     {
                         "data": "id",
                         "render": function (data) {
                             return `
                             <div class="text-center">
                              <a href="/User/Student/StudentInClass/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit"></i> View Students
+                                    <i class="fas fa-list"></i>Students
                                 </a>
                                 <a href="/User/Schedule/ClassSchedule/?classId=${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit"></i>Schedule
+                                    <i class="far fa-calendar"></i>Schedule
                                 </a>
-                                <a href="/User/Attendance/ClassAttendance/?classId=${data}" class="btn btn-success text-white btn-sm" style="cursor:pointer">            
-                                    <i class="fas fa-edit"></i> Take Attendance
+                                <a href="/User/Attendance/ClassAttendance/?classId=${data}" class="btn btn-success text-white" style="cursor:pointer">            
+                                    <i class="fas fa-user-check"></i>Attendance
                                 </a>
                                 <a href="/User/Class/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-edit"></i>Edit
                                 </a>
                                 <a onclick=Delete("/User/Class/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
-                                    <i class="fas fas fa-edit"></i>
+                                    <i class="fas fas fa-trash"></i>Delete
                                 </a>
                             </div>
                            `;
-                        }, "width": "45%"
+                        }, "width": "70%"
                     }
                 ]
             });
