@@ -220,5 +220,16 @@ namespace Smart_ELearning.Services
             }
             return result;
         }
+
+        public int ChangeTestStatus(int id)
+        {
+            var test = this.GetById(id);
+            if (test.Status == true)
+                test.Status = false;
+            else
+                test.Status = true;
+            _context.Entry(test).State = EntityState.Modified;
+            return _context.SaveChanges();
+        }
     }
 }
