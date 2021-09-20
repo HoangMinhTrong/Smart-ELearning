@@ -86,7 +86,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         {
             var result = await _questionService.AddRange(models.ToList());
 
-            return RedirectToAction("Index", "Class");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
