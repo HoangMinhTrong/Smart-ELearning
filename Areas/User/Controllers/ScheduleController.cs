@@ -114,7 +114,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             {
                 return View(scheduleViewModel);
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("ClassSchedule", new { classId = scheduleViewModel.ScheduleModel.ClassId });
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]

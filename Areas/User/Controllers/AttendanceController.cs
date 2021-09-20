@@ -13,10 +13,12 @@ using System.Threading.Tasks;
 using Smart_ELearning.ViewModels.Test;
 using Smart_ELearning.ViewModels.Attendance;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize("Teacher")]
     public class AttendanceController : Controller
     {
         private readonly ITestService _testService;

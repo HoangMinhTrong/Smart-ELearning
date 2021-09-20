@@ -26,7 +26,9 @@
         <thead class="thead-dark">
             <tr class="table-info">
                 <th>Title</th>
-                <th>No of Question</th>
+                <th>Number of Question</th>
+                <th>Status</th>
+
                 <th></th>
             </tr>
         </thead>
@@ -51,17 +53,25 @@
                     /*"data": JSON.stringify({ id:classId })*/
                 },
                 "columns": [
-                    { "data": "title" },
-                    { "data": "numberOfQuestion" },
+                    { "data": "title", "width": "20%" },
+                    { "data": "numberOfQuestion", "width":"10%" },
+                    { "data": "status", "width": "10%" },
 
                     {
                         "data": "id",
                         "render": function (data) {
                             return `
-                                <div class="text-center">
+                <input type="hidden" value="" />
 
+                                <div class="text-center">
+                                    </a>
+                                    <a href="/User/Test/TestResult/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                    <i class="fas fa-edit">Submision</i>
+                                </a>
+                                    <button class="btn btn-success text-white" onclick=setClipboard("/User/Test/TestForm/?testid=${data}")>Get Link</button>
+                                </a>
                                     <a href="/User/Test/TestQuestion/?testId=${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit">View Questions</i>
+                                    <i class="fas fa-edit">Questions</i>
                                 </a>
                                     <a onclick=Delete("/User/Test/Delete/${data}&classId=${classId}") class="btn btn-danger text-white" style="cursor:pointer">
                                         <i class="fas fa-trash-alt"></i>
@@ -98,6 +108,16 @@
                     });
                 }
             });
+        }
+        function setClipboard(value) {
+            var tempInput = document.createElement("input");
+            var hostName = window.location.hostname;
+            tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+            tempInput.value = window.location.host+value;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
         }
     </script>
 }

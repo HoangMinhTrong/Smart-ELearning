@@ -23,7 +23,6 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         public IActionResult Index()
         {
-            var isFake = _submissionService.CheckFakeAddress();
             return View();
         }
 
