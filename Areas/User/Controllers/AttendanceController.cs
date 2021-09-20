@@ -32,32 +32,32 @@ namespace Smart_ELearning.Areas.User.Controllers
             _attendanceService = attendanceService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Upsert(int? id, int? scheduleId)
-        {
-            return View();
-        }
+        // public IActionResult Index()
+        // {
+        //     return View();
+        // }
+        //
+        // public IActionResult Upsert(int? id, int? scheduleId)
+        // {
+        //     return View();
+        // }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(TestViewModel testViewModel)
-        {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(testViewModel);
-            //}
-
-            //var obj = _testService.Upsert(testViewModel);
-            //if (obj == 0)
-            //{
-            //    return View(testViewModel);
-            //}
-            return RedirectToAction(nameof(Index));
-        }
+        // public IActionResult Upsert(TestViewModel testViewModel)
+        // {
+        //     //if (!ModelState.IsValid)
+        //     //{
+        //     //    return View(testViewModel);
+        //     //}
+        //
+        //     //var obj = _testService.Upsert(testViewModel);
+        //     //if (obj == 0)
+        //     //{
+        //     //    return View(testViewModel);
+        //     //}
+        //     // return RedirectToAction(nameof(Index));
+        // }
 
         [HttpGet]
         public IActionResult GetAll()
