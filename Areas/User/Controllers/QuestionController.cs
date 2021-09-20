@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Smart_ELearning.Models;
 using Smart_ELearning.Services.Interfaces;
 using System;
@@ -9,13 +10,23 @@ using System.Threading.Tasks;
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(Roles = "Teacher")]
     public class QuestionController : Controller
     {
         private readonly IQuestionService _questionService;
+        private readonly IScheduleService _scheduleService;
+        private readonly ITestService _testService;
 
-        public QuestionController(IQuestionService questionService)
+
+
+        public QuestionController(IQuestionService questionService,
+            IScheduleService scheduleService,
+            ITestService testService)
+            
         {
             _questionService = questionService;
+            _scheduleService = scheduleService;
+            _testService = testService;
         }
 
         public IActionResult Index()
@@ -85,8 +96,9 @@ namespace Smart_ELearning.Areas.User.Controllers
         public async Task<IActionResult> AddRange(List<QuestionModel> models)
         {
             var result = await _questionService.AddRange(models.ToList());
+            var scheduleId = _testService.GetById(models[0].TestId).ScheduleId;
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ScheduleToTest", "Schedule", new {id=scheduleId });
         }
     }
 }
