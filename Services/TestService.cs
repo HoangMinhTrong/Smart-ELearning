@@ -87,7 +87,7 @@ namespace Smart_ELearning.Services
             var test = _context.TestModels.Find(testId);
             var questionQuery = _context.QuestionModels
                 .Where(x => x.TestId == testId).AsQueryable();
-
+            var rnd = new Random();
             var listQuestion = questionQuery.Select(x => new StudentQuestionVm()
             {
                 Id = x.Id,
@@ -100,6 +100,7 @@ namespace Smart_ELearning.Services
                 Content = x.Content,
                 CorrectAnswer = x.CorrectAnswer,
             }).ToList();
+            var questionData = listQuestion.OrderBy(x => rnd.Next());
 
             var model = new StudentTestVm();
             model.ScheduleId = test.ScheduleId;

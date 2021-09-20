@@ -18,7 +18,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace Smart_ELearning.Areas.User.Controllers
 {
     [Area("User")]
-    [Authorize(Roles = "Teacher")]
     public class TestController : Controller
     {
         private readonly ITestService _testService;
@@ -44,11 +43,13 @@ namespace Smart_ELearning.Areas.User.Controllers
             _submissionService = submissionService;
         }
 
+        [Authorize(Roles = "Teacher")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "Teacher")]
         public IActionResult Upsert(int? id, int? scheduleId)
         {
             TestViewModel testViewModel = new TestViewModel()
@@ -68,6 +69,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return View(testViewModel);
         }
 
+        [Authorize(Roles = "Teacher")]
         public IActionResult CreateTestToSchedule(int scheduleId)
         {
             ViewBag.SchedulTitle = _scheduleService.GetById(scheduleId).Title;
@@ -79,6 +81,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         public async Task<IActionResult> CreateTestToSchedule(TestModel model)
         {
@@ -89,6 +92,9 @@ namespace Smart_ELearning.Areas.User.Controllers
             await _testService.CreateTestToSchedule(model);
             return RedirectToAction("AddRange", "Question", new { testId = model.Id, numberOfQuestion = model.NumberOfQuestion });
         }
+
+        [Authorize(Roles = "Teacher")]
+
         public IActionResult TestQuestion(int testId)
         {
             var data = _questionService.GetTestQuestions(testId);
@@ -98,6 +104,7 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         #region APICall
 
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(TestViewModel testViewModel)
@@ -115,6 +122,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -122,6 +130,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return Json(new { data = allObj });
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpDelete]
         public IActionResult Delete(int id)
         {
@@ -135,6 +144,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return Json(new { success = true, message = "Delete Successful" });
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         public IActionResult LockUnlock([FromBody] int id)
         {
@@ -159,7 +169,9 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         #endregion APICall
 
-        [Authorize(Roles = "Student,Teacher")]
+
+        [Authorize(Roles = "Student")]
+
         public IActionResult TestForm(int testId)
         {
             // Check IP here
@@ -180,6 +192,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return View(data);
         }
 
+        [Authorize(Roles = "Teacher")]
         public IActionResult SubmitRecord(int id)
         {
             ViewBag.RecordId = id;
@@ -201,6 +214,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpGet]
         public IActionResult GetTestResult(int id)
         {
@@ -208,6 +222,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return Json(new { data = data });
         }
 
+        [Authorize(Roles = "Teacher")]
         public IActionResult TestResult(int id)
         {
             var test = _testService.GetById(id);

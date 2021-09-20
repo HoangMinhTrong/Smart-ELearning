@@ -7,6 +7,7 @@ namespace Smart_ELearning.ViewModels.Attendance
 {
     public class ScheduleAttendanceVm
     {
+        public int ScheduleId { get; set; }
         public int AttendanceId { get; set; }
         public string StudentName { get; set; }
         public string SpecificId { get; set; }
