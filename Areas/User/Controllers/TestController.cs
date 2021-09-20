@@ -163,6 +163,7 @@ namespace Smart_ELearning.Areas.User.Controllers
                 ojbFromdb.LockoutEnd = DateTime.Now.AddYears(1000);
             }
 
+
             _context.SaveChanges();
             return Json(new { success = true, Message = "Success" });
         }
@@ -175,6 +176,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         public IActionResult TestForm(int testId)
         {
             // Check IP here
+            var lockout = _context.TestModels.Find(testId);
             var ipResult = _submissionService.CheckFakeAddress();
             if (ipResult != 0)
             {
@@ -186,6 +188,12 @@ namespace Smart_ELearning.Areas.User.Controllers
                 TempData["DangerMessage"] = "Your Have Submmited Before!!!";
                 return RedirectToAction("Index", "Home");
             }
+
+            if (lockout.LockoutEnd > DateTime.Now)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+ 
             var studentIp = _submissionService.GetIpAddress();
             ViewBag.StudentIp = studentIp;
             var data = _testService.GetTestQuestion(testId);
