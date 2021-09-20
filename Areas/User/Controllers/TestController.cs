@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System.Threading.Tasks;
 using Smart_ELearning.ViewModels.Test;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
@@ -21,13 +23,23 @@ namespace Smart_ELearning.Areas.User.Controllers
         private readonly IScheduleService _scheduleService;
         private readonly ApplicationDbContext _context;
         private readonly IQuestionService _questionService;
+        private readonly UserManager<AppUserModel> _userManager;
+        private readonly IAttendanceService _attendanceService;
+        private readonly ISubmissionService _submissionService;
 
-        public TestController(IQuestionService questionService, ITestService testService, IScheduleService scheduleService, ApplicationDbContext context)
+        public TestController(IQuestionService questionService,
+            ITestService testService,
+            UserManager<AppUserModel> userManager,
+            IAttendanceService attendanceService,
+            ISubmissionService submissionService, IScheduleService scheduleService, ApplicationDbContext context)
         {
             _testService = testService;
             _scheduleService = scheduleService;
             _context = context;
             _questionService = questionService;
+            _userManager = userManager;
+            _attendanceService = attendanceService;
+            _submissionService = submissionService;
         }
 
         public IActionResult Index()
@@ -148,6 +160,17 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         public IActionResult TestForm(int testId)
         {
+            // Check IP here
+            var ipResult = _submissionService.CheckFakeAddress();
+            if (ipResult != 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var isDuplicate = _submissionService.IsDuplicate(testId);
+            if (ipResult == 1)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var data = _testService.GetTestQuestion(testId);
             return View(data);
         }
@@ -166,9 +189,10 @@ namespace Smart_ELearning.Areas.User.Controllers
             {
                 return View(model);
             }
-            var submitId = await _testService.AddSubmitRecord(model);
-
-            return RedirectToAction("SubmitRecord", "Test", new { recordid = submitId });
+            var submit = await _testService.AddSubmitRecord(model);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _attendanceService.IsFulFillTest(model.ScheduleId, userId);
+            return RedirectToAction("SubmitRecord", "Test", new { recordid = submit.Id });
         }
 
         [HttpGet]

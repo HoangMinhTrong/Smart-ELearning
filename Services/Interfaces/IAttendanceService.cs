@@ -22,5 +22,9 @@ namespace Smart_ELearning.Services.Interfaces
         //List<ClassAttendanceVm> GetClassAttendace(int classId);
 
         string TakeAttendanceStatus(DateTime date);
+
+        StudentAttendanceModel GetById(int id);
+
+        int IsFulFillTest(int scheduleId, string userId);
     }
 }

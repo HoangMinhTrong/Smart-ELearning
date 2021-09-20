@@ -24,7 +24,7 @@ namespace Smart_ELearning.Services.Interfaces
 
         SubmitTestVM SubmitDeatilRecord(int submitid);
 
-        Task<int> AddSubmitRecord(StudentTestVm submitTestVm);
+        Task<SubmitModel> AddSubmitRecord(StudentTestVm submitTestVm);
 
         List<SubmitDetailVm> GetSubmitDetail(int submitId);
 
