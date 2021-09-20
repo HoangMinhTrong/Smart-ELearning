@@ -77,7 +77,8 @@ namespace Smart_ELearning.Services
             {
                 Id = x.Id,
                 Title = x.Title,
-                NumberOfQuestion = x.NumberOfQuestion
+                NumberOfQuestion = x.NumberOfQuestion,
+                lockoutEnd =  x.LockoutEnd
             });
             return objlist.ToList();
         }

@@ -12,7 +12,7 @@
             <div>
                 <p>
                     <a href="@Url.Action("Index","Class") class=" fas fa-long-arrow-alt-left>Class</a>/
-                    <a href="@Url.Action("ClassSchedule","Schedule", new {classId=classId })">Schedule</a>/Test
+                    <a href="@Url.Action("ClassSchedule","Schedule", new {classId=classId })">Schedule</a>/
                 </p>
             </div>
         </div>
@@ -48,27 +48,48 @@
                     "url": "/user/schedule/getscheduletotest/"+classId,
                     "type": "GET",
                     "dataType": "json",
-                    /*"data": JSON.stringify({ id:classId })*/
+                    // "data": JSON.stringify({ idclass:classId })
                 },
                 "columns": [
                     { "data": "title" },
                     { "data": "numberOfQuestion" },
-
                     {
-                        "data": "id",
-                        "render": function (data) {
-                            return `
-                                <div class="text-center">
-
-                                    <a href="/User/Test/TestQuestion/?testId=${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit">View Questions</i>
-                                </a>
-                                    <a onclick=Delete("/User/Test/Delete/${data}&classId=${classId}") class="btn btn-danger text-white" style="cursor:pointer">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </div>
-                               `;
-                        }, "width": "25%"
+                    "data": {
+                      id :"id", lockoutEnd : "LockoutEnd", classid : "@ViewBag.ScheduleId" },
+                  "render": function (data) {
+                      var today = new Date().getTime()
+                      var lockout = new Date(data.lockoutEnd).getTime();
+                      if (lockout > today) {
+                          return `
+                              <div class="text-center">                             
+                                  <a href="/User/Test/GetAll/" class="btn btn-success text-white" style="cursor:pointer">
+                                      <i class="fas fa-lock-open"></i> Lock Test
+                                                                  </a>            
+                                  <a href="/User/Test/Upsert/${data.id}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
+                                      <i class="fas fa-edit"></i> 
+                                  </a>
+                                  <a onclick=Delete("/User/Test/Delete/${data.id}") class="btn btn-danger text-white btn-sm" style="cursor:pointer">
+                                      <i class="fas fa-trash-alt"></i> 
+                                  </a>
+                              </div>
+                             `;
+                      } else {
+                          return `
+                              <div class="text-center">                             
+                                  <a onclick=LockUnlock('${classId}') class="btn btn-success text-white btn-sm" style="cursor:pointer">
+                                      <i class="fas fa-lock"></i> Lock
+                                  </a>
+                                  <a href="/User/Test/Upsert/${data.id}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
+                                      <i class="fas fa-edit"></i> 
+                                  </a>
+                                  <a onclick=Delete("/User/Test/Delete/${data.id}") class="btn btn-danger text-white btn-sm" style="cursor:pointer">
+                                      <i class="fas fa-trash-alt"></i>
+                                  </a>
+                              </div>
+                            
+                             `;
+                      }
+                  }, "width": "60%"
                     }
                 ]
             });
@@ -99,5 +120,22 @@
                 }
             });
         }
+        function LockUnlock(id) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/User/Schedule/ScheduleToTest/'+classId,
+                        data: JSON.stringify(id),
+                        contentType: "application/json",
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                                dataTable.ajax.reload();
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    });
+                }
     </script>
 }

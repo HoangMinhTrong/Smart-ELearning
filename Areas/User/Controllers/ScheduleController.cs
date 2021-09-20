@@ -18,12 +18,14 @@ namespace Smart_ELearning.Areas.User.Controllers
         private readonly IScheduleService _schedule;
         private readonly ISubjectService _subject;
         private readonly IClassService _classService;
+        private readonly ApplicationDbContext _context;
 
-        public ScheduleController(IScheduleService schedule, IClassService classService, ISubjectService subject)
+        public ScheduleController(IScheduleService schedule, IClassService classService, ISubjectService subject, ApplicationDbContext context)
         {
             _schedule = schedule;
             _classService = classService;
             _subject = subject;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -73,8 +75,34 @@ namespace Smart_ELearning.Areas.User.Controllers
             ViewBag.ScheduleId = classFromDb.Id;
             ViewBag.ClassId = classFromDb.ClassId;
             ViewBag.ScheduleName = classFromDb.Title;
-
             return View();
+        }
+        [HttpGet]
+        public IActionResult GetScheduleToTest(int id)
+        {
+            var obj = _schedule.GetScheduleToTest(id);
+            return Json(new { data = obj });
+        }
+        [HttpPost]
+        public IActionResult LockUnlock([FromBody] int id)
+        {
+            var ojbFromdb = _context.TestModels.FirstOrDefault(u => u.Id == id);
+            if (ojbFromdb == null)
+            {
+                return Json(new { success = false, Message = "Error While Lock/Unlock" });
+            }
+
+            if (ojbFromdb.LockoutEnd != null && ojbFromdb.LockoutEnd > DateTime.Now)
+            {
+                ojbFromdb.LockoutEnd = DateTime.Now;
+            }
+            else
+            {
+                ojbFromdb.LockoutEnd = DateTime.Now.AddYears(1000);
+            }
+
+            _context.SaveChanges();
+            return Json(new { success = true, Message = "Success" });
         }
 
         public async Task<IActionResult> ClassSchedule(int? classId)
@@ -94,12 +122,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             return Json(new { data = data });
         }
 
-        [HttpGet]
-        public IActionResult GetScheduleToTest(int id)
-        {
-            var obj = _schedule.GetScheduleToTest(id);
-            return Json(new { data = obj });
-        }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
