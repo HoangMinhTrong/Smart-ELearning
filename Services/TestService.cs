@@ -99,6 +99,7 @@ namespace Smart_ELearning.Services
                 ChoiceD = x.ChoiceD,
                 Content = x.Content,
                 CorrectAnswer = x.CorrectAnswer,
+                StudentAnswer = null
             }).ToList();
             var questionData = listQuestion.OrderBy(x => rnd.Next());
 
@@ -158,7 +159,7 @@ namespace Smart_ELearning.Services
                 var submitDetail = new SubmitDetailModel()
                 {
                     QuestionId = item.Id,
-                    StudentAnswer = item.StudentAnswer,
+                    StudentAnswer = item.StudentAnswer.Value,
                     SubmitId = objsub.Id,
                 };
                 _context.SubmitDetailModels.Add(submitDetail);

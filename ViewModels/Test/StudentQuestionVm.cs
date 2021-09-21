@@ -17,6 +17,6 @@ namespace Smart_ELearning.ViewModels.Test
         public string ChoiceB { get; set; }
         public string ChoiceC { get; set; }
         public string ChoiceD { get; set; }
-        public AnswerChoice StudentAnswer { get; set; }
+        public AnswerChoice? StudentAnswer { get; set; }
     }
 }
