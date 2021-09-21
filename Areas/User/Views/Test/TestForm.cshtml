@@ -3,9 +3,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<a href="/css/TestForm.css"></a>
+<a href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></a>
+<a href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></a>
+<a href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></a>
 
 <form method="post" action="TestForm" autocomplete="off">
-    <div class="row p-3 border">
+    <div class="container mt-sm-5 my-1">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="NumberOfQuestion" />
         <input type="hidden" asp-for="TestId" />
@@ -13,33 +17,31 @@
         <input type="hidden" asp-for="StudentIp" value="@ViewBag.StudentIp" />
 
         <div class="col-12 border-bottom">
-            <h2 class="text-primary">Titl Chuwa ghi </h2>
+            <h2 class="text-primary">Title</h2>
         </div>
-        <div class="col-8 pt-4">
-
+        <div class="question ml-sm-5 pl-sm-5 pt-2">
+             
             @for (int i = 0; i < Model.NumberOfQuestion; i++)
             {
                 <input type="hidden" asp-for="@Model.QuestionsResult[i].CorrectAnswer" />
                 <input type="hidden" asp-for="@Model.QuestionsResult[i].Id" />
                 <input type="hidden" asp-for="@Model.QuestionsResult[i].TestId" />
                 <input type="hidden" asp-for="@Model.QuestionsResult[i].Score" />
+                <p class="text-muted">Multiple Choice Question</p>
                 <h4><strong>Question </strong>@(i + 1)</h4>
-                <p>@Model.QuestionsResult[i].Content</p>
-                <label asp-for="@Model.QuestionsResult[i].StudentAnswer">Choose a answer:</label>
-                <select asp-for="@Model.QuestionsResult[i].StudentAnswer" id="answer">
-                    <option selected="selected" disabled value="">Choose answer</option>
-                    <option value="A">@Model.QuestionsResult[i].ChoiceA</option>
-                    <option value="B">@Model.QuestionsResult[i].ChoiceB</option>
-                    <option value="C">@Model.QuestionsResult[i].ChoiceC</option>
-                    <option value="D">@Model.QuestionsResult[i].ChoiceD</option>
-                </select>
-
+                <div class="py-2 h5"><b>@Model.QuestionsResult[i].Content</b></div>
+                <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">@Model.QuestionsResult[i].StudentAnswer
+                <label class="options">@Model.QuestionsResult[i].ChoiceA <input type="radio" name="radio"> <span class="checkmark"></span> </label>
+                <label class="options">@Model.QuestionsResult[i].ChoiceB<input type="radio" name="radio"> <span class="checkmark"></span> </label>
+                <label class="options">@Model.QuestionsResult[i].ChoiceC<input type="radio" name="radio"> <span class="checkmark"></span> </label>
+                <label class="options">@Model.QuestionsResult[i].ChoiceD<input type="radio" name="radio"> <span class="checkmark"></span> </label>
+                </div>
                 <hr />
             }
             <div class="form-group row">
                 <div class="col-8 offset-4">
 
-                    <input type="submit" class="btn btn-primary" value="Submit" />
+                    <input type="submit" value="Submit" class="mx-sm-0 mx-1">
                 </div>
             </div>
         </div>
