@@ -16,7 +16,7 @@ namespace Smart_ELearning
 {
     public class Program
     {
-        public async static Task Main(string[] args)
+        public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
@@ -25,15 +25,15 @@ namespace Smart_ELearning
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 try
                 {
-                    var context = services.GetRequiredService<ApplicationDbContext>();
-                    var userManager = services.GetRequiredService<UserManager<AppUserModel>>();
-                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await Seed.ContextSeed.SeedRolesAsync(userManager, roleManager);
+                    //var context = services.GetRequiredService<ApplicationDbContext>();
+                    //var userManager = services.GetRequiredService<UserManager<AppUserModel>>();
+                    //var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    //await Seed.ContextSeed.SeedRolesAsync(userManager, roleManager);
                 }
                 catch (Exception ex)
                 {
-                    var logger = loggerFactory.CreateLogger<Program>();
-                    logger.LogError(ex, "An error occurred seeding the DB.");
+                    //var logger = loggerFactory.CreateLogger<Program>();
+                    //logger.LogError(ex, "An error occurred seeding the DB.");
                 }
             }
             host.Run();

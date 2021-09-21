@@ -15,31 +15,27 @@ namespace Smart_ELearning.Data.DataSeed
                 await roleManager.CreateAsync(new IdentityRole(Roles.Teacher.ToString()));
                 await roleManager.CreateAsync(new IdentityRole(Roles.Student.ToString()));
                 await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
-
             }
         }
+
         public static void SeedData(this ModelBuilder modelBuilder)
         {
-
             // Identity
             PasswordHasher<AppUserModel> passwordHasher = new PasswordHasher<AppUserModel>();
-
 
             modelBuilder.Entity<AppUserModel>().HasData(
                 new AppUserModel
                 {
                     FullName = "Teacher",
-                    UserName = "teacheradmin@smartelearning.com",
-                    NormalizedUserName = "TEACHERADMIN@SMARTELEARNING.COM",
-                    PasswordHash = "Admin@123",
+                    UserName = "teacher@smartelearning.com",
+                    NormalizedUserName = "TEACHERN@SMARTELEARNING.COM",
+                    PasswordHash = passwordHasher.HashPassword(null, "Default@123"),
                     Email = "teacheradmin@smartelearning.com",
                     NormalizedEmail = "teacheradmin@smartelearning.com",
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true,
-                    
                 }
             );
-            
         }
     }
 }

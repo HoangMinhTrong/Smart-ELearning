@@ -57,9 +57,20 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
+
                 <td>
-                    @Html.ActionLink("Take", "ScheduleAttendance", new { scheduleId=item.ScheduleId }) |
- 
+                    @if (item.Status == "Avaliale")
+                    {
+                        <a href="/User/Attendance/ScheduleAttendance/?scheduleId=@item.ScheduleId" class="btn btn-primary btn-sm text-white" style="cursor:pointer">
+                            <i class="fas fa-check"></i>Take
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="" class="btn btn-secondary btn-sm text-white" disabled style="cursor:pointer">
+                            Not yet
+                        </a>
+                    }
                 </td>
             </tr>
         }

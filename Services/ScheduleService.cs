@@ -91,7 +91,7 @@ namespace Smart_ELearning.Services
             var list = query.Select(x => new ScheduleVM()
             {
                 Id = x.Id,
-                DateTime = x.DateTime.ToString("dd/MM/yyyy"),
+                DateTime = x.DateTime.ToString("dddd, dd MMMM yyyy"),
                 StartTime = x.StartTime.ToString("HH:mm"),
                 EndTime = x.EndTime.ToString("HH:mm"),
                 ClassName = x.ClassModel.Name,
@@ -111,7 +111,7 @@ namespace Smart_ELearning.Services
             var list = query.Select(x => new ScheduleVM()
             {
                 Id = x.Id,
-                DateTime = x.DateTime.ToString("dd/MM/yyyy"),
+                DateTime = x.DateTime.ToString("ddd, dd MMM yyyy"),
                 StartTime = x.StartTime.ToString("HH:mm"),
                 EndTime = x.EndTime.ToString("HH:mm"),
                 ClassName = x.ClassModel.Name,
