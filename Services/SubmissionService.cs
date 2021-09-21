@@ -28,7 +28,7 @@ namespace Smart_ELearning.Services
         {
             string userIp = this.GetIpAddress();
             int isFake = 0;
-            string info = new WebClient().DownloadString("https://v2.api.iphub.info/guest/ip/14.243.128.251" + "?c=Fae9gi8a");
+            string info = new WebClient().DownloadString("https://v2.api.iphub.info/guest/ip/" + userIp + "?c=Fae9gi8a");
             var ipInfo = JsonConvert.DeserializeObject<dynamic>(info);
             if (ipInfo.block == 1 || ipInfo.block == 2)
             {
@@ -55,7 +55,7 @@ namespace Smart_ELearning.Services
             catch (Exception ex)
             {
             }
-            return "14.243.128.251";
+            return userIp;
         }
 
         public int IsDuplicate(int testId)
@@ -65,7 +65,7 @@ namespace Smart_ELearning.Services
             string userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             // Dùng tạm ip cố định
             var record = _context.submitModels.Where(x => x.TestId == testId)
-                .Where(x => x.UserIp == "14.243.128.251" || x.UserId == userId)
+                .Where(x => x.UserIp == userIp || x.UserId == userId)
                 .FirstOrDefault();
             if (record != null)
             {

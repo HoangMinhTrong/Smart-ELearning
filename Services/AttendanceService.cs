@@ -54,6 +54,7 @@ namespace Smart_ELearning.Services
                 .Count();
 
             var noOfSumitted = _context.submitModels
+                .Include(x => x.TestModels)
                 .Where(x => x.TestModels.ScheduleId == scheduleId)
                 .Where(x => x.UserId == userId)
                 .Count();

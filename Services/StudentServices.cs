@@ -9,6 +9,7 @@ using Smart_ELearning.Services.Interfaces;
 
 using Microsoft.AspNetCore.Identity;
 using Smart_ELearning.ViewModels.AccountViewModels;
+using System.Text.RegularExpressions;
 
 namespace Smart_ELearning.Services
 {
@@ -34,16 +35,25 @@ namespace Smart_ELearning.Services
 
             var specificId = 0;
             var lastedStudentAccount = await _context.AppUserModels.OrderBy(x => x.SpecificId).LastOrDefaultAsync();
-            if (lastedStudentAccount == null) specificId = 101;
+            if (lastedStudentAccount == null || lastedStudentAccount.SpecificId < 100) specificId = 101;
             else specificId = lastedStudentAccount.SpecificId + 1;
 
+            var fullNameToEmail = String.Concat(request.FullName.Where(c => !Char.IsWhiteSpace(c)));
+            fullNameToEmail = fullNameToEmail.ToLower();
+            fullNameToEmail = Regex.Replace(fullNameToEmail, "à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ|/g", "a");
+            fullNameToEmail = Regex.Replace(fullNameToEmail, "è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ|/g", "e");
+            fullNameToEmail = Regex.Replace(fullNameToEmail, "ì|í|ị|ỉ|ĩ|/g", "i");
+            fullNameToEmail = Regex.Replace(fullNameToEmail, "ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ|/g", "o");
+            fullNameToEmail = Regex.Replace(fullNameToEmail, "ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ|/g", "u");
+            fullNameToEmail = Regex.Replace(fullNameToEmail, "ỳ|ý|ỵ|ỷ|ỹ|/g", "y");
+            fullNameToEmail = Regex.Replace(fullNameToEmail, "đ", "d");
             account.FullName = request.FullName;
             account.SpecificId = specificId;
-            account.Email = String.Concat(request.FullName.Where(c => !Char.IsWhiteSpace(c))) + "@smartlearning.com";
+            account.Email = fullNameToEmail + specificId.ToString() + "@smartlearning.com";
             account.EmailConfirmed = true;
             account.PhoneNumberConfirmed = true;
             account.NormalizedUserName = request.FullName.ToUpper();
-            account.UserName = String.Concat(request.FullName.Where(c => !Char.IsWhiteSpace(c))) + "@smartlearning.com";
+            account.UserName = fullNameToEmail + specificId.ToString() + "@smartlearning.com";
 
             IdentityResult result = _userManager.CreateAsync(account, "Default@123").GetAwaiter().GetResult();
             if (!_roleManager.RoleExistsAsync("Student").Result)
@@ -56,7 +66,7 @@ namespace Smart_ELearning.Services
             }
 
             var addRoleResult = await _userManager.AddToRoleAsync(account, "Student");
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
             // Tạo tạm cái role
 
             var studentInClass = new StudentInClassModel()
