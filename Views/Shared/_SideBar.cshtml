@@ -37,14 +37,11 @@
                 <h6 class="collapse-header">Function</h6>
 
                 <a class="collapse-item " asp-area="Identity" asp-page="/Account/Manage/Index"><i class="fas fa-user-circle mx-2"></i>Profile</a>
-                <a class="collapse-item" asp-area="Identity" asp-page="/Account/Manage/Email"><i class="fab fa-google mx-2"></i>Email</a>
                 <a class="collapse-item " asp-area="Identity" asp-page="/Account/Manage/ChangePassword"><i class="fas fa-lock mx-2"></i>Password</a>
                 @if (hasExternalLogins)
                 {
                     <a class="collapse-item " asp-area="Identity" asp-page="/Account/Manage/ExternalLogins">External logins</a>
                 }
-                <a class="collapse-item " asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication"><i class="fas fa-user-shield mx-2 "></i>Authentication factor</a>
-                <a class="collapse-item " asp-area="Identity" asp-page="/Account/Manage/PersonalData"><i class="far fa-folder mx-2"></i>Personal data</a>
             </div>
         </div>
     </li>
@@ -73,20 +70,23 @@
         Posts
     </div>
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePosts" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-newspaper"></i>
+    @if (User.IsInRole("Teacher"))
+    {
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePosts" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-newspaper"></i>
 
-            <span>Manage</span>
-        </a>
-        <div id="collapsePosts" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
+                <span>Manage</span>
+            </a>
+            <div id="collapsePosts" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
 
-                <a class="collapse-item" asp-area="user" asp-controller="Class" asp-action="Index"><i class="fas fa-list mx-2"></i> Class</a>
-                <a class="collapse-item" asp-area="user" asp-controller="Subject" asp-action="Index"><i class="	fas fa-book-reader mx-2"></i> Subject</a>
+                    <a class="collapse-item" asp-area="user" asp-controller="Class" asp-action="Index"><i class="fas fa-list mx-2"></i> Class</a>
+                    <a class="collapse-item" asp-area="user" asp-controller="Subject" asp-action="Index"><i class="	fas fa-book-reader mx-2"></i> Subject</a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    }
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
