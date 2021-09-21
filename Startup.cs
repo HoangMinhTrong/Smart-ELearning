@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Smart_ELearning.Models;
 using Smart_ELearning.Services;
 using Smart_ELearning.Data.Initializer;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Smart_ELearning
 {
@@ -39,6 +40,7 @@ namespace Smart_ELearning
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
+            services.AddSession();
 
             services.AddIdentity<AppUserModel, IdentityRole>()
                        .AddDefaultUI()
@@ -63,10 +65,14 @@ namespace Smart_ELearning
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();
