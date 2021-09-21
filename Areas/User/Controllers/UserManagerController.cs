@@ -5,19 +5,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
-    [Area("User")]
+    [Area("Admin")]
     public class UserManagerController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
+
         public UserManagerController(RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
         }
+
         public async Task<IActionResult> Index()
         {
             var roles = await _roleManager.Roles.ToListAsync();
             return View(roles);
         }
+
         [HttpPost]
         public async Task<IActionResult> AddRole(string roleName)
         {
