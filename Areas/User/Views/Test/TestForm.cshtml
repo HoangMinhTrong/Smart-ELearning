@@ -1,49 +1,49 @@
 ﻿@model Smart_ELearning.ViewModels.Test.StudentTestVm;
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
-<a href="/css/TestForm.css"></a>
-<a href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></a>
-<a href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></a>
-<a href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></a>
+<link rel="stylesheet" href="css/TestForm.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 
 <form method="post" action="TestForm" autocomplete="off">
-    <div class="container mt-sm-5 my-1">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="NumberOfQuestion" />
-        <input type="hidden" asp-for="TestId" />
-        <input type="hidden" asp-for="ScheduleId" />
-        <input type="hidden" asp-for="StudentIp" value="@ViewBag.StudentIp" />
+    <div class="container-fluid">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NumberOfQuestion"/>
+            <input type="hidden" asp-for="TestId"/>
+            <input type="hidden" asp-for="ScheduleId"/>
+            <input type="hidden" asp-for="StudentIp" value="@ViewBag.StudentIp"/>
 
-        <div class="col-12 border-bottom">
-            <h2 class="text-primary">Title</h2>
-        </div>
-        <div class="question ml-sm-5 pl-sm-5 pt-2">
-             
-            @for (int i = 0; i < Model.NumberOfQuestion; i++)
-            {
-                <input type="hidden" asp-for="@Model.QuestionsResult[i].CorrectAnswer" />
-                <input type="hidden" asp-for="@Model.QuestionsResult[i].Id" />
-                <input type="hidden" asp-for="@Model.QuestionsResult[i].TestId" />
-                <input type="hidden" asp-for="@Model.QuestionsResult[i].Score" />
-                <p class="text-muted">Multiple Choice Question</p>
-                <h4><strong>Question </strong>@(i + 1)</h4>
-                <div class="py-2 h5"><b>@Model.QuestionsResult[i].Content</b></div>
-                <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">@Model.QuestionsResult[i].StudentAnswer
-                <label class="options">@Model.QuestionsResult[i].ChoiceA <input type="radio" name="radio"> <span class="checkmark"></span> </label>
-                <label class="options">@Model.QuestionsResult[i].ChoiceB<input type="radio" name="radio"> <span class="checkmark"></span> </label>
-                <label class="options">@Model.QuestionsResult[i].ChoiceC<input type="radio" name="radio"> <span class="checkmark"></span> </label>
-                <label class="options">@Model.QuestionsResult[i].ChoiceD<input type="radio" name="radio"> <span class="checkmark"></span> </label>
-                </div>
-                <hr />
-            }
-            <div class="form-group row">
-                <div class="col-8 offset-4">
-
-                    <input type="submit" value="Submit" class="mx-sm-0 mx-1">
-                </div>
+            <div class="col-12 border-bottom">
+                <h2 class="text">Title</h2>
             </div>
+            <div class="modal-body">
+
+                @for (int i = 0; i < Model.NumberOfQuestion; i++)
+                {
+                    <input type="hidden" asp-for="@Model.QuestionsResult[i].CorrectAnswer"/>
+                    <input type="hidden" asp-for="@Model.QuestionsResult[i].Id"/>
+                    <input type="hidden" asp-for="@Model.QuestionsResult[i].TestId"/>
+                    <input type="hidden" asp-for="@Model.QuestionsResult[i].Score"/>
+                    <p class="text-muted">Choice Question</p>
+                    <h4><strong>Question </strong>@(i + 1)</h4>
+                    <div class="py-2 h5"><b>@Model.QuestionsResult[i].Content</b></div>
+                    <div class="quiz" id="quiz" data-toggle="buttons">@Model.QuestionsResult[i].StudentAnswer
+                        <label class="element-animation1 btn btn-lg btn-secondary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">@Model.QuestionsResult[i].ChoiceA </label>
+                        <label class="element-animation1 btn btn-lg btn-secondary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">@Model.QuestionsResult[i].ChoiceB </label>
+                        <label class="element-animation1 btn btn-lg btn-secondary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">@Model.QuestionsResult[i].ChoiceC</label>
+                        <label class="element-animation1 btn btn-lg btn-secondary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">@Model.QuestionsResult[i].ChoiceD </label>
+                    </div>
+                    <hr/>
+                }
+
+            </div>
+            <input type="submit" value="Submit" class="text-center btn-success">
+        </div>
         </div>
     </div>
 </form>
