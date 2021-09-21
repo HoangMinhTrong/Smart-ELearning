@@ -162,6 +162,7 @@ namespace Smart_ELearning.Services
                     StudentName = student.FullName,
                     SpecificId = "SL" + student.SpecificId.ToString(),
                     SubmitInRequire = this.CheckNumberOfSubmit(scheduleId, item.UserId),
+                    IsPresent = item.IsPresent,
                 };
                 if (item.IsPresent == false)
                 {
@@ -186,7 +187,7 @@ namespace Smart_ELearning.Services
                 .Where(x => x.TestModels.ScheduleId == scheduleId)
                 .Count();
 
-            if (noOfSumitted == noOfTest)
+            if (noOfSumitted >= noOfTest)
             {
                 var attendanceRecord = _context.StudentAttendanceModels
                     .Where(x => x.ScheduleId == scheduleId)
@@ -196,7 +197,15 @@ namespace Smart_ELearning.Services
                 _context.Entry(attendanceRecord).State = EntityState.Modified;
                 return _context.SaveChanges();
             }
-            return 0;
+            else
+            {
+                var attendanceRecord = _context.StudentAttendanceModels
+                    .Where(x => x.ScheduleId == scheduleId)
+                    .Where(x => x.UserId == userId).First();
+                attendanceRecord.IsPresent = false;
+                _context.Entry(attendanceRecord).State = EntityState.Modified;
+                return _context.SaveChanges();
+            }
         }
 
         public string TakeAttendanceStatus(DateTime date)

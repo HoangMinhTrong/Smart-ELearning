@@ -40,6 +40,7 @@ namespace Smart_ELearning
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
+            services.AddSession();
 
             services.AddIdentity<AppUserModel, IdentityRole>()
                        .AddDefaultUI()
@@ -71,7 +72,7 @@ namespace Smart_ELearning
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();

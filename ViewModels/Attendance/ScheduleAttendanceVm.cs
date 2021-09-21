@@ -13,5 +13,6 @@ namespace Smart_ELearning.ViewModels.Attendance
         public string SpecificId { get; set; }
         public string SubmitInRequire { get; set; }
         public string Status { get; set; }
+        public bool IsPresent { get; set; }
     }
 }
