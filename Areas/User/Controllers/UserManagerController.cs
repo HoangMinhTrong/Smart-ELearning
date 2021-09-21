@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Smart_ELearning.Areas.User.Controllers
 {
-    [Area("Admin")]
+    [Area("User")]
     public class UserManagerController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
