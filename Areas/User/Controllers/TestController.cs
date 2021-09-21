@@ -162,7 +162,6 @@ namespace Smart_ELearning.Areas.User.Controllers
                 ojbFromdb.LockoutEnd = DateTime.Now.AddYears(1000);
             }
 
-
             _context.SaveChanges();
             return Json(new { success = true, Message = "Success" });
         }
@@ -179,10 +178,11 @@ namespace Smart_ELearning.Areas.User.Controllers
                 return RedirectToAction("Index", "Home");
             }
             // Check IP here
-            var lockout = _context.TestModels.Find(testId);
+            //var lockout = _context.TestModels.Find(testId);
             var ipResult = _submissionService.CheckFakeAddress();
             if (ipResult != 0)
             {
+                TempData["DangerMessage"] = "Looks like you're using VPN. Turn it off to take the test!!!";
                 return RedirectToAction("Index", "Home");
             }
             var isDuplicate = _submissionService.IsDuplicate(testId);
@@ -192,11 +192,11 @@ namespace Smart_ELearning.Areas.User.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            if (lockout.LockoutEnd > DateTime.Now)
-            {
-                return RedirectToAction("Index", "Home");
-            }
- 
+            //if (lockout.LockoutEnd > DateTime.Now)
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+
             var studentIp = _submissionService.GetIpAddress();
             ViewBag.StudentIp = studentIp;
             var data = _testService.GetTestQuestion(testId);
@@ -229,6 +229,8 @@ namespace Smart_ELearning.Areas.User.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _attendanceService.IsFulFillTest(model.ScheduleId, userId);
             //return RedirectToAction("SubmitRecord", "Test", new { id = submit.Id });
+            TempData["SuccessMessage"] = "Successful Submission!!!!!!";
+
             return RedirectToAction("Index", "Home");
         }
 
