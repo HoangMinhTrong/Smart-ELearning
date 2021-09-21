@@ -25,8 +25,8 @@
         <thead class="thead-dark">
             <tr class="table-info">
                 <th>Date Time</th>
-                <th>Time Start</th>
-                <th>Time End</th>
+                <th>Start</th>
+                <th>End</th>
                 <th>Title</th>
                 <th>Subject Name</th>
                 <th></th>
@@ -50,30 +50,32 @@
                     "type": "GET"
                 },
                 "columns": [
-                    { "data": "dateTime", "width": "10%" },
-                    { "data": "startTime", "width": "10%" },
-                    { "data": "endTime", "width": "10%" },
+                    { "data": "dateTime", "width": "15%" },
+                    { "data": "startTime", "width": "5%" },
+                    { "data": "endTime", "width": "5%" },
                     { "data": "title", "width": "25%" },
-                    { "data": "subjectName", "width": "15%" },
+                    { "data": "subjectName", "width": "10%" },
 
                     {
                         "data": "id",
                         "render": function (data) {
                             return `
                                     <div class="text-center">
-                                        <a href="/User/Schedule/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                        <a href="/User/Attendance/ScheduleAttendance/?scheduleId=${data}" class="btn btn-primary text-white" style="cursor:pointer">
+                                                                    <i class="fas fa-check" ></i>Attendance
+                                                                </a>
                                         <a href="/User/Schedule/ScheduleToTest/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                            <i class="fas fa-edit"></i> Test Exam
+                                            <i class="fas fa-poll-h"></i> Test Exam
                                         </a>
-                                       
+                                       <a href="/User/Schedule/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                            <i class="fas fa-edit"></i>Edit
+                                        </a>
                                         <a onclick=Delete("/User/Schedule/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
-                                            <i class="fas fa-trash-alt"></i>
+                                            <i class="fas fa-trash-alt"></i>Delete
                                         </a>
                                     </div>
                                    `;
-                        }, "width": "30%"
+                        }, "width": "40%"
                     }
                 ]
             });

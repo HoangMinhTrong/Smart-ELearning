@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Smart_ELearning.Models;
 using Smart_ELearning.Services;
+using Smart_ELearning.Data.Initializer;
 
 namespace Smart_ELearning
 {
@@ -44,12 +45,12 @@ namespace Smart_ELearning
                        .AddEntityFrameworkStores<ApplicationDbContext>()
                                        .AddDefaultTokenProviders();
             services.AddControllersWithViews();
-
+            services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -70,6 +71,7 @@ namespace Smart_ELearning
 
             app.UseAuthentication();
             app.UseAuthorization();
+            dbInitializer.Initialize();
 
             app.UseEndpoints(endpoints =>
             {

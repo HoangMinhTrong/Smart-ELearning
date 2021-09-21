@@ -59,6 +59,7 @@ namespace Smart_ELearning.Data
             {
                 entity.ToTable("UserTokens");
             });
+            //
         }
 
         public DbSet<AppUserModel> AppUserModels { get; set; }
