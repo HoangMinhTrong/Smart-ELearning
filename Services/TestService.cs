@@ -136,7 +136,10 @@ namespace Smart_ELearning.Services
 
             foreach (var item in request.QuestionsResult)
             {
-                if (item.StudentAnswer == item.CorrectAnswer) noOfCorrect++;
+                if (item.StudentAnswer != null)
+                {
+                    if (item.StudentAnswer == item.CorrectAnswer) noOfCorrect++;
+                }
             }
 
             var objsub = new SubmitModel()
@@ -159,7 +162,7 @@ namespace Smart_ELearning.Services
                 var submitDetail = new SubmitDetailModel()
                 {
                     QuestionId = item.Id,
-                    StudentAnswer = item.StudentAnswer.Value,
+                    StudentAnswer = item.StudentAnswer.HasValue ? item.StudentAnswer.Value : AnswerChoice.Null,
                     SubmitId = objsub.Id,
                 };
                 _context.SubmitDetailModels.Add(submitDetail);
