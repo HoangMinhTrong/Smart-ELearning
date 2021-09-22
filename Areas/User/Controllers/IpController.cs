@@ -55,6 +55,10 @@ namespace Smart_ELearning.Areas.User.Controllers
         {
             return View();
         }
+        public IActionResult BlackList()
+        {
+            return View();
+        }
 
         [HttpGet]
         public IActionResult GetWhiteList()

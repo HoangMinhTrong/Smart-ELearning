@@ -106,8 +106,8 @@ namespace Smart_ELearning.Services
                 .Include(x => x.ClassModel)
                 .Include(x => x.SubjectModel)
                 .Where(x => x.ClassId == classId)
-                .OrderBy(x=>x.DateTime)
-                .ThenBy(x=>x.StartTime)
+                .OrderBy(x => x.DateTime)
+                .ThenBy(x => x.StartTime)
                 .AsQueryable();
 
             //foreach(var item in query)
@@ -180,14 +180,13 @@ namespace Smart_ELearning.Services
 
         public int IsFulFillTest(int scheduleId, string userId)
         {
-            var noOfTest = _context.ScheduleModels
-                .Include(x => x.TestModels)
-                .Where(x => x.Id == scheduleId)
-                .Select(x => x.TestModels)
+            var noOfTest = _context.TestModels
+                .Where(x => x.ScheduleId == scheduleId)
                 .Count();
 
             var noOfSumitted = _context.submitModels
                 .Where(x => x.TestModels.ScheduleId == scheduleId)
+                .Where(x => x.UserId == userId)
                 .Count();
 
             if (noOfSumitted >= noOfTest)
@@ -197,7 +196,7 @@ namespace Smart_ELearning.Services
                     .Where(x => x.UserId == userId).First();
                 attendanceRecord.IsPresent = true;
 
-                _context.Entry(attendanceRecord).State = EntityState.Modified;
+                _context.StudentAttendanceModels.Update(attendanceRecord);
                 return _context.SaveChanges();
             }
             else
@@ -206,7 +205,7 @@ namespace Smart_ELearning.Services
                     .Where(x => x.ScheduleId == scheduleId)
                     .Where(x => x.UserId == userId).First();
                 attendanceRecord.IsPresent = false;
-                _context.Entry(attendanceRecord).State = EntityState.Modified;
+                _context.StudentAttendanceModels.Update(attendanceRecord);
                 return _context.SaveChanges();
             }
         }
