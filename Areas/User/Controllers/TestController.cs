@@ -168,7 +168,7 @@ namespace Smart_ELearning.Areas.User.Controllers
 
         #endregion APICall
 
-        [Authorize(Roles = "Student")]
+        [Authorize]
         public IActionResult TestForm(int testId)
         {
             var isExpired = _submissionService.IsExpired(testId);

@@ -13,7 +13,7 @@ namespace Smart_ELearning.Models
         public SubmitModel SubmitModel { get; set; }
 
         public int QuestionId { get; set; }
-        public AnswerChoice StudentAnswer { get; set; }
+        public AnswerChoice? StudentAnswer { get; set; }
 
         public ICollection<ScheduleModel> ScheduleModels { get; set; }
     }
