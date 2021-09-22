@@ -107,7 +107,7 @@ namespace Smart_ELearning.Services
             model.ScheduleId = test.ScheduleId;
             model.TestId = testId;
             model.TestTitle = test.Title;
-            model.QuestionsResult = listQuestion;
+            model.QuestionsResult = questionData.ToList();
             model.NumberOfQuestion = test.NumberOfQuestion;
 
             return model;
