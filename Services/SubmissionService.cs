@@ -28,11 +28,32 @@ namespace Smart_ELearning.Services
         {
             string userIp = this.GetIpAddress();
             int isFake = 0;
+            string userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _context.AppUserModels.Find(userId);
+            // Check if Ip in white list
+            var isInIpList = _context.IpInfos.FirstOrDefault(x => x.StudentId == user.SpecificId && x.Ip == userIp);
+            if (isInIpList != null && isInIpList.IsBlock != true)
+            {
+                return 0;
+            }
+
             string info = new WebClient().DownloadString("https://v2.api.iphub.info/guest/ip/" + userIp + "?c=Fae9gi8a");
             var ipInfo = JsonConvert.DeserializeObject<dynamic>(info);
             if (ipInfo.block == 1 || ipInfo.block == 2)
             {
                 isFake = 1;
+                if (isInIpList == null)
+                {
+                    var model = new IpInfo()
+                    {
+                        Ip = userIp,
+                        StudentId = user.SpecificId,
+                        IsBlock = true,
+                        LimitAccount = 0,
+                    };
+                    _context.IpInfos.Add(model);
+                    _context.SaveChanges();
+                }
             }
 
             return isFake;
@@ -69,14 +90,40 @@ namespace Smart_ELearning.Services
             int isDuplicate = 0;
             string userIp = this.GetIpAddress();
             string userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            // Dùng tạm ip cố định
+            var user = _context.AppUserModels.Find(userId);
+
             var record = _context.submitModels.Where(x => x.TestId == testId)
-                .Where(x => x.UserIp == userIp || x.UserId == userId)
-                .FirstOrDefault();
-            if (record != null)
+                .Where(x => x.UserIp == userIp || x.UserId == userId);
+
+            if (record.Count() == 0)
             {
-                isDuplicate = 1;
+                isDuplicate = 0;
                 return isDuplicate;
+            }
+
+            var isWhiteList = _context.IpInfos.FirstOrDefault(x => x.StudentId == user.SpecificId && x.Ip == userIp);
+            if (isWhiteList != null && isWhiteList.IsBlock == false)
+            {
+                foreach (var item in record)
+                {
+                    if (item.UserId == userId)
+                        return 1;
+                }
+            }
+            if (isWhiteList != null && isWhiteList.IsBlock == true)
+                return isDuplicate = 1;
+            if (isWhiteList == null)
+            {
+                var model = new IpInfo()
+                {
+                    Ip = userIp,
+                    StudentId = user.SpecificId,
+                    IsBlock = true,
+                    LimitAccount = 0,
+                };
+                _context.IpInfos.Add(model);
+                _context.SaveChanges();
+                return isDuplicate = 1;
             }
 
             return isDuplicate;

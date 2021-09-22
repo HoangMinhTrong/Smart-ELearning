@@ -66,20 +66,20 @@
                             if (data.status == "Close") {
                                 return `
                             <div class="text-center">
-                                <a onclick=OpenClose("/User/Test/ChangeTestStatus/${data.id}") class="btn btn-success text-white " style="cursor:pointer">
+                                <a onclick=OpenClose("/User/Test/ChangeTestStatus/${data.id}") class="btn btn-primary text-white " style="cursor:pointer">
                                     <i class="fas fa-unlock"> Click to Open</i>
                                 </a>
-                                 <button class="btn btn-success text-white" onclick=setClipboard("/User/Test/TestForm/?testid=${data.id}")>
+                                 <button class="btn btn-primary text-white" onclick=setClipboard("/User/Test/TestForm/?testid=${data.id}")>
                                     <i class="fas fa-link"> Link</i></button>
 
-                                <a href="/User/Test/TestResult/${data.id}" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/User/Test/TestResult/${data.id}" class="btn btn-primary text-white" style="cursor:pointer">
                                                         <i class="fas fa-edit"> Submision</i>
                                  </a>
 
-                                 <a href="/User/Test/TestQuestion/?testId=${data.id}" class="btn btn-success text-white" style="cursor:pointer">
+                                 <a href="/User/Test/TestQuestion/?testId=${data.id}" class="btn btn-primary text-white" style="cursor:pointer">
                                        <i class="fas fa-edit"> Questions</i>
                                  </a>
-                                <a href="/User/Question/EditQuestion/?testId=${data.id}" class="btn btn-success text-white " style="cursor:pointer">
+                                <a href="/User/Question/EditQuestion/?testId=${data.id}" class="btn btn-primary text-white " style="cursor:pointer">
                                     <i class="fas fa-edit">Edit</i>
                                 </a>
                                                         <a onclick=Delete("/User/Test/Delete/${data.id}") class="btn btn-danger text-white" style="cursor:pointer">
@@ -93,17 +93,17 @@
                                 <a onclick=OpenClose("/User/Test/ChangeTestStatus/${data.id}") class="btn btn-danger text-white " style="cursor:pointer">
                                     <i class="fas fa-lock"> Click to Close</i>
                                 </a>
-                                 <button class="btn btn-success text-white" onclick=setClipboard("/User/Test/TestForm/?testid=${data.id}")>
+                                 <button class="btn btn-primary text-white" onclick=setClipboard("/User/Test/TestForm/?testid=${data.id}")>
                                     <i class="fas fa-link"> Link</i></button>
 
-                                <a href="/User/Test/TestResult/${data.id}" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/User/Test/TestResult/${data.id}" class="btn btn-primary text-white" style="cursor:pointer">
                                                         <i class="fas fa-edit"> Submision</i>
                                  </a>
 
-                                 <a href="/User/Test/TestQuestion/?testId=${data.id}" class="btn btn-success text-white" style="cursor:pointer">
+                                 <a href="/User/Test/TestQuestion/?testId=${data.id}" class="btn btn-primary text-white" style="cursor:pointer">
                                        <i class="fas fa-edit"> Questions</i>
                                  </a>
-                                <a href="/User/Question/EditQuestion/?testId=${data.id}" class="btn btn-success text-white " style="cursor:pointer">
+                                <a href="/User/Question/EditQuestion/?testId=${data.id}" class="btn btn-primary text-white " style="cursor:pointer">
                                     <i class="fas fa-edit">Edit</i>
                                 </a>
                                                         <a onclick=Delete("/User/Test/Delete/${data.id}") class="btn btn-danger text-white" style="cursor:pointer">

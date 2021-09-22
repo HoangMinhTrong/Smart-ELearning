@@ -1,0 +1,145 @@
+﻿@model Smart_ELearning.Models.ClassModel
+@{
+    ViewData["Title"] = "Class";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br>
+<div class="p-4 border rounded bg-white">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-primary">Ip Adress</h2>
+        </div>
+    </div>
+    <br>
+    <br>
+    <table id="tblData" class="table table-striped table-bordered" style="width:100%">
+        <thead class="thead-dark">
+            <tr class="table-info">
+                <th>Ip Adress</th>
+                <th>Status</th>
+
+                <th>Student Id</th>
+
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+@section Scripts{
+    <script>
+        var dataTable;
+
+        $(document).ready(function () {
+            loadDataTable();
+        });
+
+        function loadDataTable() {
+            dataTable = $('#tblData').DataTable({
+                "ajax": {
+                    "url": "/user/ip/getall/",
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { "data": "ip", "width": "10%" },
+                    {
+                        "data": "isBlock",
+                        "render": function (data) {
+                            if (data == false) { return "Block" }
+                            else { return "Accepted" }
+                        },
+                        "width": "5%"
+                    },
+                    { "data": "studentId", "width": "10%" },
+
+                    {
+                        "data": {
+                            id: "id", isBlock: "isBlock"
+                        },
+                        "render": function (data) {
+                            if (data.isBlock == false) {
+                                return `
+                                                                <div class="text-center">
+                                                                    <a onclick=OpenClose("/User/ip/ChangeStatus/${data.id}") class="btn btn-primary text-white " style="cursor:pointer">
+                                                                        <i class="fas fa-unlock"> Accept</i>
+                                                                    </a>
+
+                                                                    <a onclick=Delete("/User/ip/Delete/${data.id}") class="btn btn-danger text-white" style="cursor:pointer">
+                                                                              <i class="fas fa-trash-alt"></i>
+                                                                      </a>
+                                                                </div>
+                                                               `;
+                            } else {
+                                return `
+                                                                <div class="text-center">
+                                                                    <a onclick=OpenClose("/User/ip/ChangeStatus/${data.id}") class="btn btn-danger text-white " style="cursor:pointer">
+                                                                        <i class="fas fa-unlock"> Block &nbsp</i>
+                                                                     </a>
+                                                                    <a onclick=Delete("/User/ip/Delete/${data.id}") class="btn btn-danger text-white" style="cursor:pointer">
+                                                                              <i class="fas fa-trash-alt"></i>
+                                                                      </a>
+                                                                        </div>
+
+                                                                        `;
+                            }
+                        }
+
+                        , "width": "30%"
+                    },
+                ]
+            });
+        }
+
+        function Delete(url) {
+            swal({
+                title: "Are you sure you want to Delete?",
+                text: "You will not be able to restore the data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: url,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                                dataTable.ajax.reload();
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        function OpenClose(url) {
+            swal({
+                title: "Are you sure you want to change status?",
+                text: "You will not be able to restore the data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                                dataTable.ajax.reload();
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

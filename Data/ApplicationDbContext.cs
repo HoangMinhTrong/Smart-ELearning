@@ -72,5 +72,6 @@ namespace Smart_ELearning.Data
         public DbSet<SubmitModel> submitModels { get; set; }
         public DbSet<TestModel> TestModels { get; set; }
         public DbSet<SubmitDetailModel> SubmitDetailModels { get; set; }
+        public DbSet<IpInfo> IpInfos { get; set; }
     }
 }

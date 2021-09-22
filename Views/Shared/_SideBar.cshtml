@@ -12,10 +12,13 @@
     <a class="sidebar-brand d-flex align-items-center justify-content-center"
        asp-action="Index" asp-controller="Home" asp-area="">
 
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-dragon"></i>
-        </div>
+        @*<div class="sidebar-brand-icon rotate-n-15">*@
+        @*<i class="fas fa-dragon"></i>*@
+        <i class="fas fa-chalkboard-teacher fa-lg"></i>
+        @*</div>*@
         <div class="sidebar-brand-text mx-2">Smart_ELearning</div>
+
+        @*//<i class="fas fa-chalkboard-teacher"></i>*@
     </a>
 
     <!-- Divider -->
@@ -83,6 +86,7 @@
 
                     <a class="collapse-item" asp-area="user" asp-controller="Class" asp-action="Index"><i class="fas fa-list mx-2"></i> Class</a>
                     <a class="collapse-item" asp-area="user" asp-controller="Subject" asp-action="Index"><i class="	fas fa-book-reader mx-2"></i> Subject</a>
+                    <a class="collapse-item" asp-area="user" asp-controller="Ip" asp-action="Index"><i class="	fas fa-book-reader mx-2"></i> Ip Adress</a>
                 </div>
             </div>
         </li>
