@@ -46,24 +46,24 @@
                         "data": "id",
                         "render": function (data) {
                             return `
-                                    <div class="text-center">
-                                     <a href="/User/Student/StudentInClass/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                            <i class="fas fa-user-graduate"></i>Students
-                                        </a>
-                                        <a href="/User/Schedule/ClassSchedule/?classId=${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                            <i class="far fa-calendar"></i>Schedule
-                                        </a>
-                                        <a href="/User/Attendance/ClassAttendance/?classId=${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                            <i class="fas fa-user-check"></i>Attendance
-                                        </a>
-                                        <a href="/User/Class/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                            <i class="fas fa-edit"></i>Edit
-                                        </a>
-                                        <a onclick=Delete("/User/Class/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
-                                            <i class="fas fas fa-trash"></i>Delete
-                                        </a>
-                                    </div>
-                                   `;
+                                        <div class="text-center">
+                                         <a href="/User/Student/StudentInClass/${data}" class="btn btn-primary text-white" style="cursor:pointer">
+                                                <i class="fas fa-user-graduate"></i>Students
+                                            </a>
+                                            <a href="/User/Schedule/ClassSchedule/?classId=${data}" class="btn btn-primary text-white" style="cursor:pointer">
+                                                <i class="far fa-calendar"></i>Schedule
+                                            </a>
+                                            <a href="/User/Attendance/ClassAttendance/?classId=${data}" class="btn btn-primary text-white" style="cursor:pointer">
+                                                <i class="fas fa-user-check"></i>Attendance
+                                            </a>
+                                            <a href="/User/Class/Upsert/${data}" class="btn btn-primary text-white" style="cursor:pointer">
+                                                <i class="fas fa-edit"></i>Edit
+                                            </a>
+                                            <a onclick=Delete("/User/Class/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                                                <i class="fas fas fa-trash"></i>Delete
+                                            </a>
+                                        </div>
+                                       `;
                         }, "width": "70%"
                     }
                 ]

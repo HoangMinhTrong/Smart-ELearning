@@ -7,12 +7,7 @@
         <strong>@TempData["DangerMessage"]</strong>
     </div>
 }
-@if (TempData["DangerMessage"] != null)
-{
-    <div class="alert alert-danger alert-dismissable">
-        <strong>@TempData["DangerMessage"]</strong>
-    </div>
-}
+
 @if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success alert-dismissable">

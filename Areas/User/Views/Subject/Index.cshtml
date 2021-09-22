@@ -46,16 +46,16 @@
                         "data": "id",
                         "render": function (data) {
                             return `
-                                    <div class="text-center">
+                                        <div class="text-center">
 
-                                        <a href="/User/Subject/Upsert/${data}" class="btn btn-success text-white btn-sm" style="cursor:pointer">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a onclick=Delete("/User/Subject/Delete/${data}") class="btn btn-danger text-white btn-sm" style="cursor:pointer">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </div>
-                                   `;
+                                            <a href="/User/Subject/Upsert/${data}" class="btn btn-primary text-white btn-sm" style="cursor:pointer">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a onclick=Delete("/User/Subject/Delete/${data}") class="btn btn-danger text-white btn-sm" style="cursor:pointer">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                       `;
                         }, "width": "40%"
                     }
                 ]
