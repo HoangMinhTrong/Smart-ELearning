@@ -241,7 +241,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         public IActionResult GetTestResult(int id)
         {
             var data = _testService.GetTestResults(id);
-            
+
             return Json(new { data = data });
         }
 

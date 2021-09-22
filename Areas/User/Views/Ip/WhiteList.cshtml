@@ -8,7 +8,15 @@
 <div class="p-4 border rounded bg-white">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-primary">Ip Adress</h2>
+            <h2 class="text-primary">White List IP Adress</h2>
+            <div>
+                <p>
+                    <a href="@Url.Action("Index","Ip")"><i class="fas fa-long-arrow-alt-left"></i>Back</a>/White List
+                </p>
+            </div>
+        </div>
+        <div class="col-6 text-right">
+            <a class="btn btn-primary" href="@Url.Action("BlackList","Ip")"><i class="fas fa-plus"></i> &nbsp; BlackList</a>
         </div>
     </div>
     <br>
@@ -46,42 +54,48 @@
                     {
                         "data": "isBlock",
                         "render": function (data) {
-                            if (data == false) { return "Block" }
+                            if (data == true) { return "Block" }
                             else { return "Accepted" }
                         },
                         "width": "5%"
                     },
-                    { "data": "studentId", "width": "10%" },
+                    {
+                        "data": "studentId",
+                        "render": function (data) {
+                            return "SL" + data;
+                        },
+                        "width": "10%"
+                    },
 
                     {
                         "data": {
                             id: "id", isBlock: "isBlock"
                         },
                         "render": function (data) {
-                            if (data.isBlock == false) {
+                            if (data.isBlock == true) {
                                 return `
-                                                                    <div class="text-center">
-                                                                        <a onclick=OpenClose("/User/ip/ChangeStatus/${data.id}") class="btn btn-primary text-white " style="cursor:pointer">
-                                                                            <i class="fas fa-unlock"> Accept</i>
-                                                                        </a>
+                                                        <div class="text-center">
+                                                            <a onclick=OpenClose("/User/ip/ChangeStatus/${data.id}") class="btn btn-primary text-white " style="cursor:pointer">
+                                                                <i class="fas fa-unlock"> Accept</i>
+                                                            </a>
 
-                                                                        <a onclick=Delete("/User/ip/Delete/${data.id}") class="btn btn-danger text-white" style="cursor:pointer">
-                                                                                  <i class="fas fa-trash-alt"></i>
-                                                                          </a>
-                                                                    </div>
-                                                                   `;
+                                                            <a onclick=Delete("/User/ip/Delete/${data.id}") class="btn btn-danger text-white" style="cursor:pointer">
+                                                                      <i class="fas fa-trash-alt"></i>
+                                                              </a>
+                                                        </div>
+                                                                                               `;
                             } else {
                                 return `
-                                                                    <div class="text-center">
-                                                                        <a onclick=OpenClose("/User/ip/ChangeStatus/${data.id}") class="btn btn-danger text-white " style="cursor:pointer">
-                                                                            <i class="fas fa-unlock"> Block &nbsp</i>
-                                                                         </a>
-                                                                        <a onclick=Delete("/User/ip/Delete/${data.id}") class="btn btn-danger text-white" style="cursor:pointer">
-                                                                                  <i class="fas fa-trash-alt"></i>
-                                                                          </a>
-                                                                            </div>
+                                                            <div class="text-center">
+                                                                <a onclick=OpenClose("/User/ip/ChangeStatus/${data.id}") class="btn btn-danger text-white " style="cursor:pointer">
+                                                                    <i class="fas fa-unlock"> Block &nbsp</i>
+                                                                 </a>
+                                                                <a onclick=Delete("/User/ip/Delete/${data.id}") class="btn btn-danger text-white" style="cursor:pointer">
+                                                                          <i class="fas fa-trash-alt"></i>
+                                                                  </a>
+                                                                    </div>
 
-                                                                            `;
+                                                                    `;
                             }
                         }
 
