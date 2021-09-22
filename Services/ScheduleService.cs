@@ -104,20 +104,38 @@ namespace Smart_ELearning.Services
 
         public List<ScheduleVM> GetClassSchedule(int classId)
         {
+            var list = new List<ScheduleVM>();
             var query = _context.ScheduleModels.Include(x => x.ClassModel)
                 .Include(x => x.SubjectModel)
                 .Where(x => x.ClassId == classId)
+                .OrderBy(x=>x.DateTime)
+                .ThenBy(x=>x.StartTime)
                 .AsQueryable();
-            var list = query.Select(x => new ScheduleVM()
+
+            foreach(var x in query)
             {
-                Id = x.Id,
-                DateTime = x.DateTime.ToString("ddd, dd MMM yyyy"),
-                StartTime = x.StartTime.ToString("HH:mm"),
-                EndTime = x.EndTime.ToString("HH:mm"),
-                ClassName = x.ClassModel.Name,
-                SubjectName = x.SubjectModel.Name,
-                Title = x.Title,
-            }).ToList();
+                var model = new ScheduleVM()
+                {
+                    Id = x.Id,
+                    DateTime = x.DateTime.ToString("ddd, dd MMM yyyy"),
+                    StartTime = x.StartTime.ToString("HH:mm"),
+                    EndTime = x.EndTime.ToString("HH:mm"),
+                    ClassName = x.ClassModel.Name,
+                    SubjectName = x.SubjectModel.Name,
+                    Title = x.Title,
+                };
+                list.Add(model);
+            }    
+            //var list = query.Select(x => new ScheduleVM()
+            //{
+            //    Id = x.Id,
+            //    DateTime = x.DateTime.ToString("ddd, dd MMM yyyy"),
+            //    StartTime = x.StartTime.ToString("HH:mm"),
+            //    EndTime = x.EndTime.ToString("HH:mm"),
+            //    ClassName = x.ClassModel.Name,
+            //    SubjectName = x.SubjectModel.Name,
+            //    Title = x.Title,
+            //}).ToList();
 
             return list;
         }

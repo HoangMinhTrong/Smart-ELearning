@@ -207,7 +207,9 @@ namespace Smart_ELearning.Areas.User.Controllers
         public IActionResult SubmitRecord(int id)
         {
             ViewBag.RecordId = id;
+            var grade = _submissionService.GetById(id).TotalGrade;
             var data = _testService.GetSubmitDetail(id);
+            ViewBag.TotalGrade = grade;
             return View(data);
         }
 
@@ -239,6 +241,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         public IActionResult GetTestResult(int id)
         {
             var data = _testService.GetTestResults(id);
+            
             return Json(new { data = data });
         }
 

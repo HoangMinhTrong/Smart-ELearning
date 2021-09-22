@@ -20,5 +20,9 @@ namespace Smart_ELearning.Services.Interfaces
         Task<QuestionModel> GetById(int id);
 
         Task<int> AddRange(ICollection<QuestionModel> models);
+
+        List<QuestionModel> GetByTestId(int testId);
+
+        Task<int> UpdateRange(List<QuestionModel> models);
     }
 }

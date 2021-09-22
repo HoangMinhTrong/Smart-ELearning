@@ -105,7 +105,10 @@ namespace Smart_ELearning.Services
             var query = _context.ScheduleModels
                 .Include(x => x.ClassModel)
                 .Include(x => x.SubjectModel)
-                .Where(x => x.ClassId == classId).AsQueryable();
+                .Where(x => x.ClassId == classId)
+                .OrderBy(x=>x.DateTime)
+                .ThenBy(x=>x.StartTime)
+                .AsQueryable();
 
             //foreach(var item in query)
             //{

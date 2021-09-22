@@ -6,60 +6,60 @@
 }
 @{ var index = 1;}
 <div>
-    <h4>Result</h4>
+    <h4>Grade: @ViewBag.TotalGrade/100 </h4>
+
     <hr />
-    <dl class="row">
+
+    <div class="container">
         @foreach (var item in Model)
         {
+            <div class="row">
+                <div class="col-sm-2">
+                    <strong>Question @(index++)</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span style="white-space: pre-line">@item.QuestionContent</span>
+                </div>
 
-            <dt class="col-sm-2">
-                Question number @(index++):
-            </dt>
-            <dd class="col-sm-10">
-                @item.QuestionContent
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Choice A:
-            </dt>
-            <dd class="col-sm-10">
-                @item.ChoiceA
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Choice B:
-            </dt>
-            <dd class="col-sm-10">
-                @item.ChoiceB
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Choice C
-            </dt>
-            <dd class="col-sm-10">
-                @item.ChoiceC
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Choice D
-            </dt>
-            <dd class="col-sm-10">
-                @item.ChoiceD
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Correct:
-            </dt>
-            <dd class="col-sm-10">
-                @item.CorrectAnswer
-            </dd>
-            //
-            <dt class="col-sm-2">
-                Student Answer:
-            </dt>
-            <dd class="col-sm-10">
-                @item.StudentAnswer
-            </dd>
+                <div class="col-sm-2">
+                    <strong>Choice A</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span style="white-space: pre-line">@item.ChoiceA</span>
+                </div>
+
+                <div class="col-sm-2">
+                    <strong>Choice B</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span style="white-space: pre-line">@item.ChoiceB</span>
+                </div>
+                <div class="col-sm-2">
+                    <strong>Choice C</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span style="white-space: pre-line">@item.ChoiceC</span>
+                </div>
+                <div class="col-sm-2">
+                    <strong>Choice D</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span style="white-space: pre-line">@item.ChoiceD</span>
+                </div>
+                <div class="col-sm-2">
+                    <strong>Correct Answer</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span style="white-space: pre-line">@item.CorrectAnswer</span>
+                </div>
+                <div class="col-sm-2">
+                    <strong>Student Answer</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span style="white-space: pre-line">@item.StudentAnswer</span>
+                </div>
+            </div>
+            <hr style="font-size:5px;" />
         }
-    </dl>
+    </div>
 </div>

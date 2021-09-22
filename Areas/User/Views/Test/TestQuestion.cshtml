@@ -5,72 +5,67 @@
 }
 @{ int index = 1;}
 
-
 <div>
-    
-        
-            <h3>Test Title: @Model.Title</h3>
-       
-   
+
+    <h3>Test Title: @Model.Title</h3>
+
     <hr />
     @foreach (var item in Model.question)
     {
-        <dl class="row">
+        <div class="row">
+            <div class="col-sm-2">
+                <strong>Question @(index++)</strong>
+            </div>
+            <div class="col-sm-8">
+                <span style="white-space: pre-line">@item.Content</span>
+            </div>
+            <div class="col-sm-2">
+            </div>
 
+            <div class="col-sm-2">
+                <strong>Choice A</strong>
+            </div>
+            <div class="col-sm-8">
+                <span style="white-space: pre-line">@item.ChoiceA</span>
+            </div>
+            <div class="col-sm-2">
+            </div>
 
-            <form>
-                <table class="table table-striped border">
-                    <tr class=" table-secondary">
-                        <th>
-                            <label>Question number @(index++):</label>
-                        </th>
-                        <th>
-                            <label> @item.Content</label>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Choice A:
-                        </th>
-                        <th>
-                            @item.ChoiceA
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Choice B:
-                        </th>
-                        <th>
-                            @item.ChoiceB
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Choice C:
-                        </th>
-                        <th>
-                            @item.ChoiceC
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Choice D:
-                        </th>
-                        <th>
-                            @item.ChoiceD
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Correct:
-                        </th>
-                        <th>
-                            @item.CorrectAnswer
-                        </th>
-                    </tr>
-                </table>
-            </form>
-        </dl>}
+            <div class="col-sm-2">
+                <strong>Choice B</strong>
+            </div>
+            <div class="col-sm-8">
+                <span style="white-space: pre-line">@item.ChoiceB</span>
+            </div>
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-2">
+                <strong>Choice C</strong>
+            </div>
+            <div class="col-sm-8">
+                <span style="white-space: pre-line">@item.ChoiceC</span>
+            </div>
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-2">
+                <strong>Choice D</strong>
+            </div>
+            <div class="col-sm-8">
+                <span style="white-space: pre-line">@item.ChoiceD</span>
+            </div>
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-2">
+                <strong>Correct Answer</strong>
+            </div>
+            <div class="col-sm-8">
+                <span style="white-space: pre-line">@item.CorrectAnswer</span>
+            </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+        <hr style="font-size:5px;" />
+    }
 </div>
 <div>
     @* @Html.ActionLink("Edit", "", new { /* id = Model.PrimaryKey */ }) | *@

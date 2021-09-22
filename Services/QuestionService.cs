@@ -22,7 +22,7 @@ namespace Smart_ELearning.Services
         public async Task<int> AddRange(ICollection<QuestionModel> models)
         {
             var numberOfQuestion = models.Count();
-            foreach(var item in models)
+            foreach (var item in models)
             {
                 item.Score = 100 / numberOfQuestion;
             }
@@ -50,6 +50,13 @@ namespace Smart_ELearning.Services
             return question;
         }
 
+        public List<QuestionModel> GetByTestId(int testId)
+        {
+            var data = _context.QuestionModels.Where(x => x.TestId == testId).ToList();
+
+            return data;
+        }
+
         public TestQuestionVm GetTestQuestions(int testId)
         {
             var questions = _context.QuestionModels.Where(x => x.TestId == testId);
@@ -61,6 +68,12 @@ namespace Smart_ELearning.Services
                 question = questions.ToList(),
             };
             return model;
+        }
+
+        public async Task<int> UpdateRange(List<QuestionModel> models)
+        {
+            _context.QuestionModels.UpdateRange(models);
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<int> Upsert(QuestionModel model)

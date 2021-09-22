@@ -45,6 +45,12 @@ namespace Smart_ELearning.Services
             return _context.SaveChanges();
         }
 
+        public SubmitModel GetById(int id)
+        {
+            var model = _context.submitModels.Find(id);
+            return model;
+        }
+
         public string GetIpAddress()
         {
             string userIp = "unknow";

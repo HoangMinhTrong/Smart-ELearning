@@ -45,6 +45,8 @@
 
         function loadDataTable() {
             dataTable = $('#tblData').DataTable({
+                "order": [],
+                "aaSorting": [],
                 "ajax": {
                     "url": "/User/Schedule/GetClassSchedule/"+classId,
                     "type": "GET"

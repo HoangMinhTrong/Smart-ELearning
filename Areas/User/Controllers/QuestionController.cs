@@ -17,12 +17,10 @@ namespace Smart_ELearning.Areas.User.Controllers
         private readonly IScheduleService _scheduleService;
         private readonly ITestService _testService;
 
-
-
         public QuestionController(IQuestionService questionService,
             IScheduleService scheduleService,
             ITestService testService)
-            
+
         {
             _questionService = questionService;
             _scheduleService = scheduleService;
@@ -68,6 +66,7 @@ namespace Smart_ELearning.Areas.User.Controllers
             var data = await _questionService.GetAll();
             return Ok(data);
         }
+
         [HttpGet]
         public IActionResult GetQuestionByTestId(int testId)
         {
@@ -97,7 +96,21 @@ namespace Smart_ELearning.Areas.User.Controllers
             var result = await _questionService.AddRange(models.ToList());
             var scheduleId = _testService.GetById(models[0].TestId).ScheduleId;
 
-            return RedirectToAction("ScheduleToTest", "Schedule", new {id=scheduleId });
+            return RedirectToAction("ScheduleToTest", "Schedule", new { id = scheduleId });
+        }
+
+        public IActionResult EditQuestion(int testId)
+        {
+            var data = _questionService.GetByTestId(testId);
+            return View(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditQuestion(List<QuestionModel> models)
+        {
+            var result = await _questionService.UpdateRange(models);
+            var scheduleId = _testService.GetById(models[0].TestId).ScheduleId;
+            return RedirectToAction("ScheduleToTest", "Schedule", new { id = scheduleId });
         }
     }
 }

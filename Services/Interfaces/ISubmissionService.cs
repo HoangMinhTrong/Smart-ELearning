@@ -1,4 +1,6 @@
-﻿namespace Smart_ELearning.Services.Interfaces
+﻿using Smart_ELearning.Models;
+
+namespace Smart_ELearning.Services.Interfaces
 {
     public interface ISubmissionService
     {
@@ -11,5 +13,7 @@
         int Delete(int id);
 
         int IsExpired(int testId);
+
+        SubmitModel GetById(int id);
     }
 }

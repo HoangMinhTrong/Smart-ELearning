@@ -1,0 +1,122 @@
+@model List<Smart_ELearning.Models.QuestionModel>
+@{
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Edit Question";
+}
+
+<form method="post" action="EditQuestion" autocomplete="off">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title @*@ViewBag.TestTitle*@</h2>
+        </div>
+        <div class="col-8 pt-4">
+
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                switch (ViewBag.NumberOfQuesiton)
+                {
+                    case 5:
+                        <input type="hidden" asp-for="@Model[i].Score" value="20" />
+                        break;
+                    case 10:
+                        <input type="hidden" asp-for="@Model[i].Score" value="10" />
+                        break;
+                    case 20:
+                        <input type="hidden" asp-for="@Model[i].Score" value="5" />
+                        break;
+                    case 25:
+                        <input type="hidden" asp-for="@Model[i].Score" value="4" />
+                        break;
+                    case 40:
+                        <input type="hidden" asp-for="@Model[i].Score" value="2.5" />
+                        break;
+                    default:
+                        <input type="hidden" asp-for="@Model[i].Score" value="0" />
+                        break;
+
+                }
+
+                <input type="hidden" asp-for="@Model[i].TestId" />
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <h4>Question @(i + 1)</h4>
+                    </div>
+                    <div class="col-8">
+                        <textarea cols="40" rows="4" asp-for="@Model[i].Content" required class="form-control"></textarea>
+                        <span asp-validation-for="@Model[i].Content" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].ChoiceA"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model[i].ChoiceA" required class="form-control" />
+                        <span asp-validation-for="@Model[i].ChoiceA" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].ChoiceB"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model[i].ChoiceB" required class="form-control" />
+                        <span asp-validation-for="@Model[i].ChoiceB" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].ChoiceC"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model[i].ChoiceC" required class="form-control" />
+
+                        <span asp-validation-for="@Model[i].ChoiceC" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].ChoiceD"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model[i].ChoiceD" required class="form-control" />
+                        <input type="hidden" asp-for="@Model[i].Id" />
+                        <span asp-validation-for="@Model[i].ChoiceD" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="@Model[i].CorrectAnswer"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="@Model[i].CorrectAnswer" required id="answer">
+                            <option value="">Choose One</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr />
+
+            }
+
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+
+                    <input type="submit" class="btn btn-primary" value="Update" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
