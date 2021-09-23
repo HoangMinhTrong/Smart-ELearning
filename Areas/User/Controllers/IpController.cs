@@ -28,11 +28,13 @@ namespace Smart_ELearning.Areas.User.Controllers
             UserManager<AppUserModel> userManager,
             IAttendanceService attendanceService,
             ISubmissionService submissionService,
-            IIpService ipService
+            IIpService ipService,
+            ApplicationDbContext context
             )
         {
             _testService = testService;
             _ipService = ipService;
+            _context = context;
 
             _userManager = userManager;
             _attendanceService = attendanceService;
@@ -55,6 +57,7 @@ namespace Smart_ELearning.Areas.User.Controllers
         {
             return View();
         }
+
         public IActionResult BlackList()
         {
             return View();
@@ -80,6 +83,16 @@ namespace Smart_ELearning.Areas.User.Controllers
             var result = _ipService.ChangeStatus(id);
             if (result == 0) return BadRequest("Cound not found");
             else return Json(new { success = true, message = "Change Successful" }); ;
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            var record = _context.IpInfos.Find(id);
+            _context.IpInfos.Remove(record);
+            var result = _context.SaveChanges();
+            if (result == 0) return BadRequest("Cound not found");
+            else return Json(new { success = true, message = "Delete Successful" });
         }
     }
 }

@@ -16,6 +16,8 @@ using Smart_ELearning.Models;
 using Smart_ELearning.Services;
 using Smart_ELearning.Data.Initializer;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Smart_ELearning
 {
@@ -33,7 +35,7 @@ namespace Smart_ELearning
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("Deploy")));
             services.AddDatabaseDeveloperPageExceptionFilter();
             //Cycal
             services.AddControllersWithViews()
@@ -49,6 +51,15 @@ namespace Smart_ELearning
             services.AddControllersWithViews();
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddService();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = "Cookie";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(720);
+                options.LoginPath = new PathString("/Login");
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.SlidingExpiration = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
